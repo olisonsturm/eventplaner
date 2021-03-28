@@ -9,9 +9,6 @@ public class EventUebersichtActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TextView welcomeMessageTV = new TextView(this);
-        welcomeMessageTV.setText("Hello CodeYourApp World!");
-        setContentView(welcomeMessageTV);
+        setContentView(R.layout.activity_eventuebersicht);
     }
 }
