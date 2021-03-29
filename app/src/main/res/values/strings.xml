@@ -1,3 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EventPlaner</string>
+    <string name="app_name" translatable="false">EventPlaner</string>
+    <string name="UserName">Username</string>
+    <string name="Password">Password</string>
+    <string name="LOGIN">LOGIN</string>
+    <string name="loginInvalid">Authentication failed (incorrect username or password)</string>
+    <string name="Login">Login</string>
+    <string name="noAccountTextView">"Don't have an account yet? "</string>
+    <string name="registerLinkButton">Register now!</string>
 </resources>
