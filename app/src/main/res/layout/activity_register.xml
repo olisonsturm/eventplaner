@@ -1,10 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/bgColorWhiteBlue"
-    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="430dp"
+    android:layout_height="491dp"
+    android:layout_gravity="center"
+    android:background="@drawable/register_bg"
+    android:fontFamily="@font/ubuntu_medium"
     android:orientation="vertical"
-    android:padding="10dp">
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/registerTextView"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="55dp"
+        android:gravity="center"
+        android:text="@string/Register"
+        android:letterSpacing=".02"
+        android:textColor="@color/colorPrimaryGrey"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/userNameEditText"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/colorPrimaryGrey"
+        android:drawableLeft="@drawable/benutzer"
+        android:letterSpacing=".02"
+        android:drawablePadding="5dp"
+        android:hint="@string/UserName"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorPrimaryGrey" />
+
+    <EditText
+        android:id="@+id/eMailEditText"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorPrimaryGrey"
+        android:drawableLeft="@drawable/email"
+        android:letterSpacing=".02"
+        android:drawablePadding="5dp"
+        android:hint="@string/EMail"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorPrimaryGrey" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorPrimaryGrey"
+        android:drawableLeft="@drawable/schlussel"
+        android:drawablePadding="5dp"
+        android:hint="@string/Password"
+        android:letterSpacing=".02"
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimaryGrey" />
+
+    <EditText
+        android:id="@+id/passwordAgainEditText"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorPrimaryGrey"
+        android:drawableLeft="@drawable/passwort"
+        android:drawablePadding="5dp"
+        android:hint="@string/PasswordAgain"
+        android:letterSpacing=".02"
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimaryGrey" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="32.5dp"
+        android:background = "@drawable/roundedbutton"
+        android:backgroundTint="@color/colorPrimaryGrey"
+        android:gravity="center"
+        android:text="@string/Register"
+        android:letterSpacing=".02"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:gravity="center"
+        android:fontFamily="@font/ubuntu_medium"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:textSize="15sp"
+            android:letterSpacing=".02"
+            android:textStyle="bold"
+            android:text="@string/alreadyAccountTextView" />
+
+        <TextView
+            android:id="@+id/loginLinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:letterSpacing=".02"
+            android:text="@string/loginLinkButton"
+            android:textSize="15sp" />
+    </LinearLayout>
 
 </LinearLayout>

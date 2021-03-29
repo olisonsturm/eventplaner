@@ -2,9 +2,13 @@
 <resources>
     <string name="UserName">Benutzername</string>
     <string name="Password">Passwort</string>
-    <string name="LOGIN">ANMELDEN</string>
     <string name="loginInvalid">Die Anmeldung ist fehlgeschlagen (Benutzername oder Passwort falsch)</string>
-    <string name="Login">Anmelden</string>
+    <string name="Login">ANMELDEN</string>
     <string name="noAccountTextView">Noch keinen Account?</string>
     <string name="registerLinkButton">Registriere dich!</string>
+    <string name="PasswordAgain">Passwort wiederholen</string>
+    <string name="EMail">E-Mail</string>
+    <string name="Register">REGISTRIEREN</string>
+    <string name="loginLinkButton">Zur Anmeldung!</string>
+    <string name="alreadyAccountTextView">Du hast einen Account?</string>
 </resources>

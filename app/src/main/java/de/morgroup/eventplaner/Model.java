@@ -19,6 +19,7 @@ public class Model {
     private String password;
 
     public boolean checkLoginData(String userName, String password) {
+        // MySQL-Abfrage hier hin
         if (userName.equals("oli") && password.equals("oli")) {
             this.userName = userName;
             this.password = password;
