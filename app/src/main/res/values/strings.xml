@@ -12,4 +12,7 @@
     <string name="Register">REGISTER</string>
     <string name="loginLinkButton">Login now!</string>
     <string name="alreadyAccountTextView">Do you have an account?</string>
+    <string name="registerInvalid">Registration failed</string>
+    <string name="registerErrorPassword">" Passwords do not match"</string>
+    <string name="registerErrorUserName">" Username is already taken"</string>
 </resources>

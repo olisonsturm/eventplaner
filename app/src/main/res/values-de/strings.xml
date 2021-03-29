@@ -11,4 +11,7 @@
     <string name="Register">REGISTRIEREN</string>
     <string name="loginLinkButton">Zur Anmeldung!</string>
     <string name="alreadyAccountTextView">Du hast einen Account?</string>
+    <string name="registerInvalid">Die Registrierung ist fehlgeschlagen</string>
+    <string name="registerErrorPassword">Passwörter stimmen nicht überein</string>
+    <string name="registerErrorUserName">" Benutzername ist bereits vergeben"</string>
 </resources>
