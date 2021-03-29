@@ -17,8 +17,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="55dp"
         android:gravity="center"
-        android:text="@string/Login"
         android:letterSpacing=".02"
+        android:text="@string/Login"
         android:textColor="@color/colorPrimaryGrey"
         android:textSize="36sp"
         android:textStyle="bold" />
@@ -31,10 +31,10 @@
         android:layout_marginTop="35dp"
         android:backgroundTint="@color/colorPrimaryGrey"
         android:drawableLeft="@drawable/benutzer"
-        android:letterSpacing=".02"
         android:drawablePadding="5dp"
         android:hint="@string/UserName"
         android:inputType="textPersonName"
+        android:letterSpacing=".02"
         android:textColor="@color/colorPrimaryGrey" />
 
     <EditText
@@ -47,8 +47,8 @@
         android:drawableLeft="@drawable/schlussel"
         android:drawablePadding="5dp"
         android:hint="@string/Password"
-        android:letterSpacing=".02"
         android:inputType="textPassword"
+        android:letterSpacing=".02"
         android:textColor="@color/colorPrimaryGrey" />
 
 
@@ -59,11 +59,11 @@
         android:layout_gravity="right"
         android:layout_marginTop="50dp"
         android:layout_marginRight="32.5dp"
-        android:background = "@drawable/roundedbutton"
+        android:background="@drawable/roundedbutton"
         android:backgroundTint="@color/colorPrimaryGrey"
         android:gravity="center"
-        android:text="@string/Login"
         android:letterSpacing=".02"
+        android:text="@string/Login"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -71,11 +71,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginTop="25dp"
         android:layout_marginLeft="18dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="18dp"
-        android:gravity="center"
         android:fontFamily="@font/ubuntu_medium"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -83,10 +83,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="2dp"
-            android:textSize="15sp"
             android:letterSpacing=".02"
-            android:textStyle="bold"
-            android:text="@string/noAccountTextView" />
+            android:text="@string/noAccountTextView"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/registerLinkButton"
