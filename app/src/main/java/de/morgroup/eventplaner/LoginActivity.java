@@ -29,8 +29,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        registerLinkButton = (TextView) findViewById(R.id.registerLinkButton);
-        userNameEditText = findViewById(R.id.userNameEditText);
+        registerLinkButton = findViewById(R.id.registerLinkButton);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
 
@@ -39,7 +38,7 @@ public class LoginActivity extends Activity {
                                                   public void onClick(View v) {
                                                       Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                                                       startActivity(intent);
-
+                                                      finish();
                                                   }
                                               }
         );
