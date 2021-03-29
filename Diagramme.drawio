@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-03-29T09:38:18.456Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" etag="dPuMM8iRrr64jag1zwiD" version="14.5.3" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2021-03-29T15:48:53.251Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" etag="xyIn6enBDO4F16FTpxxs" version="14.5.3" type="github" pages="2">
   <diagram name="ER-Modell" id="c4acf3e9-155e-7222-9cf6-157b1a14988f">
     <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
       <root>
@@ -54,44 +54,56 @@
         <mxCell id="jBpVfz8XybSRO9sbNiaX-12" value="Benutzerprofil" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="210" y="580" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="jBpVfz8XybSRO9sbNiaX-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-13" target="jBpVfz8XybSRO9sbNiaX-12" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="jBpVfz8XybSRO9sbNiaX-13" value="events_anzahl_alle" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-          <mxGeometry x="30" y="550" width="110" height="40" as="geometry" />
-        </mxCell>
         <mxCell id="jBpVfz8XybSRO9sbNiaX-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-14" target="jBpVfz8XybSRO9sbNiaX-12" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="680" />
+              <mxPoint x="300" y="620" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="jBpVfz8XybSRO9sbNiaX-14" value="&lt;b&gt;pk_benutzer_id&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-          <mxGeometry x="300" y="740" width="100" height="40" as="geometry" />
+          <mxGeometry x="325" y="660" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="jBpVfz8XybSRO9sbNiaX-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-15" target="jBpVfz8XybSRO9sbNiaX-12" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="jBpVfz8XybSRO9sbNiaX-15" value="events_anzahl_eigene" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-          <mxGeometry x="10" y="620" width="140" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="jBpVfz8XybSRO9sbNiaX-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.372;entryY=0.991;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-16" target="jBpVfz8XybSRO9sbNiaX-12" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="jBpVfz8XybSRO9sbNiaX-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-16" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="600" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="160" y="600" />
+              <mxPoint x="160" y="600" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="jBpVfz8XybSRO9sbNiaX-16" value="profil_bild_path" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-          <mxGeometry x="20" y="700" width="100" height="40" as="geometry" />
+          <mxGeometry x="60" y="580" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="jBpVfz8XybSRO9sbNiaX-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-17" target="jBpVfz8XybSRO9sbNiaX-12" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="jBpVfz8XybSRO9sbNiaX-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-17" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="620" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="220" y="680" />
+              <mxPoint x="220" y="620" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="jBpVfz8XybSRO9sbNiaX-17" value="first_name" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-          <mxGeometry x="100" y="770" width="100" height="40" as="geometry" />
+          <mxGeometry x="80" y="660" width="100" height="40" as="geometry" />
         </mxCell>
         <mxCell id="jBpVfz8XybSRO9sbNiaX-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.65;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-18" target="jBpVfz8XybSRO9sbNiaX-12" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="620" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="jBpVfz8XybSRO9sbNiaX-18" value="last_name" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-          <mxGeometry x="225" y="800" width="100" height="40" as="geometry" />
+          <mxGeometry x="210" y="700" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="jBpVfz8XybSRO9sbNiaX-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-13" target="jBpVfz8XybSRO9sbNiaX-13" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="jBpVfz8XybSRO9sbNiaX-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="590" as="sourcePoint" />
+            <mxPoint x="85" y="590" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="jBpVfz8XybSRO9sbNiaX-92" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-33" target="jBpVfz8XybSRO9sbNiaX-2" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -281,7 +293,7 @@
         <mxCell id="jBpVfz8XybSRO9sbNiaX-106" value="&lt;b&gt;pk_moeglichkeiten_id&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="1005" y="660" width="135" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="VcUeD26wxsZzKOzzAmoT-1" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;endArrow=none;endFill=0;" edge="1" parent="1" source="jBpVfz8XybSRO9sbNiaX-107" target="jBpVfz8XybSRO9sbNiaX-82">
+        <mxCell id="VcUeD26wxsZzKOzzAmoT-1" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;endArrow=none;endFill=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-107" target="jBpVfz8XybSRO9sbNiaX-82" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="940" y="470" as="sourcePoint" />
           </mxGeometry>
@@ -313,7 +325,7 @@
         <mxCell id="jBpVfz8XybSRO9sbNiaX-119" value="anz_stimmen" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="740" y="600" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="jBpVfz8XybSRO9sbNiaX-138" value="&lt;pre style=&quot;font-size: 15px ; line-height: 140%&quot;&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 15px&quot;&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Benutzerprofil(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_profil_id&lt;/b&gt;, last_name,&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;first_name, events_anzahl_alle,events_anzahl_eigene) &lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Benutzer(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_benutzer_id&lt;/b&gt;, benutzer_email,&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;span style=&quot;font-size: 15px&quot;&gt;benutzer_name, benutzer_passwort)&lt;/span&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Event(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_event_id, &lt;/b&gt;beschreibung, event_name, event_zeit,&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;event_datum, adresse, ort, event_bild_path)&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;H_Benutzer_Event(&lt;u style=&quot;font-size: 15px&quot;&gt;fk_benutzer_id&lt;/u&gt;, rolle &lt;u style=&quot;font-size: 15px&quot;&gt;fk_event_id&lt;/u&gt;)&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Abstimmung(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_abstimmung_id&lt;/b&gt;, text, &lt;u style=&quot;font-size: 15px&quot;&gt;fk_event_id)&lt;/u&gt;&lt;/font&gt;&lt;/font&gt;&lt;/pre&gt;&lt;pre style=&quot;font-size: 15px ; line-height: 140%&quot;&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 15px&quot;&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Moeglichkeiten(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_moeglichkeiten_id, &lt;/b&gt;anz_stimmen, text, &lt;u style=&quot;font-size: 15px&quot;&gt;fk_abstimmung_id)&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/u&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Aufgabe(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_aufgabe_id&lt;/b&gt;, zustaendiger, beschreibung, text, &lt;u style=&quot;font-size: 15px&quot;&gt;fk_event_id&lt;/u&gt;)&lt;/font&gt;&lt;/font&gt;&lt;/pre&gt;" style="whiteSpace=wrap;html=1;align=left;fontSize=15;rounded=0;shadow=0;sketch=0;" parent="1" vertex="1">
+        <mxCell id="jBpVfz8XybSRO9sbNiaX-138" value="&lt;pre style=&quot;font-size: 15px ; line-height: 140%&quot;&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 15px&quot;&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Benutzerprofil(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_benutzer_id&lt;/b&gt;, last_name, &lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;first_name) &lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Benutzer(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_benutzer_id&lt;/b&gt;, benutzer_email,&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;span style=&quot;font-size: 15px&quot;&gt;benutzer_name, benutzer_passwort)&lt;/span&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Event(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_event_id, &lt;/b&gt;beschreibung, event_name, event_zeit,&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;event_datum, adresse, ort, event_bild_path)&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;H_Benutzer_Event(&lt;u style=&quot;font-size: 15px&quot;&gt;fk_benutzer_id&lt;/u&gt;, rolle &lt;u style=&quot;font-size: 15px&quot;&gt;fk_event_id&lt;/u&gt;)&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Abstimmung(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_abstimmung_id&lt;/b&gt;, text, &lt;u style=&quot;font-size: 15px&quot;&gt;fk_event_id)&lt;/u&gt;&lt;/font&gt;&lt;/font&gt;&lt;/pre&gt;&lt;pre style=&quot;font-size: 15px ; line-height: 140%&quot;&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 15px&quot;&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Moeglichkeiten(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_moeglichkeiten_id, &lt;/b&gt;anz_stimmen, text, &lt;u style=&quot;font-size: 15px&quot;&gt;fk_abstimmung_id)&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/u&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;br style=&quot;font-size: 15px&quot;&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 15px&quot;&gt;Aufgabe(&lt;b style=&quot;font-size: 15px&quot;&gt;pk_aufgabe_id&lt;/b&gt;, zustaendiger, beschreibung, text, &lt;u style=&quot;font-size: 15px&quot;&gt;fk_event_id&lt;/u&gt;)&lt;/font&gt;&lt;/font&gt;&lt;/pre&gt;" style="whiteSpace=wrap;html=1;align=left;fontSize=15;rounded=0;shadow=0;sketch=0;" parent="1" vertex="1">
           <mxGeometry x="1150" y="710" width="530" height="370" as="geometry" />
         </mxCell>
         <mxCell id="860rnhKavh-7kefb2QbS-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="jBpVfz8XybSRO9sbNiaX-33" target="jBpVfz8XybSRO9sbNiaX-46" edge="1">
@@ -336,14 +348,14 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="VcUeD26wxsZzKOzzAmoT-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="VcUeD26wxsZzKOzzAmoT-2" target="jBpVfz8XybSRO9sbNiaX-101">
+        <mxCell id="VcUeD26wxsZzKOzzAmoT-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="VcUeD26wxsZzKOzzAmoT-2" target="jBpVfz8XybSRO9sbNiaX-101" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="910" y="520" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="VcUeD26wxsZzKOzzAmoT-2" value="text" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="VcUeD26wxsZzKOzzAmoT-2" value="text" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="1040" y="500" width="100" height="40" as="geometry" />
         </mxCell>
       </root>
