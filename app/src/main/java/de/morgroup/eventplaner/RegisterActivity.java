@@ -7,7 +7,6 @@ package de.morgroup.eventplaner;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -25,10 +24,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.w3c.dom.Text;
-
 public class RegisterActivity extends Activity {
 
+    // init
     EditText eMailEditText;
     EditText passwordEditText;
     EditText passwordAgainEditText;
@@ -50,7 +48,11 @@ public class RegisterActivity extends Activity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Methoden
+        // bereits eingeloggt?
+        if (firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
+            finish();
+        }
 
         // Tastatur ok
         passwordAgainEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -65,12 +67,6 @@ public class RegisterActivity extends Activity {
             }
         });
 
-        // bereits eingeloggt?
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
-            finish();
-        }
-
         // Button Register pressed
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +75,7 @@ public class RegisterActivity extends Activity {
             }
         });
 
-        // Link zur LoginActivity.java
+        // Link zur LoginActivity
         loginLinkButton.setOnClickListener(new View.OnClickListener() {
                                                @Override
                                                public void onClick(View v) {
@@ -92,36 +88,34 @@ public class RegisterActivity extends Activity {
     }
 
     private void register() {
-        System.out.println("HALLOOOOOO MEIN FREUND");
+        // toString
         String email = eMailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-        System.out.println(email +"--"+ password);
         String passwordAgain = passwordAgainEditText.getText().toString().trim();
 
-        // Errors
+        // Interrogate errors
         if (TextUtils.isEmpty(email)) {
-            System.out.println("Email is Required");
-            eMailEditText.setError("Email is Required");
+            eMailEditText.setError(getResources().getString(R.string.eMailRequired));
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            passwordEditText.setError("Password is Required");
+            passwordEditText.setError(getResources().getString(R.string.passwordRequired));
             return;
         }
 
         if (TextUtils.isEmpty(passwordAgain)) {
-            passwordEditText.setError("Password is Required");
+            passwordEditText.setError(getResources().getString(R.string.passwordAgainRequired));
             return;
         }
 
         if (password.length() < 6) {
-            passwordEditText.setError("Password must be >= 6 characters");
+            passwordEditText.setError(getResources().getString(R.string.passwordLenght));
             return;
         }
 
         if (!TextUtils.equals(password, passwordAgain)) {
-            passwordAgainEditText.setError("Passwords do not match");
+            passwordAgainEditText.setError(getResources().getString(R.string.passwordDoNotMatch));
             return;
         }
 
@@ -130,11 +124,11 @@ public class RegisterActivity extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, getResources().getString(R.string.accountCreated), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(RegisterActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

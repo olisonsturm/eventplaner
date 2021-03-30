@@ -53,7 +53,7 @@ public class LoginActivity extends Activity {
             finish();
         }
 
-        // Methoden
+        // Tatsatur ok
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
@@ -66,6 +66,7 @@ public class LoginActivity extends Activity {
             }
         });
 
+        // Button Login pressed
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +74,7 @@ public class LoginActivity extends Activity {
             }
         });
 
+        // link zur RegisterActivity
         registerLinkButton.setOnClickListener(new View.OnClickListener() {
                                                   @Override
                                                   public void onClick(View v) {
@@ -85,17 +87,18 @@ public class LoginActivity extends Activity {
     }
 
     private void login() {
+        // toString
         String email = eMailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        // Errors
+        // Interrogate errors
         if (TextUtils.isEmpty(email)) {
-            eMailEditText.setError("Email is Required");
+            eMailEditText.setError(getResources().getString(R.string.eMailRequired));
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            passwordEditText.setError("Password is Required");
+            passwordEditText.setError(getResources().getString(R.string.passwordRequired));
             return;
         }
 
@@ -104,11 +107,11 @@ public class LoginActivity extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Logged in Successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.loginSuccessful), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

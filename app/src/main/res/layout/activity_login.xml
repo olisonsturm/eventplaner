@@ -51,13 +51,12 @@
         android:letterSpacing=".02"
         android:textColor="@color/colorPrimaryGrey" />
 
-
     <Button
         android:id="@+id/loginButton"
         android:layout_width="170dp"
         android:layout_height="45dp"
         android:layout_gravity="right"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="35dp"
         android:layout_marginRight="32.5dp"
         android:background="@drawable/roundedbutton"
         android:backgroundTint="@color/colorPrimaryGrey"
@@ -68,11 +67,49 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/forgotPasswordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:layout_marginRight="40dp"
+        android:letterSpacing=".02"
+        android:text="@string/forgotPassword"
+        android:textColor="@color/colorPrimaryGrey"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="338dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="60"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="G"
+            android:textColor="@color/colorPrimaryGrey"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="F"
+            android:textColor="@color/colorPrimaryGrey"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="25dp"
         android:layout_marginRight="18dp"
         android:fontFamily="@font/ubuntu_medium"
         android:gravity="center"
