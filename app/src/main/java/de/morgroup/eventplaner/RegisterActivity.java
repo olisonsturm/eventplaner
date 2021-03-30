@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,77 +18,125 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.w3c.dom.Text;
 
 public class RegisterActivity extends Activity {
 
-    TextView loginLinkButton;
-    EditText userNameEditText;
     EditText eMailEditText;
     EditText passwordEditText;
     EditText passwordAgainEditText;
     Button registerButton;
+    TextView loginLinkButton;
+    FirebaseAuth firebaseAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        loginLinkButton = findViewById(R.id.loginLinkButton);
-        userNameEditText = findViewById(R.id.userNameEditText);
+        // Deklaration
         eMailEditText = findViewById(R.id.eMailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         passwordAgainEditText = findViewById(R.id.passwordAgainEditText);
         registerButton = findViewById(R.id.registerButton);
+        loginLinkButton = findViewById(R.id.loginLinkButton);
 
-        loginLinkButton.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View v) {
-                                                      Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                                      startActivity(intent);
-                                                      finish();
-                                                  }
-                                              }
-        );
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                register(view);
-            }
-        });
+        // Methoden
 
+        // Tastatur ok
         passwordAgainEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    register(view);
+                    register();
                     handled = true;
                 }
                 return handled;
             }
         });
 
+        // bereits eingeloggt?
+        if (firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
+            finish();
+        }
+
+        // Button Register pressed
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                register();
+            }
+        });
+
+        // Link zur LoginActivity.java
+        loginLinkButton.setOnClickListener(new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View v) {
+                                                   Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                                   startActivity(intent);
+                                                   finish();
+                                               }
+                                           }
+        );
     }
 
-    private void register(View view) {
-        Model model = Model.getInstance();
-        String userName = userNameEditText.getText().toString();
-        String eMail = eMailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-        String passwordAgain = passwordAgainEditText.getText().toString();
-        switch (model.checkRegisterData(userName, eMail, password, passwordAgain)) {
-            case 0:
-                Intent intent = new Intent(view.getContext(), EventUebersichtActivity.class);
-                startActivity(intent);
-                finish();
-            case 1:
-                Toast.makeText(RegisterActivity.this, R.string.registerErrorUserName, Toast.LENGTH_LONG).show();
-            case 2:
-                Toast.makeText(RegisterActivity.this, R.string.registerErrorPassword, Toast.LENGTH_LONG).show();
-            default:
-                Toast.makeText(RegisterActivity.this, R.string.registerInvalid, Toast.LENGTH_LONG).show();
+    private void register() {
+        System.out.println("HALLOOOOOO MEIN FREUND");
+        String email = eMailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        System.out.println(email +"--"+ password);
+        String passwordAgain = passwordAgainEditText.getText().toString().trim();
+
+        // Errors
+        if (TextUtils.isEmpty(email)) {
+            System.out.println("Email is Required");
+            eMailEditText.setError("Email is Required");
+            return;
         }
+
+        if (TextUtils.isEmpty(password)) {
+            passwordEditText.setError("Password is Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(passwordAgain)) {
+            passwordEditText.setError("Password is Required");
+            return;
+        }
+
+        if (password.length() < 6) {
+            passwordEditText.setError("Password must be >= 6 characters");
+            return;
+        }
+
+        if (!TextUtils.equals(password, passwordAgain)) {
+            passwordAgainEditText.setError("Passwords do not match");
+            return;
+        }
+
+        // Benutzer-Registration
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
