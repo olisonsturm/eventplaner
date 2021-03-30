@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="UserName">Benutzername</string>
+    <string name="Password">Passwort</string>
+    <string name="loginInvalid">Die Anmeldung ist fehlgeschlagen (Benutzername oder Passwort falsch)</string>
+    <string name="Login">ANMELDEN</string>
+    <string name="noAccountTextView">Noch keinen Account?</string>
+    <string name="registerLinkButton">Registriere dich!</string>
+    <string name="PasswordAgain">Passwort wiederholen</string>
+    <string name="EMail">E-Mail</string>
+    <string name="Register">REGISTRIEREN</string>
+    <string name="loginLinkButton">Zur Anmeldung!</string>
+    <string name="alreadyAccountTextView">Du hast einen Account?</string>
+    <string name="registerInvalid">Die Registrierung ist fehlgeschlagen</string>
+    <string name="registerErrorPassword">Passwörter stimmen nicht überein</string>
+    <string name="registerErrorUserName">" Benutzername ist bereits vergeben"</string>
+    <string name="forgotPassword">Passwort vergessen?</string>
+    <string name="eMailRequired">E-Mail ist erforderlich</string>
+    <string name="passwordRequired">Passwort ist erforderlich</string>
+    <string name="passwordAgainRequired">Password muss wiederholt werden</string>
+    <string name="passwordLenght">Password muss mindestens 6 Zeichen lang sein</string>
+    <string name="passwordDoNotMatch">Passwörter stimmen nicht überein</string>
+    <string name="accountCreated">Account erstellt</string>
+    <string name="loginSuccessful">Erfolgreich eingeloggt</string>
+</resources>

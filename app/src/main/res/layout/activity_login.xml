@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="430dp"
+    android:layout_height="491dp"
+    android:layout_gravity="center"
+    android:background="@drawable/register_bg"
+    android:fontFamily="@font/ubuntu_medium"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/loginTextView"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="55dp"
+        android:gravity="center"
+        android:letterSpacing=".02"
+        android:text="@string/Login"
+        android:textColor="@color/colorPrimaryGrey"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/eMailEditText"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="35dp"
+        android:backgroundTint="@color/colorPrimaryGrey"
+        android:drawableLeft="@drawable/benutzer"
+        android:drawablePadding="5dp"
+        android:hint="@string/EMail"
+        android:inputType="textPersonName"
+        android:letterSpacing=".02"
+        android:textColor="@color/colorPrimaryGrey" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/colorPrimaryGrey"
+        android:drawableLeft="@drawable/schlussel"
+        android:drawablePadding="5dp"
+        android:hint="@string/Password"
+        android:inputType="textPassword"
+        android:letterSpacing=".02"
+        android:textColor="@color/colorPrimaryGrey" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="32.5dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="@color/colorPrimaryGrey"
+        android:gravity="center"
+        android:letterSpacing=".02"
+        android:text="@string/Login"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/forgotPasswordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:layout_marginRight="40dp"
+        android:letterSpacing=".02"
+        android:text="@string/forgotPassword"
+        android:textColor="@color/colorPrimaryGrey"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="338dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="60dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="G"
+            android:textColor="@color/colorPrimaryGrey"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="F"
+            android:textColor="@color/colorPrimaryGrey"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:fontFamily="@font/ubuntu_medium"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:letterSpacing=".02"
+            android:text="@string/noAccountTextView"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/registerLinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:letterSpacing=".02"
+            android:text="@string/registerLinkButton"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

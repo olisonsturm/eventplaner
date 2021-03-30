@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480010531402",
+    "project_id": "eventplaner-b44ff",
+    "storage_bucket": "eventplaner-b44ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480010531402:android:e105508e4376a3026eacb3",
+        "android_client_info": {
+          "package_name": "de.morgroup.eventplaner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480010531402-odev4kibb88tlhcr8d3et7ah92eubopj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuPozcJparINPym1MOay0bkQbpgDOFMTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480010531402-odev4kibb88tlhcr8d3et7ah92eubopj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

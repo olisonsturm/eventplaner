@@ -1,12 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EventPlaner</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="app_name" translatable="false">EventPlaner</string>
+    <string name="UserName">Username</string>
+    <string name="Password">Password</string>
+    <string name="loginInvalid">Authentication failed (incorrect username or password)</string>
+    <string name="Login">LOGIN</string>
+    <string name="noAccountTextView">Do not have an account yet?</string>
+    <string name="registerLinkButton">Register now!</string>
+    <string name="PasswordAgain">Repeat password</string>
+    <string name="EMail">Email</string>
+    <string name="Register">REGISTER</string>
+    <string name="loginLinkButton">Login now!</string>
+    <string name="alreadyAccountTextView">Do you have an account?</string>
+    <string name="registerInvalid">Registration failed</string>
+    <string name="registerErrorPassword">Passwords do not match</string>
+    <string name="registerErrorUserName">Username is already taken</string>
+    <string name="forgotPassword">Forgot Password?</string>
+    <string name="eMailRequired">Email is required</string>
+    <string name="passwordRequired">Password is required</string>
+    <string name="passwordAgainRequired">Password must be repeated</string>
+    <string name="passwordLenght">Password must be at least 6 characters long</string>
+    <string name="passwordDoNotMatch">Pwasswords do not match</string>
+    <string name="accountCreated">Account created</string>
+    <string name="loginSuccessful">Logged in successfully</string>
 </resources>
