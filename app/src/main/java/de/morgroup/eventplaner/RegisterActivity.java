@@ -27,9 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RegisterActivity extends Activity {
 
     // init
-    EditText eMailEditText;
-    EditText passwordEditText;
-    EditText passwordAgainEditText;
+    EditText eMailEditText, passwordEditText, passwordAgainEditText;
     Button registerButton;
     TextView loginLinkButton;
     FirebaseAuth firebaseAuth;

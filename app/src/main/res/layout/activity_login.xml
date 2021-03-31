@@ -5,7 +5,7 @@
     android:layout_width="430dp"
     android:layout_height="491dp"
     android:layout_gravity="center"
-    android:background="@drawable/register_bg"
+    android:background="@drawable/bg_register"
     android:fontFamily="@font/ubuntu_medium"
     android:orientation="vertical"
     tools:context=".LoginActivity">
@@ -30,7 +30,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
         android:backgroundTint="@color/colorPrimaryGrey"
-        android:drawableLeft="@drawable/benutzer"
+        android:drawableLeft="@drawable/ic_benutzer"
         android:drawablePadding="5dp"
         android:hint="@string/EMail"
         android:inputType="textPersonName"
@@ -44,7 +44,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimaryGrey"
-        android:drawableLeft="@drawable/schlussel"
+        android:drawableLeft="@drawable/ic_schlusselpassword"
         android:drawablePadding="5dp"
         android:hint="@string/Password"
         android:inputType="textPassword"
@@ -59,6 +59,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/googleLoginButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="15dp"
@@ -66,6 +67,7 @@
             android:background="@drawable/ic_google" />
 
         <ImageView
+            android:id="@+id/facebookLoginButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="15dp"
@@ -73,6 +75,7 @@
             android:background="@drawable/ic_facebook" />
 
         <ImageView
+            android:id="@+id/twitterLoginButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="15dp"
@@ -88,7 +91,7 @@
         android:layout_gravity="right"
         android:layout_marginTop="20dp"
         android:layout_marginRight="32.5dp"
-        android:background="@drawable/roundedbutton"
+        android:background="@drawable/btn_rounded_left"
         android:backgroundTint="@color/colorPrimaryGrey"
         android:gravity="center"
         android:letterSpacing=".02"

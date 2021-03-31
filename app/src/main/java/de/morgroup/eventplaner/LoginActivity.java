@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +29,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends Activity {
 
     //init
-    EditText eMailEditText;
-    EditText passwordEditText;
+    EditText eMailEditText, passwordEditText;
     Button loginButton;
+    ImageView googleLoginButton, facebookLoginButton, twitterLoginButton;
     TextView registerLinkButton;
     FirebaseAuth firebaseAuth;
 
@@ -43,6 +44,9 @@ public class LoginActivity extends Activity {
         eMailEditText = findViewById(R.id.eMailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
+        googleLoginButton = findViewById(R.id.googleLoginButton);
+        facebookLoginButton = findViewById(R.id.facebookLoginButton);
+        twitterLoginButton = findViewById(R.id.twitterLoginButton);
         registerLinkButton = findViewById(R.id.registerLinkButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -74,16 +78,39 @@ public class LoginActivity extends Activity {
             }
         });
 
+        // Button Google+ pressed
+        googleLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        // Button Facebook pressed
+        facebookLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        // Button Twitter pressed
+        twitterLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         // link zur RegisterActivity
         registerLinkButton.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View v) {
-                                                      Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                                                      startActivity(intent);
-                                                      finish();
-                                                  }
-                                              }
-        );
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void login() {
@@ -103,7 +130,7 @@ public class LoginActivity extends Activity {
         }
 
         // Benutzer-Registration
-        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -117,4 +144,5 @@ public class LoginActivity extends Activity {
         });
 
     }
+
 }
