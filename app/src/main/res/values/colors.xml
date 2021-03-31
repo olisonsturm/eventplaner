@@ -3,7 +3,6 @@
     <!--Hauptfarben der App-->
     <color name="bgColorWhite">#FFFFFFFF</color>
     <color name="bgColorWhiteBlue">#F3F4FA</color>
-
     <color name="colorPrimaryGrey">#4A4A4A</color>
     <color name="colorPrimaryBlue">#4A90E2</color>
     <color name="colorPrimaryRed">#F73B3B</color>
