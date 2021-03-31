@@ -8,7 +8,7 @@
     android:background="@drawable/bg_register"
     android:fontFamily="@font/ubuntu_medium"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <TextView
         android:id="@+id/loginTextView"
@@ -89,7 +89,7 @@
         android:layout_width="170dp"
         android:layout_height="45dp"
         android:layout_gravity="right"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="32.5dp"
         android:background="@drawable/btn_rounded_left"
         android:backgroundTint="@color/colorPrimaryGrey"
@@ -113,11 +113,12 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="18dp"
+        android:layout_gravity="center"
         android:fontFamily="@font/ubuntu_medium"
         android:gravity="center"
         android:orientation="horizontal">

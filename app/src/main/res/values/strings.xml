@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">EventPlaner</string>
+
     <string name="UserName">Username</string>
     <string name="Password">Password</string>
     <string name="loginInvalid">Authentication failed (incorrect username or password)</string>
