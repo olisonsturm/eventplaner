@@ -26,7 +26,7 @@
     <EditText
         android:id="@+id/eMailEditText"
         android:layout_width="260dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
         android:backgroundTint="@color/colorPrimaryGrey"
@@ -40,9 +40,9 @@
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="260dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimaryGrey"
         android:drawableLeft="@drawable/schlussel"
         android:drawablePadding="5dp"
@@ -51,12 +51,42 @@
         android:letterSpacing=".02"
         android:textColor="@color/colorPrimaryGrey" />
 
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_launcher_background" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/passwort" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/email" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="170dp"
         android:layout_height="45dp"
         android:layout_gravity="right"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="32.5dp"
         android:background="@drawable/roundedbutton"
         android:backgroundTint="@color/colorPrimaryGrey"
@@ -72,44 +102,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:gravity="right"
         android:layout_marginRight="40dp"
+        android:gravity="right"
         android:letterSpacing=".02"
         android:text="@string/forgotPassword"
         android:textColor="@color/colorPrimaryGrey"
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="338dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="60dp"
-        android:gravity="left"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="G"
-            android:textColor="@color/colorPrimaryGrey"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="F"
-            android:textColor="@color/colorPrimaryGrey"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginLeft="18dp"
+        android:layout_marginTop="3dp"
         android:layout_marginRight="18dp"
         android:fontFamily="@font/ubuntu_medium"
         android:gravity="center"
