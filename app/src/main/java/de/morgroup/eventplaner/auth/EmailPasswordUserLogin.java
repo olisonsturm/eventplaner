@@ -43,14 +43,11 @@ public class EmailPasswordUserLogin extends UserLogin {
             return;
         }
 
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    loggedInSuccessfully();
-                } else {
-                    authFailure(task);
-                }
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                loggedInSuccessfully();
+            } else {
+                authFailure(task);
             }
         });
     }

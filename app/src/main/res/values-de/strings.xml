@@ -22,4 +22,5 @@
     <string name="passwordDoNotMatch">Passwörter stimmen nicht überein</string>
     <string name="accountCreated">Account erstellt</string>
     <string name="loginSuccessful">Erfolgreich eingeloggt</string>
+    <string name="sendPasswordResetEmail">E-Mail wurde erfolgreich verschickt</string>
 </resources>

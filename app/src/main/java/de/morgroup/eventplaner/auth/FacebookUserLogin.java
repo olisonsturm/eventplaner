@@ -4,16 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -31,8 +25,8 @@ public class FacebookUserLogin extends UserLogin {
 
     @Override
     public void login() {
-        Toast.makeText(activity, "in progress...", Toast.LENGTH_SHORT).show();
-        //LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile", "email"));
+        Toast.makeText(activity, "in progress...", Toast.LENGTH_LONG).show();
+        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile", "email"));
     }
 
     public void result(int requestCode, int resultCode, Intent data, CallbackManager callbackManager) {

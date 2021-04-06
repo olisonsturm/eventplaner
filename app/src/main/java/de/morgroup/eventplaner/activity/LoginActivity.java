@@ -2,9 +2,8 @@ package de.morgroup.eventplaner.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -22,28 +21,16 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.firebase.ui.auth.data.model.User;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-
-import java.util.Arrays;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.auth.EmailPasswordUserLogin;
 import de.morgroup.eventplaner.auth.FacebookUserLogin;
 import de.morgroup.eventplaner.auth.GoogleUserLogin;
 import de.morgroup.eventplaner.auth.TwitterUserLogin;
-import de.morgroup.eventplaner.auth.UserLogin;
 
 public class LoginActivity extends Activity {
 
@@ -55,7 +42,7 @@ public class LoginActivity extends Activity {
     private EditText eMailEditText, passwordEditText;
     private Button loginButton;
     private ImageView googleLoginButton, facebookLoginButton, twitterLoginButton;
-    private TextView registerLinkButton;
+    private TextView registerLinkButton, forgotPasswordTextView;
 
     private EmailPasswordUserLogin emailPasswordUserLogin;
     private GoogleUserLogin googleUserLogin = GoogleUserLogin.create(activity, firebaseAuth);
@@ -63,7 +50,7 @@ public class LoginActivity extends Activity {
     private TwitterUserLogin twitterUserLogin = TwitterUserLogin.create(activity, firebaseAuth);
 
     // Facebook
-    private CallbackManager callbackManager = CallbackManager.Factory.create();;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onStart() {
@@ -89,6 +76,7 @@ public class LoginActivity extends Activity {
         facebookLoginButton = findViewById(R.id.facebookLoginButton);
         twitterLoginButton = findViewById(R.id.twitterLoginButton);
         registerLinkButton = findViewById(R.id.registerLinkButton);
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
 
         emailPasswordUserLogin = EmailPasswordUserLogin.create(activity, firebaseAuth, eMailEditText, passwordEditText);
 
@@ -96,7 +84,7 @@ public class LoginActivity extends Activity {
         googleUserLogin.createGoogleRequest();
 
         // Create Facebook Request
-        FacebookSdk.sdkInitialize(this.getApplicationContext()); //ohne versuchen
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         LoginManager loginManager = LoginManager.getInstance();
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -168,6 +156,21 @@ public class LoginActivity extends Activity {
                 Intent intent = new Intent(activity, RegisterActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        // Button um Passwort zurückzusetzen
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String emailAdress = eMailEditText.getText().toString().trim();
+                firebaseAuth.sendPasswordResetEmail(emailAdress).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(activity, getResources().getString(R.string.sendPasswordResetEmail), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
