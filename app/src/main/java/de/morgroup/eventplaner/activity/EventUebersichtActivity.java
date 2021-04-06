@@ -7,10 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -30,12 +27,12 @@ public class EventUebersichtActivity extends AppCompatActivity {
         textView.setText (firebaseAuth.getCurrentUser().getDisplayName() + "-" + firebaseAuth.getCurrentUser().getEmail() + "-" + firebaseAuth.getCurrentUser().getUid() + "-" + firebaseAuth.getCurrentUser().getPhotoUrl());
         linearLayout.addView(textView);
         Button btn = new Button(this);
-        linearLayout.addView(btn);
         btn.setOnClickListener(view -> {
             FirebaseAuth.getInstance().signOut(); //logout
             startActivity(new Intent(getApplicationContext(), LoginActivity.class)); //startet LoginActivity
             finish(); //benendet aktuelle Acitivity
         });
+        linearLayout.addView(btn);
     }
 
 
