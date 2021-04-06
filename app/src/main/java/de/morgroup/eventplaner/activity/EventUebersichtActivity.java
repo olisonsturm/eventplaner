@@ -1,4 +1,4 @@
-package de.morgroup.eventplaner.activity;
+    package de.morgroup.eventplaner.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
