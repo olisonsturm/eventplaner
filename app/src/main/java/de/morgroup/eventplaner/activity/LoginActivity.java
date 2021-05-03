@@ -21,6 +21,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,11 +32,12 @@ import de.morgroup.eventplaner.auth.EmailPasswordUserLogin;
 import de.morgroup.eventplaner.auth.FacebookUserLogin;
 import de.morgroup.eventplaner.auth.GoogleUserLogin;
 import de.morgroup.eventplaner.auth.TwitterUserLogin;
+import de.morgroup.eventplaner.auth.UserLogin;
 
 public class LoginActivity extends Activity {
 
     // dekl.
-    private Activity activity = LoginActivity.this;
+    private Activity activity = this;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     // init
