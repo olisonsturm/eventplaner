@@ -45,7 +45,7 @@ public class RegisterActivity extends Activity {
 
         // bereits eingeloggt?
         if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
 
@@ -120,7 +120,7 @@ public class RegisterActivity extends Activity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(RegisterActivity.this, getResources().getString(R.string.accountCreated), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                 } else {
                     Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

@@ -23,4 +23,13 @@
     <string name="accountCreated">Account erstellt</string>
     <string name="loginSuccessful">Erfolgreich eingeloggt</string>
     <string name="sendPasswordResetEmail">E-Mail wurde erfolgreich verschickt</string>
+    <string name="firstAndLastName" >Vor- und Nachname</string>
+    <string name="nickName">Spitzname</string>
+    <string name="mobile">Handy</string>
+    <string name="address">Adresse</string>
+    <string name="addressHint">Straße Hausnummer, Ort</string>
+    <string name="mobileHint">Handynummer</string>
+    <string name="nameHint">Max Mustermann</string>
+    <string name="nicknameHint">Maxi</string>
+    <string name="titleAccountSettings">Account Eistellungen</string>
 </resources>

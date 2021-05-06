@@ -2,7 +2,6 @@ package de.morgroup.eventplaner.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,17 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.firebase.ui.auth.data.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -32,7 +26,6 @@ import de.morgroup.eventplaner.auth.EmailPasswordUserLogin;
 import de.morgroup.eventplaner.auth.FacebookUserLogin;
 import de.morgroup.eventplaner.auth.GoogleUserLogin;
 import de.morgroup.eventplaner.auth.TwitterUserLogin;
-import de.morgroup.eventplaner.auth.UserLogin;
 
 public class LoginActivity extends Activity {
 
@@ -60,7 +53,7 @@ public class LoginActivity extends Activity {
         // keine Anmeldung, wenn User eingeloggt ist
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(getApplicationContext(), EventUebersichtActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
     }

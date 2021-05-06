@@ -8,7 +8,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.activity.EventUebersichtActivity;
+import de.morgroup.eventplaner.activity.MainActivity;
 
 public abstract class UserLogin {
 
@@ -24,7 +24,7 @@ public abstract class UserLogin {
 
     protected void loggedInSuccessfully() {
         Toast.makeText(activity, activity.getResources().getString(R.string.loginSuccessful), Toast.LENGTH_SHORT).show();
-        activity.startActivity(new Intent(activity.getApplicationContext(), EventUebersichtActivity.class));
+        activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class));
         activity.finish();
     }
 
