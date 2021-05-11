@@ -1,10 +1,13 @@
 package de.morgroup.eventplaner.db;
 
+import android.net.Uri;
+
 public class User {
 
     private static User instance;
 
     private String uid;
+    private String photourl;
     private String firstname;
     private String lastname;
     private String nickname;
@@ -30,6 +33,14 @@ public class User {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getPhotourl() {
+        return photourl;
+    }
+
+    public void setPhotourl(String photourl) {
+        this.photourl = photourl;
     }
 
     public String getFirstname() {

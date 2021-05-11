@@ -40,12 +40,11 @@ import de.morgroup.eventplaner.db.User;
 
 public class LoginActivity extends Activity {
 
-    // dekl.
+    // init
     private Activity activity = this;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser firebaseUser;
 
-    // init
     private EditText eMailEditText, passwordEditText;
     private Button loginButton;
     private ImageView googleLoginButton, facebookLoginButton, twitterLoginButton;
@@ -63,6 +62,8 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         // Deklaration
         eMailEditText = findViewById(R.id.eMailEditText);
@@ -175,8 +176,8 @@ public class LoginActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        // keine Anmeldung, wenn User eingeloggt ist
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+/*        // keine Anmeldung, wenn User eingeloggt ist
         if (firebaseUser != null) {
             db.collection("users").document(firebaseUser.getUid()).get().addOnCompleteListener(documentSnapshot -> {
                 if(documentSnapshot.isSuccessful()) {
@@ -188,7 +189,7 @@ public class LoginActivity extends Activity {
                     startActivity(new Intent(getApplicationContext(), ConfirmActivity.class));
                     finish();
                 }
-            });
+            });*/
 
 /*            db.collection("users").document(firebaseUser.getUid()).get().addOnCompleteListener(task -> {
                 if(task.getResult().exists()) {
@@ -208,7 +209,6 @@ public class LoginActivity extends Activity {
                 startActivity(new Intent(getApplicationContext(), ConfirmActivity.class));
                 finish();
             }*/
-        }
     }
 
     @Override

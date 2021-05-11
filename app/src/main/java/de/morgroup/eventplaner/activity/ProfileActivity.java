@@ -3,18 +3,6 @@ package de.morgroup.eventplaner.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,35 +10,41 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.db.User;
-import de.morgroup.eventplaner.util.ProfileImageFromFirebase;
+import de.morgroup.eventplaner.util.ProfileImageFB;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore db;
-    private FirebaseUser firebaseUser;
-    private User user = new User();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
+    private DocumentReference userDB = db.collection("users")
+            .document(firebaseAuth.getCurrentUser().getUid());
 
-    private DrawerLayout drawer;
+    private ListenerRegistration listenerRegistration;
+
+    private Button btnAccountDelete;
     private ImageView headerPB;
     private TextView headerName, headerMail;
     private TextView accountFirstLastName, accountNick, accountEmail, accountMobile, accountAddress;
     private RelativeLayout editFirstLastName, editNick, editEmail, editMobile, editAddress;
-    private Button btnAccountDelete;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance();
-        db.collection("users").document(firebaseUser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
-            user = documentSnapshot.toObject(User.class);
-        });
-    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -61,16 +55,6 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance();
-        db.collection("users").document(firebaseUser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
-            user = documentSnapshot.toObject(User.class);
-        });
-
-        user.setUid(firebaseUser.getUid());
-        user.setEmail(firebaseUser.getEmail());
 
         btnAccountDelete = findViewById(R.id.account_delete);
 
@@ -89,13 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
         editMobile = findViewById(R.id.editMobile);
         editAddress = findViewById(R.id.editAddress);
 
-        //set Profile Image
-        ProfileImageFromFirebase image = new ProfileImageFromFirebase(headerPB);
-        image.execute(firebaseUser.getPhotoUrl().toString());
-
-        //set Name
-        headerName.setText(user.getFirstname() + " " + user.getLastname());
-        accountFirstLastName.setText(user.getFirstname() + " " + user.getLastname());
+        // set name
         editFirstLastName.setOnClickListener(task -> {
             LinearLayout view = new LinearLayout(this);
             EditText firstname = new EditText(this);
@@ -112,19 +90,18 @@ public class ProfileActivity extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.firstAndLastName))
                     .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-
-                        String cFirstname = firstname.getText().toString().toLowerCase().trim();
-                        cFirstname = cFirstname.substring(0, 1).toUpperCase() + cFirstname.substring(1);
-                        String cLastname = lastname.getText().toString().toLowerCase().trim();
-                        cLastname = cLastname.substring(0, 1).toUpperCase() + cLastname.substring(1);
-
-                        user.setFirstname(cFirstname);
-                        user.setLastname(cLastname);
-                        confirmEdit();
-
-                        headerName.setText(cFirstname + " " + cLastname);
-                        accountFirstLastName.setText(cFirstname + " " + cLastname);
-
+                        if ((firstname.getText() != null) && (lastname.getText() != null)) {
+                            if (firstname.getText().toString().length() > 0 && lastname.getText().toString().length() > 0) {
+                                String cFirstname = firstname.getText().toString().toLowerCase().replace(" ", "");
+                                cFirstname = cFirstname.substring(0, 1).toUpperCase() + cFirstname.substring(1);
+                                String cLastname = lastname.getText().toString().toLowerCase().replace(" ", "");
+                                cLastname = cLastname.substring(0, 1).toUpperCase() + cLastname.substring(1);
+                                headerName.setText(cFirstname + " " + cLastname);
+                                accountFirstLastName.setText(cFirstname + " " + cLastname);
+                                updateData("firstname", cFirstname);
+                                updateData("lastname", cLastname);
+                            }
+                        }
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -133,7 +110,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         //set Spitzname
-        accountNick.setText(user.getNickname());
         editNick.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.nicknameHint));
@@ -143,14 +119,13 @@ public class ProfileActivity extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.nickName))
                     .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-
-                        String cNickname = view.getText().toString().trim();
-
-                        user.setNickname(cNickname);
-                        confirmEdit();
-
-                        accountNick.setText(cNickname);
-
+                        if (view.getText() != null) {
+                            if (view.getText().toString().length() > 0) {
+                                String cNickname = view.getText().toString().trim();
+                                accountNick.setText(cNickname);
+                                updateData("nickname", cNickname);
+                            }
+                        }
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -158,12 +133,9 @@ public class ProfileActivity extends AppCompatActivity {
             alertDialog.show();
         });
 
-        //set Email
-        headerMail.setText(firebaseUser.getEmail());
-        accountEmail.setText(firebaseUser.getEmail());
+        //set Email verifiziert!
 
         //set Mobile
-        accountMobile.setText(user.getMobile());
         editMobile.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.mobileHint));
@@ -173,14 +145,13 @@ public class ProfileActivity extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.mobile))
                     .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-
-                        String cMobile = view.getText().toString().trim();
-
-                        user.setMobile(cMobile);
-                        confirmEdit();
-
-                        accountMobile.setText(cMobile);
-
+                        if (view.getText() != null) {
+                            if (view.getText().toString().length() > 0) {
+                                String cMobile = view.getText().toString().trim();
+                                accountMobile.setText(cMobile);
+                                updateData("mobile", cMobile);
+                            }
+                        }
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -189,7 +160,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         //set Address
-        accountAddress.setText(user.getAddress());
         editAddress.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.addressHint));
@@ -198,14 +168,13 @@ public class ProfileActivity extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.address))
                     .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-
-                        String cAddress = view.getText().toString();
-
-                        user.setAddress(cAddress);
-                        confirmEdit();
-
-                        accountAddress.setText(cAddress);
-
+                        if (view.getText() != null) {
+                            if (view.getText().toString().length() > 0) {
+                                String cAddress = view.getText().toString();
+                                accountAddress.setText(cAddress);
+                                updateData("address", cAddress);
+                            }
+                        }
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -213,22 +182,27 @@ public class ProfileActivity extends AppCompatActivity {
             alertDialog.show();
         });
 
-        //Confirm Button - DB UPLOAD
+        // account delete (drop auth and doc)
         btnAccountDelete.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().getCurrentUser().reload();
             AlertDialog alertDialog = new AlertDialog.Builder(this)
                     .setTitle(getResources().getString(R.string.account_delete) + "?")
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-                        db.collection("users").document(firebaseUser.getUid())
-                                .delete()
-                                .addOnCompleteListener(aVoid -> {
-                                    // DocumentSnapshot successfully deleted!
-                                    firebaseUser.delete().addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
+
+                        userDB.delete().addOnSuccessListener(task -> {
+                            // DocumentSnapshot successfully deleted
+                            FirebaseAuth.getInstance().getCurrentUser().delete()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            // back to login activity
                                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                                             finish();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(),task1.getException().getMessage(),Toast.LENGTH_LONG);
                                         }
-                                    });
-                                });
+                                    }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG));
+                        });
+
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -238,8 +212,54 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    private void confirmEdit() {
-        db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(user);
+    private void updateData(String field, String value) {
+
+        // update user document with new user data
+        userDB.update(field, value)
+                .addOnFailureListener(e -> {
+                    // exception message
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                });
+
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // getting data by listener
+        listenerRegistration = userDB.addSnapshotListener((documentSnapshot, e) -> {
+            // preventing errors
+            if (e != null) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                return;
+            }
+
+            // getting data and update
+            if (documentSnapshot.exists()) {
+
+                // receive the user object from db
+                User user = documentSnapshot.toObject(User.class);
+
+                // cache the data
+                String firstname = user.getFirstname();
+                String lastname = user.getLastname();
+                String nickname = user.getNickname();
+                String email = user.getEmail();
+                String mobile = user.getMobile();
+                String address = user.getAddress();
+
+                // show the data
+                new ProfileImageFB(headerPB).execute(user.getPhotourl());
+                headerName.setText(firstname + " " + lastname);
+                accountFirstLastName.setText(firstname + " " + lastname);
+                headerMail.setText(email);
+                accountEmail.setText(email);
+                accountNick.setText(nickname);
+                accountMobile.setText(mobile);
+                accountAddress.setText(address);
+
+            }
+
+        });
+    }
 }

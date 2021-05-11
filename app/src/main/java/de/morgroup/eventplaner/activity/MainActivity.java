@@ -1,12 +1,11 @@
 package de.morgroup.eventplaner.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,39 +16,34 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
-
-import java.io.InputStream;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.db.User;
-import de.morgroup.eventplaner.util.ProfileImageFromFirebase;
+import de.morgroup.eventplaner.util.ProfileImageFB;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    // init
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final DocumentReference userDB = db.collection("users")
+            .document(firebaseAuth.getCurrentUser().getUid());
 
-    // Init
+    private ListenerRegistration listenerRegistration;
+
     private DrawerLayout drawer;
     private ImageView footerPB;
     private TextView footerName, footerEmail;
-
-    private ListenerRegistration listenerRegistration;
-    private DocumentReference documentReference;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -63,31 +57,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new EventsFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_events);
-
         }
 
+        // dekl. widgets
         footerPB = findViewById(R.id.footer_pb);
         footerName = findViewById(R.id.footer_name);
         footerEmail = findViewById(R.id.footer_mail);
-
-        //set FooterNav Image
-        if (user.getPhotoUrl() == null) {
-            //footerPB.setImageResource(R.drawable.ic_launcher);
-        } else {
-            ProfileImageFromFirebase profileImageFromFirebase = new ProfileImageFromFirebase(footerPB);
-            profileImageFromFirebase.execute(user.getPhotoUrl().toString());
-        }
-        //set FooterNav Name
-        footerName.setText(user.getDisplayName());
-
-        //set FooterNav Email
-        footerEmail.setText(user.getEmail());
 
     }
 
     @Override
     protected void onStart() {
+        super.onStart();
 
+        // catch any update from firestore db
+
+        // getting data by listener
+        listenerRegistration = userDB.addSnapshotListener((documentSnapshot, e) -> {
+            // preventing errors
+            if (e != null) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                return;
+            }
+
+            // getting data and update
+            if (documentSnapshot.exists()) {
+
+                // receive the user object from db
+                User user = documentSnapshot.toObject(User.class);
+
+                // cache the data
+                String firstname = user.getFirstname();
+                String lastname = user.getLastname();
+                String email = user.getEmail();
+
+                // nav footer
+                footerName.setText(firstname + " " + lastname);
+                footerEmail.setText(email);
+
+//                ProfileImageFromFirebase profileImageFromFirebase = new ProfileImageFromFirebase(footerPB);
+//                profileImageFromFirebase.execute(firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+                new ProfileImageFB(footerPB).execute(user.getPhotourl());
+
+
+            } else {
+                footerName.setText("");
+                footerEmail.setText("");
+            }
+
+        });
     }
 
     @Override

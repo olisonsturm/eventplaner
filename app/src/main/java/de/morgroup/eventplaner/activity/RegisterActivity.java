@@ -25,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
@@ -35,18 +36,24 @@ import de.morgroup.eventplaner.R;
 
 public class RegisterActivity extends Activity {
 
+    // dekl.
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
     // init
     EditText eMailEditText, passwordEditText, passwordAgainEditText;
     Button registerButton;
     TextView loginLinkButton;
 
-    FirebaseAuth firebaseAuth;
-    FirebaseFirestore db;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        if (firebaseUser != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
 
         // Deklaration
         eMailEditText = findViewById(R.id.eMailEditText);
@@ -54,15 +61,6 @@ public class RegisterActivity extends Activity {
         passwordAgainEditText = findViewById(R.id.passwordAgainEditText);
         registerButton = findViewById(R.id.registerButton);
         loginLinkButton = findViewById(R.id.loginLinkButton);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-
-        // bereits eingeloggt?
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-        }
 
         // Tastatur ok
         passwordAgainEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -136,7 +134,6 @@ public class RegisterActivity extends Activity {
                 finish();
             } else {
                 eMailEditText.setError(task.getException().getMessage());
-                //Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

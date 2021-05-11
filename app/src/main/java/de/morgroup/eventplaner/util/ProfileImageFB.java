@@ -9,23 +9,29 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.widget.ImageView;
+
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.InputStream;
 
 import de.morgroup.eventplaner.R;
 
-public class ProfileImageFromFirebase extends AsyncTask<String, Void, Bitmap> {
+public class ProfileImageFB extends AsyncTask<String, Void, Bitmap> {
 
     ImageView imageView;
-    Bitmap bimage = null;
+    Bitmap bimage;
 
-    public ProfileImageFromFirebase(ImageView imageView) {
+    public ProfileImageFB(ImageView imageView) {
         this.imageView = imageView;
     }
 
     protected Bitmap doInBackground(String... urls) {
         String imageURL = urls[0];
+        if (TextUtils.isEmpty(imageURL)) {
+            return null;
+        }
         try {
             InputStream in = new java.net.URL(imageURL).openStream();
             bimage = BitmapFactory.decodeStream(in);
@@ -36,11 +42,11 @@ public class ProfileImageFromFirebase extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        if (result != null) {
+        if (result == null) {
+            imageView.setImageResource(R.drawable.img_placeholder);
+        } else {
             imageView.setImageBitmap(getRoundedCornerBitmap(result, 20));
-            return;
         }
-        imageView.setImageResource(R.drawable.img_placeholder);
     }
 
     private Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {

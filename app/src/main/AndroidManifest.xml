@@ -12,42 +12,45 @@
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.StartActivity"
+            android:label="@string/title_activity_start"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- Profile -->
         <activity
             android:name=".activity.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <!-- Confirm -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- Confirm -->
         <activity
             android:name=".activity.ConfirmActivity"
             android:label="@string/title_activity_profile"
             android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <!-- Login -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- Login -->
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
+
             <!-- Start -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Register -->
+        </activity> <!-- Register -->
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <!-- EventÜbersicht -->
+            android:screenOrientation="portrait" /> <!-- EventÜbersicht -->
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"

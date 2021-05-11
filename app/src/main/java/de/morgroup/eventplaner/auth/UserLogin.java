@@ -6,8 +6,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import de.morgroup.eventplaner.R;
+import de.morgroup.eventplaner.activity.ConfirmActivity;
 import de.morgroup.eventplaner.activity.MainActivity;
 
 public abstract class UserLogin {
@@ -23,11 +25,21 @@ public abstract class UserLogin {
     public abstract void login();
 
     protected void loggedInSuccessfully() {
-        Toast.makeText(activity, activity.getResources().getString(R.string.loginSuccessful), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(activity.getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-        activity.finish();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if (firebaseAuth.getCurrentUser() != null) {
+            db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(task -> {
+                if (task.getResult().exists()) {
+                    // user exists
+                    Toast.makeText(activity, activity.getResources().getString(R.string.loginSuccessful), Toast.LENGTH_SHORT).show();
+                    activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class));
+                    activity.finish();
+                } else {
+                    // user registration not completed
+                    activity.startActivity(new Intent(activity.getApplicationContext(), ConfirmActivity.class));
+                    activity.finish();
+                }
+            });
+        }
     }
 
     protected void authFailure(Task task) {
