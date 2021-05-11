@@ -21,22 +21,32 @@
     <string name="passwordRequired">Password is required</string>
     <string name="passwordAgainRequired">Password must be repeated</string>
     <string name="passwordLenght">Password must be at least 6 characters long</string>
-    <string name="passwordDoNotMatch">Pwasswords do not match</string>
+    <string name="passwordDoNotMatch">Passwords do not match</string>
     <string name="accountCreated">Account created</string>
     <string name="loginSuccessful">Logged in successfully</string>
     <string name="sendPasswordResetEmail">The email was sent successfully</string>
-    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-    <string name="title_activity_settings" translatable="false">SettingsActivity</string>
-    <string name="title_activity_profile" translatable="false">Profile</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_profile">Profile</string>
     <string name="firstAndLastName" >First and last name</string>
     <string name="nickName">Nickname</string>
     <string name="mobile">Mobile</string>
     <string name="address">Address</string>
     <string name="addressHint">Street, number, place</string>
     <string name="mobileHint">Mobile number</string>
-    <string name="nameHint">Sam Sample</string>
-    <string name="nicknameHint">Sammy</string>
+    <string name="egHint">e.g.</string>
     <string name="titleAccountSettings">Account Settings</string>
+    <string name="logoutMenu">Logout</string>
+    <string name="settingsMenu">Settings</string>
+    <string name="profileMenu">Profile</string>
+    <string name="eventsMenu">Events</string>
+    <string name="dialogProfilePositive">Confirm</string>
+    <string name="dialogProfileNegative">Cancel</string>
+    <string name="firstnameHint">Firstname</string>
+    <string name="lastnameHint">Lastname</string>
+    <string name="nicknameHint">Nickname</string>
+    <string name="firstlastnameHint">Sam Sample</string>
+    <string name="account_delete">Delete Account</string>
 
 </resources>

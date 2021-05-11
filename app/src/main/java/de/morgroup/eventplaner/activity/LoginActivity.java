@@ -12,26 +12,38 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Locale;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.auth.EmailPasswordUserLogin;
 import de.morgroup.eventplaner.auth.FacebookUserLogin;
 import de.morgroup.eventplaner.auth.GoogleUserLogin;
 import de.morgroup.eventplaner.auth.TwitterUserLogin;
+import de.morgroup.eventplaner.db.User;
 
 public class LoginActivity extends Activity {
 
     // dekl.
     private Activity activity = this;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // init
     private EditText eMailEditText, passwordEditText;
@@ -46,17 +58,6 @@ public class LoginActivity extends Activity {
 
     // Facebook
     private CallbackManager callbackManager;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // keine Anmeldung, wenn User eingeloggt ist
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +150,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, RegisterActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -168,6 +170,45 @@ public class LoginActivity extends Activity {
                 });
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // keine Anmeldung, wenn User eingeloggt ist
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            db.collection("users").document(firebaseUser.getUid()).get().addOnCompleteListener(documentSnapshot -> {
+                if(documentSnapshot.isSuccessful()) {
+                    // user exists
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                } else {
+                    // user registration not completed
+                    startActivity(new Intent(getApplicationContext(), ConfirmActivity.class));
+                    finish();
+                }
+            });
+
+/*            db.collection("users").document(firebaseUser.getUid()).get().addOnCompleteListener(task -> {
+                if(task.getResult().exists()) {
+                    // user exists
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                } else {
+                    // user registration not completed
+                    startActivity(new Intent(getApplicationContext(), ConfirmActivity.class));
+                    finish();
+                }
+            });*/
+/*            if (db.collection("users").document(firebaseUser.getUid()).get() != null) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            } else {
+                startActivity(new Intent(getApplicationContext(), ConfirmActivity.class));
+                finish();
+            }*/
+        }
     }
 
     @Override

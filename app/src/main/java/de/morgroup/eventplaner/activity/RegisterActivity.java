@@ -1,9 +1,12 @@
 package de.morgroup.eventplaner.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -14,10 +17,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
 
 import de.morgroup.eventplaner.R;
 
@@ -27,7 +39,9 @@ public class RegisterActivity extends Activity {
     EditText eMailEditText, passwordEditText, passwordAgainEditText;
     Button registerButton;
     TextView loginLinkButton;
+
     FirebaseAuth firebaseAuth;
+    FirebaseFirestore db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +56,7 @@ public class RegisterActivity extends Activity {
         loginLinkButton = findViewById(R.id.loginLinkButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // bereits eingeloggt?
         if (firebaseAuth.getCurrentUser() != null) {
@@ -84,7 +99,7 @@ public class RegisterActivity extends Activity {
 
     private void register() {
         // toString
-        String email = eMailEditText.getText().toString().trim();
+        String email = eMailEditText.getText().toString().trim().toLowerCase();
         String password = passwordEditText.getText().toString().trim();
         String passwordAgain = passwordAgainEditText.getText().toString().trim();
 
@@ -114,18 +129,16 @@ public class RegisterActivity extends Activity {
             return;
         }
 
-        // Benutzer-Registration
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, getResources().getString(R.string.accountCreated), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
-                } else {
-                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        // Email-Password-Registration
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                startActivity(new Intent(getApplicationContext(), ConfirmActivity.class));
+                finish();
+            } else {
+                eMailEditText.setError(task.getException().getMessage());
+                //Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

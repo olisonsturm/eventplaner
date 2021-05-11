@@ -24,7 +24,9 @@ public abstract class UserLogin {
 
     protected void loggedInSuccessfully() {
         Toast.makeText(activity, activity.getResources().getString(R.string.loginSuccessful), Toast.LENGTH_SHORT).show();
-        activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class));
+        Intent intent = new Intent(activity.getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
         activity.finish();
     }
 

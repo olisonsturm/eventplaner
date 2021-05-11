@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:layout_marginTop="4dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="de.morgroup.eventplaner.activity.ProfileActivity"
-    tools:showIn="@layout/activity_profile">
+    tools:context="de.morgroup.eventplaner.activity.ConfirmActivity"
+    tools:showIn="@layout/activity_confirm">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -161,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="33dp"
                 android:layout_marginTop="20dp"
+                android:hint="@string/mobileHint"
                 android:layout_toRightOf="@id/mobileImageView"
                 android:textColor="@color/colorPrimaryGrey"
                 android:textSize="14sp" />
@@ -199,6 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="33dp"
                 android:layout_marginTop="20dp"
+                android:hint="@string/addressHint"
                 android:layout_toRightOf="@id/addressImageView"
                 android:textColor="@color/colorPrimaryGrey"
                 android:textSize="14sp" />

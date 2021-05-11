@@ -29,7 +29,21 @@
     <string name="address">Adresse</string>
     <string name="addressHint">Straße Hausnummer, Ort</string>
     <string name="mobileHint">Handynummer</string>
-    <string name="nameHint">Max Mustermann</string>
-    <string name="nicknameHint">Maxi</string>
+    <string name="egHint">z.B.</string>
     <string name="titleAccountSettings">Account Eistellungen</string>
+    <string name="logoutMenu">Abmelden</string>
+    <string name="settingsMenu">Einstellungen</string>
+    <string name="profileMenu">Profil</string>
+    <string name="eventsMenu">Events</string>
+    <string name="title_activity_profile">Profil</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="navigation_drawer_open">Navigationsmenu öffnen</string>
+    <string name="navigation_drawer_close">Navigationsmenu schließen</string>
+    <string name="dialogProfilePositive">Bestätigen</string>
+    <string name="dialogProfileNegative">Abbrechen</string>
+    <string name="firstnameHint">Vorname</string>
+    <string name="lastnameHint">Nachname</string>
+    <string name="nicknameHint">Spitzname</string>
+    <string name="firstlastnameHint">Max Mustermann</string>
+    <string name="account_delete">Account löschen</string>
 </resources>

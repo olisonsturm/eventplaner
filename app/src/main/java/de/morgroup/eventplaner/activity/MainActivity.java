@@ -18,24 +18,34 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.io.InputStream;
 
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.util.DownloadImageFromInternet;
+import de.morgroup.eventplaner.db.User;
+import de.morgroup.eventplaner.util.ProfileImageFromFirebase;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
+    // Init
     private DrawerLayout drawer;
     private ImageView footerPB;
     private TextView footerName, footerEmail;
+
+    private ListenerRegistration listenerRegistration;
+    private DocumentReference documentReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,21 +70,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         footerName = findViewById(R.id.footer_name);
         footerEmail = findViewById(R.id.footer_mail);
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        DownloadImageFromInternet downloadImageFromInternet;
-
-        //set Footer Image
+        //set FooterNav Image
         if (user.getPhotoUrl() == null) {
-            footerPB.setImageResource(R.drawable.ic_launcher);
+            //footerPB.setImageResource(R.drawable.ic_launcher);
         } else {
-            downloadImageFromInternet = new DownloadImageFromInternet(footerPB);
-            downloadImageFromInternet.execute(user.getPhotoUrl().toString());
+            ProfileImageFromFirebase profileImageFromFirebase = new ProfileImageFromFirebase(footerPB);
+            profileImageFromFirebase.execute(user.getPhotoUrl().toString());
         }
-        //set Footer Name
+        //set FooterNav Name
         footerName.setText(user.getDisplayName());
-        //set Footer Email
+
+        //set FooterNav Email
         footerEmail.setText(user.getEmail());
+
+    }
+
+    @Override
+    protected void onStart() {
 
     }
 
@@ -111,17 +123,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    // get Image from URL
-    protected Bitmap urlImage(String... urls) {
-        String imageURL = urls[0];
-        Bitmap bimage = null;
-        try {
-            InputStream in = new java.net.URL(imageURL).openStream();
-            bimage = BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bimage;
-    }
 
 }

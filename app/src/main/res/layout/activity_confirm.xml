@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ProfileActivity">
+    tools:context=".activity.ConfirmActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -18,12 +18,11 @@
             android:background="@color/bgColorWhite">
 
             <Button
-                android:id="@+id/account_delete"
+                android:id="@+id/confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/account_delete"
+                android:text="@string/dialogProfilePositive"
                 android:background="@android:color/transparent"
-                android:textColor="@color/colorPrimaryRed"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="right" />
 
@@ -66,6 +65,6 @@
         android:background="@drawable/toolbar_rounded_bottom_gray"
         android:orientation="vertical" />
 
-    <include layout="@layout/content_profile" />
+    <include layout="@layout/content_confirm" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

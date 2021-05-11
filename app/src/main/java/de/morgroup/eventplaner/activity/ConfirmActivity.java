@@ -1,21 +1,15 @@
 package de.morgroup.eventplaner.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.text.InputType;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,56 +17,56 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.InputStream;
+import java.util.HashMap;
+
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.db.User;
 import de.morgroup.eventplaner.util.ProfileImageFromFirebase;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ConfirmActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
-    private FirebaseUser firebaseUser;
-    private User user = new User();
+
+    private User user;
 
     private DrawerLayout drawer;
     private ImageView headerPB;
     private TextView headerName, headerMail;
     private TextView accountFirstLastName, accountNick, accountEmail, accountMobile, accountAddress;
     private RelativeLayout editFirstLastName, editNick, editEmail, editMobile, editAddress;
-    private Button btnAccountDelete;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance();
-        db.collection("users").document(firebaseUser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
-            user = documentSnapshot.toObject(User.class);
-        });
-    }
+    private Button confirm;
 
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_confirm);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        db.collection("users").document(firebaseUser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
-            user = documentSnapshot.toObject(User.class);
-        });
+        user = User.getInstance();
 
         user.setUid(firebaseUser.getUid());
         user.setEmail(firebaseUser.getEmail());
 
-        btnAccountDelete = findViewById(R.id.account_delete);
+        confirm = findViewById(R.id.confirm);
 
         headerPB = findViewById(R.id.header_pb);
         headerName = findViewById(R.id.header_name);
@@ -94,8 +88,8 @@ public class ProfileActivity extends AppCompatActivity {
         image.execute(firebaseUser.getPhotoUrl().toString());
 
         //set Name
-        headerName.setText(user.getFirstname() + " " + user.getLastname());
-        accountFirstLastName.setText(user.getFirstname() + " " + user.getLastname());
+        headerName.setText(firebaseUser.getDisplayName());
+        accountFirstLastName.setHint(getResources().getString(R.string.firstlastnameHint));
         editFirstLastName.setOnClickListener(task -> {
             LinearLayout view = new LinearLayout(this);
             EditText firstname = new EditText(this);
@@ -120,7 +114,6 @@ public class ProfileActivity extends AppCompatActivity {
 
                         user.setFirstname(cFirstname);
                         user.setLastname(cLastname);
-                        confirmEdit();
 
                         headerName.setText(cFirstname + " " + cLastname);
                         accountFirstLastName.setText(cFirstname + " " + cLastname);
@@ -133,7 +126,17 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         //set Spitzname
-        accountNick.setText(user.getNickname());
+        String nickHint = firebaseUser.getDisplayName();
+        if (firebaseUser.getDisplayName().contains(" ")) {
+            nickHint = nickHint.split(" ")[0];
+        } else {
+            if (nickHint == null || nickHint.isEmpty()) {
+                return;
+            }
+            nickHint = firebaseUser.getDisplayName().substring(0, 3).toLowerCase();
+            nickHint = nickHint.substring(0, 1).toUpperCase() + nickHint.substring(1);
+        }
+        accountNick.setHint(getResources().getString(R.string.egHint) + " " + nickHint);
         editNick.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.nicknameHint));
@@ -147,7 +150,6 @@ public class ProfileActivity extends AppCompatActivity {
                         String cNickname = view.getText().toString().trim();
 
                         user.setNickname(cNickname);
-                        confirmEdit();
 
                         accountNick.setText(cNickname);
 
@@ -163,7 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
         accountEmail.setText(firebaseUser.getEmail());
 
         //set Mobile
-        accountMobile.setText(user.getMobile());
+        accountMobile.setHint(getResources().getString(R.string.mobileHint));
         editMobile.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.mobileHint));
@@ -177,7 +179,6 @@ public class ProfileActivity extends AppCompatActivity {
                         String cMobile = view.getText().toString().trim();
 
                         user.setMobile(cMobile);
-                        confirmEdit();
 
                         accountMobile.setText(cMobile);
 
@@ -189,7 +190,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         //set Address
-        accountAddress.setText(user.getAddress());
+        accountAddress.setHint(getResources().getString(R.string.addressHint));
         editAddress.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.addressHint));
@@ -202,7 +203,6 @@ public class ProfileActivity extends AppCompatActivity {
                         String cAddress = view.getText().toString();
 
                         user.setAddress(cAddress);
-                        confirmEdit();
 
                         accountAddress.setText(cAddress);
 
@@ -214,32 +214,37 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         //Confirm Button - DB UPLOAD
-        btnAccountDelete.setOnClickListener(v -> {
-            AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setTitle(getResources().getString(R.string.account_delete) + "?")
-                    .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-                        db.collection("users").document(firebaseUser.getUid())
-                                .delete()
-                                .addOnCompleteListener(aVoid -> {
-                                    // DocumentSnapshot successfully deleted!
-                                    firebaseUser.delete().addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                            finish();
-                                        }
-                                    });
-                                });
-                    })
-                    .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
-                    .create();
-            alertDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.alertdialog_rounded));
-            alertDialog.show();
+        confirm.setOnClickListener(v -> {
+            confirmClick(v);
         });
 
     }
 
-    private void confirmEdit() {
-        db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(user);
+    private void confirmClick(View v) {
+        if (TextUtils.isEmpty(user.getFirstname())) {
+            return;
+        }
+        if (TextUtils.isEmpty(user.getLastname())) {
+            return;
+        }
+        if (TextUtils.isEmpty(user.getNickname())) {
+            return;
+        }
+        if (TextUtils.isEmpty(user.getMobile())) {
+            return;
+        }
+        if (TextUtils.isEmpty(user.getAddress())) {
+            return;
+        }
+        db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(user).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Snackbar.make(v, getResources().getString(R.string.accountCreated), Snackbar.LENGTH_LONG);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 }
