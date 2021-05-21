@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="de.morgroup.eventplaner">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
+        android:name=".EventPlaner"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:letterSpacing=".02"
@@ -13,55 +15,53 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.StartActivity"
+            android:name=".view.activity.StartActivity"
             android:label="@string/title_activity_start"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!-- Profile -->
         <activity
-            android:name=".activity.ProfileActivity"
+            android:name=".view.activity.ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- Confirm -->
+            android:parentActivityName=".view.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- Confirm -->
         <activity
-            android:name=".activity.ConfirmActivity"
+            android:name=".view.activity.ConfirmActivity"
             android:label="@string/title_activity_profile"
-            android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- Login -->
+            android:parentActivityName=".view.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- Login -->
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".view.activity.LoginActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
-
-            <!-- Start -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- Register -->
+        </activity>
+        <!-- Register -->
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".view.activity.RegisterActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- EventÜbersicht -->
+            android:screenOrientation="portrait" />
+        <!-- EventÜbersicht -->
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
+        <!-- META -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts"
             android:screenOrientation="portrait" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            tools:replace="android:value"
+            android:value="@string/facebook_app_id"/>
     </application>
-
 </manifest>

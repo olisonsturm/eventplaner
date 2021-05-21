@@ -9,8 +9,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.activity.ConfirmActivity;
-import de.morgroup.eventplaner.activity.MainActivity;
+import de.morgroup.eventplaner.view.activity.ConfirmActivity;
+import de.morgroup.eventplaner.view.activity.MainActivity;
 
 public abstract class UserLogin {
 

@@ -25,7 +25,6 @@ public class FacebookUserLogin extends UserLogin {
 
     @Override
     public void login() {
-        Toast.makeText(activity, "in progress...", Toast.LENGTH_LONG).show();
         LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile", "email"));
     }
 

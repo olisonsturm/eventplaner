@@ -9,7 +9,7 @@
     android:background="@drawable/bg_register"
     android:fontFamily="@font/ubuntu_medium"
     android:orientation="vertical"
-    tools:context=".activity.LoginActivity">
+    tools:context=".view.activity.LoginActivity">
 
     <TextView
         android:id="@+id/registerTextView"

@@ -1,11 +1,9 @@
-package de.morgroup.eventplaner.activity;
+package de.morgroup.eventplaner.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,28 +15,28 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.db.User;
+import de.morgroup.eventplaner.util.ProfileImageFB;
 
-public class ConfirmActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseUser firebaseUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
     private DocumentReference userDB = db.collection("users")
             .document(firebaseAuth.getCurrentUser().getUid());
 
-    private Button confirm;
+    private ListenerRegistration listenerRegistration;
+
+    private Button btnAccountDelete;
     private ImageView headerPB;
     private TextView headerName, headerMail;
     private TextView accountFirstLastName, accountNick, accountEmail, accountMobile, accountAddress;
@@ -48,14 +46,13 @@ public class ConfirmActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm);
+        setContentView(R.layout.activity_profile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
 
-        firebaseUser = firebaseAuth.getCurrentUser();
-
-        confirm = findViewById(R.id.confirm);
+        btnAccountDelete = findViewById(R.id.account_delete);
 
         headerPB = findViewById(R.id.header_pb);
         headerName = findViewById(R.id.header_name);
@@ -72,14 +69,7 @@ public class ConfirmActivity extends AppCompatActivity {
         editMobile = findViewById(R.id.editMobile);
         editAddress = findViewById(R.id.editAddress);
 
-        //set Profile Image
-        headerPB.setImageResource(R.drawable.img_placeholder);
-        // -> ProfileImageFromFirebase image = new ProfileImageFromFirebase(headerPB);
-        // -> image.execute(firebaseUser.getPhotoUrl().toString());
-
-        //set Name
-        headerName.setText(firebaseUser.getDisplayName());
-        accountFirstLastName.setHint(getResources().getString(R.string.firstlastnameHint));
+        // set name
         editFirstLastName.setOnClickListener(task -> {
             LinearLayout view = new LinearLayout(this);
             EditText firstname = new EditText(this);
@@ -96,14 +86,18 @@ public class ConfirmActivity extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.firstAndLastName))
                     .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-
-                        String cFirstname = firstname.getText().toString().toLowerCase().trim();
-                        cFirstname = cFirstname.substring(0, 1).toUpperCase() + cFirstname.substring(1);
-                        String cLastname = lastname.getText().toString().toLowerCase().trim();
-                        cLastname = cLastname.substring(0, 1).toUpperCase() + cLastname.substring(1);
-                        headerName.setText(cFirstname + " " + cLastname);
-                        accountFirstLastName.setText(cFirstname + " " + cLastname);
-
+                        if ((firstname.getText() != null) && (lastname.getText() != null)) {
+                            if (firstname.getText().toString().length() > 0 && lastname.getText().toString().length() > 0) {
+                                String cFirstname = firstname.getText().toString().toLowerCase().replace(" ", "");
+                                cFirstname = cFirstname.substring(0, 1).toUpperCase() + cFirstname.substring(1);
+                                String cLastname = lastname.getText().toString().toLowerCase().replace(" ", "");
+                                cLastname = cLastname.substring(0, 1).toUpperCase() + cLastname.substring(1);
+                                headerName.setText(cFirstname + " " + cLastname);
+                                accountFirstLastName.setText(cFirstname + " " + cLastname);
+                                updateData("firstname", cFirstname);
+                                updateData("lastname", cLastname);
+                            }
+                        }
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -112,7 +106,6 @@ public class ConfirmActivity extends AppCompatActivity {
         });
 
         //set Spitzname
-        accountNick.setHint(getResources().getString(R.string.egHint));
         editNick.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.nicknameHint));
@@ -122,10 +115,13 @@ public class ConfirmActivity extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.nickName))
                     .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-
-                        String cNickname = view.getText().toString().trim();
-                        accountNick.setText(cNickname);
-
+                        if (view.getText() != null) {
+                            if (view.getText().toString().length() > 0) {
+                                String cNickname = view.getText().toString().replace(" ", "");
+                                accountNick.setText(cNickname);
+                                updateData("nickname", cNickname);
+                            }
+                        }
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -133,12 +129,9 @@ public class ConfirmActivity extends AppCompatActivity {
             alertDialog.show();
         });
 
-        //set Email
-        headerMail.setText(firebaseUser.getEmail());
-        accountEmail.setText(firebaseUser.getEmail());
+        //set Email verifiziert!
 
         //set Mobile
-        accountMobile.setHint(getResources().getString(R.string.mobileHint));
         editMobile.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.mobileHint));
@@ -148,10 +141,13 @@ public class ConfirmActivity extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.mobile))
                     .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-
-                        String cMobile = view.getText().toString().trim();
-                        accountMobile.setText(cMobile);
-
+                        if (view.getText() != null) {
+                            if (view.getText().toString().length() > 0) {
+                                String cMobile = view.getText().toString().replace(" ", "");
+                                accountMobile.setText(cMobile);
+                                updateData("mobile", cMobile);
+                            }
+                        }
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -160,7 +156,6 @@ public class ConfirmActivity extends AppCompatActivity {
         });
 
         //set Address
-        accountAddress.setHint(getResources().getString(R.string.addressHint));
         editAddress.setOnClickListener(task -> {
             EditText view = new EditText(this);
             view.setHint(getResources().getString(R.string.addressHint));
@@ -169,10 +164,13 @@ public class ConfirmActivity extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.address))
                     .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
                     .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-
-                        String cAddress = view.getText().toString();
-                        accountAddress.setText(cAddress);
-
+                        if (view.getText() != null) {
+                            if (view.getText().toString().length() > 0) {
+                                String cAddress = view.getText().toString();
+                                accountAddress.setText(cAddress);
+                                updateData("address", cAddress);
+                            }
+                        }
                     })
                     .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
                     .create();
@@ -180,71 +178,81 @@ public class ConfirmActivity extends AppCompatActivity {
             alertDialog.show();
         });
 
-        // the confirm button is saving the user data (calling method saveData)
-        confirm.setOnClickListener(v -> {
-            saveData();
+        // account delete (drop auth and doc)
+        btnAccountDelete.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().getCurrentUser().reload();
+            AlertDialog alertDialog = new AlertDialog.Builder(this)
+                    .setTitle(getResources().getString(R.string.account_delete) + "?")
+                    .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> userDB.delete().addOnSuccessListener(task -> {
+                        // DocumentSnapshot successfully deleted
+                        FirebaseAuth.getInstance().getCurrentUser().delete()
+                                .addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
+                                        // back to login activity
+                                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                        finish();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),task1.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+                                }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show());
+                    }))
+                    .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
+                    .create();
+            alertDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.alertdialog_rounded));
+            alertDialog.show();
         });
 
     }
 
-    private void saveData() {
+    private void updateData(String field, String value) {
 
-        // check that everything has been specified
-        if (TextUtils.isEmpty(accountFirstLastName.getText().toString())) {
-            return;
-        }
-        if (TextUtils.isEmpty(accountNick.getText().toString())) {
-            return;
-        }
-        if (TextUtils.isEmpty(accountMobile.getText().toString())) {
-            return;
-        }
-        if (TextUtils.isEmpty(accountAddress.getText().toString())) {
-            return;
-        }
-
-        // getting the set data
-        String uUid = firebaseUser.getUid();
-        String uEmail = firebaseUser.getEmail();
-
-        String[] uNameCache = accountFirstLastName.getText().toString().split(" ");
-        String uFirstname = uNameCache[0];
-        String uLastname = uNameCache[1];
-        String uNickname = accountNick.getText().toString();
-        String uMobile = accountMobile.getText().toString();
-        String uAddress = accountAddress.getText().toString();
-
-        // set user
-        User user = new User();
-        user.setUid(uUid);
-        user.setFirstname(uFirstname);
-        user.setLastname(uLastname);
-        user.setNickname(uNickname);
-        user.setEmail(uEmail);
-        user.setMobile(uMobile);
-        user.setAddress(uAddress);
-
-
-        // profile image update
-        if (firebaseUser.getPhotoUrl() != null) {
-            String uPhotoUrl = firebaseUser.getPhotoUrl().toString();
-            user.setPhotourl(uPhotoUrl);
-        }
-
-        // creating user document with the firebase auth uid as document name and with the user information
-        userDB.set(user)
-                .addOnSuccessListener(success -> {
-                    // account created message
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.accountCreated), Toast.LENGTH_LONG);
-                    // start the main activity
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
-                })
+        // update user document with new user data
+        userDB.update(field, value)
                 .addOnFailureListener(e -> {
                     // exception message
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 });
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // getting data by listener
+        listenerRegistration = userDB.addSnapshotListener((documentSnapshot, e) -> {
+            // preventing errors
+            if (e != null) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            // getting data and update
+            if (documentSnapshot.exists()) {
+
+                // receive the user object from db
+                User user = documentSnapshot.toObject(User.class);
+
+                // cache the data
+                String firstname = user.getFirstname();
+                String lastname = user.getLastname();
+                String nickname = user.getNickname();
+                String email = user.getEmail();
+                String mobile = user.getMobile();
+                String[] addressCache = user.getAddress().split("_");
+                String address = addressCache[0] + " " + addressCache[1] + ", " + addressCache[2];
+
+                // show the data
+                new ProfileImageFB(headerPB).execute(user.getPhotourl());
+                headerName.setText(firstname + " " + lastname);
+                accountFirstLastName.setText(firstname + " " + lastname);
+                headerMail.setText(email);
+                accountEmail.setText(email);
+                accountNick.setText(nickname);
+                accountMobile.setText(mobile);
+                accountAddress.setText(address);
+
+            }
+
+        });
+    }
 }

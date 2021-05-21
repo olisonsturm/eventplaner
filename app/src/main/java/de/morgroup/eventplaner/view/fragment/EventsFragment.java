@@ -1,4 +1,4 @@
-package de.morgroup.eventplaner.activity;
+package de.morgroup.eventplaner.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
