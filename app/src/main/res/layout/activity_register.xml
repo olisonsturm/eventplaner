@@ -6,10 +6,10 @@
     android:layout_width="430dp"
     android:layout_height="491dp"
     android:layout_gravity="center"
-    android:background="@drawable/register_bg"
+    android:background="@drawable/bg_register"
     android:fontFamily="@font/ubuntu_medium"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".view.activity.LoginActivity">
 
     <TextView
         android:id="@+id/registerTextView"
@@ -27,11 +27,11 @@
     <EditText
         android:id="@+id/eMailEditText"
         android:layout_width="260dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
         android:backgroundTint="@color/colorPrimaryGrey"
-        android:drawableLeft="@drawable/benutzer"
+        android:drawableLeft="@drawable/ic_benutzer"
         android:drawablePadding="5dp"
         android:hint="@string/EMail"
         android:inputType="textPersonName"
@@ -41,11 +41,11 @@
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="260dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimaryGrey"
-        android:drawableLeft="@drawable/schlussel"
+        android:drawableLeft="@drawable/ic_schlusselpassword"
         android:drawablePadding="5dp"
         android:hint="@string/Password"
         android:inputType="textPassword"
@@ -55,11 +55,11 @@
     <EditText
         android:id="@+id/passwordAgainEditText"
         android:layout_width="260dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimaryGrey"
-        android:drawableLeft="@drawable/passwort"
+        android:drawableLeft="@drawable/ic_passwort"
         android:drawablePadding="5dp"
         android:hint="@string/PasswordAgain"
         android:inputType="textPassword"
@@ -71,9 +71,9 @@
         android:layout_width="170dp"
         android:layout_height="45dp"
         android:layout_gravity="right"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="32.5dp"
-        android:background="@drawable/roundedbutton"
+        android:background="@drawable/btn_rounded_left"
         android:backgroundTint="@color/colorPrimaryGrey"
         android:gravity="center"
         android:letterSpacing=".02"
@@ -83,11 +83,12 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="18dp"
+        android:layout_gravity="center"
         android:fontFamily="@font/ubuntu_medium"
         android:gravity="center"
         android:orientation="horizontal">

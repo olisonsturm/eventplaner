@@ -3,7 +3,6 @@
     <!--Hauptfarben der App-->
     <color name="bgColorWhite">#FFFFFFFF</color>
     <color name="bgColorWhiteBlue">#F3F4FA</color>
-
     <color name="colorPrimaryGrey">#4A4A4A</color>
     <color name="colorPrimaryBlue">#4A90E2</color>
     <color name="colorPrimaryRed">#F73B3B</color>
@@ -11,4 +10,13 @@
     <!--Andoid Farben-->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--colors for profile-->
+    <color name="profilePrimaryDark">#FF3B30</color>
+    <color name="profileAccentColor">#F7F7F7</color>
+    <color name="whiteTextColor">#fff</color>
+    <color name="profileBackground">#fff</color>
+    <color name="blackTextColor">#000</color>
+    <color name="profileEditTextColor">#707070</color>
+
 </resources>
