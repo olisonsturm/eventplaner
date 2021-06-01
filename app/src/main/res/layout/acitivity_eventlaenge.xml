@@ -8,16 +8,26 @@
 
     <EditText
         android:id="@+id/text_eventtext"
-        android:layout_width="212dp"
+        android:layout_width="400dp"
         android:layout_height="81dp"
+        android:layout_marginStart="108dp"
         android:layout_marginTop="288dp"
-        android:layout_marginBottom="292dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="332dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="134dp"
+        android:layout_marginTop="157dp"
+        android:text="Von wann bis wann oder wie lange?"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
