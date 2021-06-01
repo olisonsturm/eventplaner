@@ -127,6 +127,15 @@
                 android:textColor="@color/colorPrimaryGrey"
                 android:textSize="14sp" />
 
+            <ImageView
+                android:id="@+id/verification_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="45dp"
+                />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -166,7 +175,7 @@
                 android:textSize="14sp" />
 
         </RelativeLayout>
-
+<!--
         <RelativeLayout
             android:id="@+id/editAddress"
             android:layout_width="match_parent"
@@ -203,6 +212,6 @@
                 android:textColor="@color/colorPrimaryGrey"
                 android:textSize="14sp" />
 
-        </RelativeLayout>
+        </RelativeLayout>-->
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

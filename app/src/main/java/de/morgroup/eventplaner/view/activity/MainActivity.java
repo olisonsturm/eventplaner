@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,9 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.view.fragment.EventsFragment;
 import de.morgroup.eventplaner.db.User;
 import de.morgroup.eventplaner.util.ProfileImageFB;
+import de.morgroup.eventplaner.view.fragment.EventsFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         listenerRegistration = userDB.addSnapshotListener((documentSnapshot, e) -> {
             // preventing errors
             if (e != null) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 return;
             }
 

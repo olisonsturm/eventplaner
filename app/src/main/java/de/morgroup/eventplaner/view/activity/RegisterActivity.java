@@ -10,7 +10,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -77,6 +82,7 @@ public class RegisterActivity extends Activity {
             // Email-Password-Registration
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+                    sendEmailVerification();
                     startActivity(new Intent(getApplicationContext(), ConfirmActivity.class));
                     finish();
                 } else {
@@ -115,4 +121,17 @@ public class RegisterActivity extends Activity {
         }
         return true;
     }
+
+    public void sendEmailVerification() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // email sent
+                    }
+                });
+    }
+
 }

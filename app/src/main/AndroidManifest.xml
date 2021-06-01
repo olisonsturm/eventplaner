@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.activity.StartActivity"
-            android:label="@string/title_activity_start"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,13 +26,13 @@
         <!-- Profile -->
         <activity
             android:name=".view.activity.ProfileActivity"
-            android:label="@string/title_activity_profile"
+            android:label="@string/app_name"
             android:parentActivityName=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Confirm -->
         <activity
             android:name=".view.activity.ConfirmActivity"
-            android:label="@string/title_activity_profile"
+            android:label="@string/app_name"
             android:parentActivityName=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Login -->

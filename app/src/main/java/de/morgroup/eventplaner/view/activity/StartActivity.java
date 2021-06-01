@@ -10,6 +10,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 import de.morgroup.eventplaner.R;
 
 public class StartActivity extends AppCompatActivity {

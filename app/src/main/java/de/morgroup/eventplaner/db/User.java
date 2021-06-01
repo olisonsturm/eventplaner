@@ -13,18 +13,16 @@ public class User {
     private String nickname;
     private String email;
     private String mobile;
-    private String address;
 
     public User() {}
 
-    public User(String uid, String firstname, String lastname, String nickname, String email, String mobile, String address) {
+    public User(String uid, String firstname, String lastname, String nickname, String email, String mobile) {
         this.uid = uid;
         this.firstname = firstname;
         this.lastname = lastname;
         this.nickname = nickname;
         this.email = email;
         this.mobile = mobile;
-        this.address = address;
     }
 
     public String getUid() {
@@ -81,13 +79,5 @@ public class User {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }

@@ -36,8 +36,8 @@ public class LoginActivity extends Activity {
 
     // init
     private Activity activity = this;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
     @BindView(R.id.eMailEditText)
     EditText eMailEditText;
@@ -88,7 +88,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onError(FacebookException exception) {
-                Toast.makeText(activity, exception.getMessage(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(activity, exception.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -137,18 +137,6 @@ public class LoginActivity extends Activity {
                 Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-
-        if (firebaseUser != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-        }
     }
 
     @Override
