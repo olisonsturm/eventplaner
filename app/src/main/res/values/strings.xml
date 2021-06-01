@@ -50,6 +50,8 @@
     <string name="account_delete">Delete Account</string>
     <string name="title_activity_start">Loading</string>
     <string name="facebook_app_id" translatable="false">133159242026292</string>
+    <string name="all_events">All events</string>
+    <string name="own_events">Own events</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

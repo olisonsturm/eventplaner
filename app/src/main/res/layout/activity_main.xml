@@ -5,29 +5,17 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    tools:openDrawer="start">
+    tools:context=".view.activity.MainActivity">
 
-    <LinearLayout
+    <include
+        layout="@layout/content_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
+    <!--<FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />-->
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -45,6 +33,7 @@
             android:layout_margin="19dp"
             android:background="@drawable/btn_rounded_right"
             android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
             <ImageView
@@ -57,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -72,14 +61,12 @@
                     android:id="@+id/footer_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:maxLines="1"
                     android:textColor="@color/colorPrimaryGrey"
-                    android:textSize="10sp" />
-
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
-
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

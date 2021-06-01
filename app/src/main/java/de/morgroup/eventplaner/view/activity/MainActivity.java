@@ -3,8 +3,6 @@ package de.morgroup.eventplaner.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,9 +17,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.db.User;
-import de.morgroup.eventplaner.util.ProfileImageFB;
 import de.morgroup.eventplaner.view.fragment.EventsFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,35 +33,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ListenerRegistration listenerRegistration;
 
-    private DrawerLayout drawer;
-    private ImageView footerPB;
-    private TextView footerName, footerEmail;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true); // ?
+        toggle.syncState(); // open or close
 
-        if (savedInstanceState == null) {
+ /*       if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new EventsFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_events);
-        }
-
-        // dekl. widgets
-        footerPB = findViewById(R.id.footer_pb);
-        footerName = findViewById(R.id.footer_name);
-        footerEmail = findViewById(R.id.footer_mail);
+        }*/
 
     }
 
@@ -90,18 +87,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String lastname = user.getLastname();
                 String email = user.getEmail();
 
-                // nav footer
-                footerName.setText(firstname + " " + lastname);
-                footerEmail.setText(email);
-
-//                ProfileImageFromFirebase profileImageFromFirebase = new ProfileImageFromFirebase(footerPB);
-//                profileImageFromFirebase.execute(firebaseAuth.getCurrentUser().getPhotoUrl().toString());
-                new ProfileImageFB(footerPB).execute(user.getPhotourl());
-
 
             } else {
-                footerName.setText("");
-                footerEmail.setText("");
+
             }
 
         });
@@ -111,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_events:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new EventsFragment()).commit();
+                /*getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new EventsFragment()).commit();*/
                 break;
             case R.id.nav_profile:
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -124,17 +112,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // logout-code
                 FirebaseAuth.getInstance().signOut(); //logout
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class)); //startet LoginActivity
-                finish(); //benendet aktuelle Acitivity
+                finish(); //beendet aktuelle Acitivity
                 break;
         }
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }

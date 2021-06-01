@@ -47,4 +47,6 @@
     <string name="firstlastnameHint">Max Mustermann</string>
     <string name="account_delete">Account löschen</string>
     <string name="title_activity_start">Laden</string>
+    <string name="all_events">Alle Events</string>
+    <string name="own_events">Eigene Events</string>
 </resources>

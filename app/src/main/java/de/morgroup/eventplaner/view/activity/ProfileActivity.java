@@ -58,12 +58,14 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.verification_email)
     ImageView checkEmailVerification;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        Toolbar toolbar = findViewById(R.id.toolbar);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
