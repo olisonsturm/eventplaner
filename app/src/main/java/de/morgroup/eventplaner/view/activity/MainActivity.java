@@ -1,5 +1,6 @@
 package de.morgroup.eventplaner.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,8 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,9 +25,10 @@ import com.google.firebase.firestore.ListenerRegistration;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.db.User;
-import de.morgroup.eventplaner.view.fragment.EventsFragment;
+import de.morgroup.eventplaner.model.User;
+import de.morgroup.eventplaner.view.adapter.PagerAdapter;
 
+@SuppressLint("NonConstantResourceId")
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // init
@@ -39,27 +45,62 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.view_pager)
+    ViewPager pager;
+    //need workaround! could not bind tab items under tab layout
+    /*@BindView(R.id.tab_layout)*/
+    TabItem allEvents;
+    /*@BindView(R.id.tab_layout)*/
+    TabItem ownEvents;
+
+    ActionBarDrawerToggle toggle;
+    androidx.viewpager.widget.PagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        // workaround
+        allEvents = (TabItem) tabLayout.getTabAt(0).getCustomView();
+        ownEvents = (TabItem) tabLayout.getTabAt(1).getCustomView();
+
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_all_events);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(true); // ?
+        toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState(); // open or close
 
- /*       if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new EventsFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_events);
-        }*/
+        adapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,tabLayout.getTabCount());
+        pager.setAdapter(adapter);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager.setCurrentItem(tab.getPosition());
+                navigationView.getMenu().getItem(tab.getPosition()).setChecked(true);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
     }
 
@@ -98,15 +139,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_events:
-                /*getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new EventsFragment()).commit();*/
+            case R.id.nav_all_events:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                pager.setCurrentItem(0, true);
+                break;
+            case R.id.nav_own_events:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                pager.setCurrentItem(1, true);
                 break;
             case R.id.nav_profile:
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
             case R.id.nav_settings:
-                //startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 break;
             case R.id.nav_logout:
                 // logout-code

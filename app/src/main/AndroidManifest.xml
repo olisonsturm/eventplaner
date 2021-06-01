@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
         android:name=".EventPlaner"
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:letterSpacing=".02"
@@ -15,53 +15,52 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.activity.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity
             android:name=".view.activity.StartActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- Profile -->
+        </activity> <!-- Profile -->
         <activity
             android:name=".view.activity.ProfileActivity"
             android:label="@string/app_name"
             android:parentActivityName=".view.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!-- Confirm -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- Confirm -->
         <activity
             android:name=".view.activity.ConfirmActivity"
             android:label="@string/app_name"
             android:parentActivityName=".view.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!-- Login -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- Login -->
         <activity
             android:name=".view.activity.LoginActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-        </activity>
-        <!-- Register -->
+            android:screenOrientation="portrait"></activity> <!-- Register -->
         <activity
             android:name=".view.activity.RegisterActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <!-- EventÜbersicht -->
+            android:screenOrientation="portrait" /> <!-- EventÜbersicht -->
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <!-- META -->
+            android:windowSoftInputMode="adjustPan" /> <!-- META -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts"
             android:screenOrientation="portrait" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            tools:replace="android:value"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value" />
     </application>
+
 </manifest>

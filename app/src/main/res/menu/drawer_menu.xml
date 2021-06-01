@@ -3,11 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <group android:checkableBehavior="none">
+    <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_events"
-            android:icon="@drawable/ic_events"
-            android:title="@string/eventsMenu" />
+            android:id="@+id/nav_all_events"
+            android:icon="@drawable/ic_all_events"
+            android:title="@string/all_events" />
+        <item
+            android:id="@+id/nav_own_events"
+            android:icon="@drawable/ic_own_events"
+            android:title="@string/own_events" />
     </group>
     <item android:title="@string/titleAccountSettings">
         <menu>
