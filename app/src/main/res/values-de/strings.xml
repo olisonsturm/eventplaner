@@ -49,4 +49,5 @@
     <string name="title_activity_start">Laden</string>
     <string name="all_events">Alle Events</string>
     <string name="own_events">Eigene Events</string>
+    <string name="event_overview">Event-Übersicht</string>
 </resources>
