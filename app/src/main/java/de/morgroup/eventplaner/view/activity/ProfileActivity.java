@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.db.User;
+import de.morgroup.eventplaner.model.User;
 import de.morgroup.eventplaner.util.ProfileImageFB;
 
 @SuppressLint("NonConstantResourceId")
@@ -61,7 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
