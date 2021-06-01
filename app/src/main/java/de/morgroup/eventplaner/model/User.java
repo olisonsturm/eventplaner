@@ -1,6 +1,4 @@
-package de.morgroup.eventplaner.db;
-
-import android.net.Uri;
+package de.morgroup.eventplaner.model;
 
 public class User {
 
