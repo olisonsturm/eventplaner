@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:elevation="5dp"
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="200dp">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <de.morgroup.eventplaner.layout.FixedCenterCrop
+                    android:id="@+id/thumbnail"
+                    android:layout_width="386dp"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center" />
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:padding="20dp">
+
+                    <androidx.coordinatorlayout.widget.CoordinatorLayout
+                        android:layout_width="70dp"
+                        android:layout_height="85dp"
+                        android:layout_gravity="start|bottom"
+                        android:background="@drawable/shape_rounded"
+                        android:backgroundTint="@color/colorPrimaryBlue">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:fontFamily="@font/ubuntu_medium"
+                            android:text="DEZ."
+                            android:textColor="@color/whiteTextColor" />
+
+                        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="67dp"
+                            android:layout_gravity="start|top"
+                            android:background="@drawable/shape_rounded"
+                            android:backgroundTint="@color/colorPrimaryGrey">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/count"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:gravity="center"
+                                android:text="04."
+                                android:textColor="@color/whiteTextColor"
+                                android:textSize="25sp" />
+                        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/overflow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0"
+        android:src="@drawable/ic_three_dots" />
+
+</LinearLayout>

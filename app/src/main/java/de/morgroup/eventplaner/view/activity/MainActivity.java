@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -49,11 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager pager;
-    //need workaround! could not bind tab items under tab layout
-    /*@BindView(R.id.tab_layout)*/
-    TabItem allEvents;
-    /*@BindView(R.id.tab_layout)*/
-    TabItem ownEvents;
 
     ActionBarDrawerToggle toggle;
     androidx.viewpager.widget.PagerAdapter adapter;
@@ -63,10 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        // workaround
-        allEvents = (TabItem) tabLayout.getTabAt(0).getCustomView();
-        ownEvents = (TabItem) tabLayout.getTabAt(1).getCustomView();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -101,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
 
     }
 

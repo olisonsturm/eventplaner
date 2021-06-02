@@ -3,9 +3,9 @@ package de.morgroup.eventplaner.model;
 public class EventItem {
     private String name;
     private String owner;
-    private String thumbnailUrl;
+    private int thumbnailUrl;
 
-    public EventItem(String name, String owner, String thumbnailUrl) {
+    public EventItem(String name, String owner, int thumbnailUrl) {
         this.name = name;
         this.owner = owner;
         this.thumbnailUrl = thumbnailUrl;
@@ -27,11 +27,11 @@ public class EventItem {
         this.owner = owner;
     }
 
-    public String getThumbnailUrl() {
+    public int getThumbnailUrl() {
         return thumbnailUrl;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
+    public void setThumbnailUrl(int thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
     }
 }
