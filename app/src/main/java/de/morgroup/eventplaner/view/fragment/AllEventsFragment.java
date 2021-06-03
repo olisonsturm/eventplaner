@@ -77,11 +77,8 @@ public class AllEventsFragment extends Fragment {
          *  TODO: Leider sind keine OR abfragen, also ob user in member or user is owner möglich!
          */
         // getting data by listener
-        //listenerRegistration = db.collection("events").whereArrayContains("member", firebaseUser.getUid()).addSnapshotListener((snapshotsMember, eMember) -> {
-        List<String> values = new ArrayList<>();
-        values.add("member");
-        values.add("owner");
-        listenerRegistration = db.collection("events").whereIn(firebaseUser.getUid(), values).addSnapshotListener((snapshotsMember, eMember) -> {
+        listenerRegistration = db.collection("events").whereArrayContains("member", firebaseUser.getUid()).addSnapshotListener((snapshotsMember, eMember) -> {
+            List<String> values = new ArrayList<>();
             // clear all event items for refresh
             eventItemList.clear();
             // catch errors (no permissions)
