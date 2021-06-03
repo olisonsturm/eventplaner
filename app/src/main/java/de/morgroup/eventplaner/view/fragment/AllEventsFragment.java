@@ -1,30 +1,38 @@
 package de.morgroup.eventplaner.view.fragment;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.model.EventItem;
+import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
 
 public class AllEventsFragment extends Fragment {
 
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private ListenerRegistration listenerRegistration;
 
     private RecyclerView recyclerView;
     private EventItemAdapter eventItemAdapter;
@@ -37,101 +45,59 @@ public class AllEventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_all_events, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
 
         eventItemList = new ArrayList<>();
-        eventItemAdapter = new EventItemAdapter(getContext(), eventItemList);
+        eventItemAdapter = new EventItemAdapter(getContext(), eventItemList, false);
 
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(eventItemAdapter);
 
-        initEventItems();
-
         return view;
     }
 
-    //  few events for testing
-    private void initEventItems() {
-        int[] paintings = new int[]{
-                R.drawable.img_banner,
-                R.drawable.img_placeholder,
-                R.drawable.img_banner,
-                R.drawable.img_placeholder,
-                R.drawable.img_banner,
-                R.drawable.img_placeholder,
-                R.drawable.img_banner,
-                R.drawable.img_placeholder,
-                R.drawable.img_banner,
-                R.drawable.img_placeholder};
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onStart() {
+        super.onStart();
+        eventItemList.clear();
+        /*Event event = new Event();
+        event.setId("1N5rb3qnZmsl2N8dk3O1");
+        event.setName("Weihnachtsfete von Familie Sturm");
+        event.setDay("24");
+        event.setMonth("Dez.");
+        event.setTime("14 Uhr");
+        event.setThumbnailUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Messe_Luzern_Corporate_Event.jpg/800px-Messe_Luzern_Corporate_Event.jpg");
+        db.collection("events").document("1N5rb3qnZmsl2N8dk3O1").set(event);
+        db.collection("events").document("r289fewi98wh9w8f8j83").set(event);*/
 
-        EventItem item = new EventItem("Silvester", "Olison", paintings[0]);
-        eventItemList.add(item);
-
-        item = new EventItem("Weihnachten", "Olison", paintings[1]);
-        eventItemList.add(item);
-
-        item = new EventItem("Geburtstag", "Marvin", paintings[2]);
-        eventItemList.add(item);
-
-        item = new EventItem("Ostern", "Marvin", paintings[3]);
-        eventItemList.add(item);
-
-        item = new EventItem("Geburtstag", "Robin", paintings[4]);
-        eventItemList.add(item);
-
-        item = new EventItem("Urlaub", "Robin", paintings[5]);
-        eventItemList.add(item);
-
-        item = new EventItem("Sommerparty", "Olison", paintings[6]);
-        eventItemList.add(item);
-
-        item = new EventItem("Geburtstag", "Olison", paintings[7]);
-        eventItemList.add(item);
-
-        item = new EventItem("Familienfete", "Marvin", paintings[8]);
-        eventItemList.add(item);
-
-        item = new EventItem("Poolparty", "Marvin", paintings[9]);
-        eventItemList.add(item);
-
-        eventItemAdapter.notifyDataSetChanged();
-    }
-
-    // give equal margin around grid item
-    public class EventItemDecoration extends RecyclerView.ItemDecoration {
-
-        private Drawable divider;
-
-        public EventItemDecoration(Context context) {
-            divider = context.getResources().getDrawable(R.drawable.recycler_divider);
-        }
-
-        @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            int left = parent.getPaddingLeft();
-            int right = parent.getWidth() - parent.getPaddingRight();
-
-            int childCount = parent.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                View child = parent.getChildAt(i);
-
-                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-
-                int top = child.getBottom() + params.bottomMargin;
-                int bottom = top + divider.getIntrinsicHeight();
-
-                divider.setBounds(left, top, right, bottom);
-                divider.draw(c);
+        /*
+         *  TODO: Leider sind keine OR abfragen, also ob user in member or user is owner möglich!
+         */
+        // getting data by listener
+        //listenerRegistration = db.collection("events").whereArrayContains("member", firebaseUser.getUid()).addSnapshotListener((snapshotsMember, eMember) -> {
+        List<String> values = new ArrayList<>();
+        values.add("member");
+        values.add("owner");
+        listenerRegistration = db.collection("events").whereIn(firebaseUser.getUid(), values).addSnapshotListener((snapshotsMember, eMember) -> {
+            // clear all event items for refresh
+            eventItemList.clear();
+            // catch errors (no permissions)
+            if (eMember != null) {
+                return;
             }
-        }
+            Event eventMember;
+            // getting data and update
+            for (QueryDocumentSnapshot document : snapshotsMember) {
+                // receive the user object from db
+                eventMember = document.toObject(Event.class);
+                // show the event
+                eventItemList.add(eventMember);
+            }
+            eventItemAdapter.notifyDataSetChanged();
+        });
     }
 
-    // Converting dp to pixel
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
 }

@@ -52,8 +52,6 @@ public class ProfileActivity extends AppCompatActivity {
     TextView accountEmail;
     @BindView(R.id.account_mobile)
     TextView accountMobile;
-//    @BindView(R.id.account_address)
-//    TextView accountAddress;
 
     @BindView(R.id.verification_email)
     ImageView checkEmailVerification;

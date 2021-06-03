@@ -1,0 +1,155 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:elevation="5dp"
+    android:orientation="horizontal"
+    android:paddingStart="24dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="200dp">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <de.morgroup.eventplaner.layout.FixedCenterCrop
+                    android:id="@+id/event_item_thumbnail"
+                    android:layout_width="386dp"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/shadow_event" />
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_gravity="end|center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_rounded_left"
+                    android:backgroundTint="@color/colorPrimaryBlue">
+
+                    <TextView
+                        android:id="@+id/event_item_owner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/ubuntu_medium"
+                        android:textColor="@color/whiteTextColor"
+                        android:textSize="12sp" />
+
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_gravity="start|bottom"
+                        android:orientation="horizontal">
+
+                        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|bottom"
+                            android:background="@drawable/shape_rounded"
+                            android:backgroundTint="@color/colorPrimaryBlue">
+
+                            <TextView
+                                android:id="@+id/event_item_month"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|center"
+                                android:layout_marginBottom="2sp"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:textColor="@color/whiteTextColor"
+                                android:textSize="12sp" />
+
+                            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="57dp"
+                                android:layout_gravity="start|top"
+                                android:background="@drawable/shape_rounded"
+                                android:backgroundTint="@color/colorPrimaryGrey">
+
+                                <TextView
+                                    android:id="@+id/event_item_day"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/ubuntu_medium"
+                                    android:gravity="center"
+                                    android:textColor="@color/whiteTextColor"
+                                    android:textSize="25sp" />
+                            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|start"
+                            android:layout_marginStart="15dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/event_item_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:gravity="bottom"
+                                android:maxLines="2"
+                                android:textColor="@color/whiteTextColor"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/event_item_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:gravity="top"
+                                android:maxLines="1"
+                                android:textColor="@color/whiteTextColor" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/event_item_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0"
+        android:src="@drawable/ic_three_dots" />
+
+</LinearLayout>

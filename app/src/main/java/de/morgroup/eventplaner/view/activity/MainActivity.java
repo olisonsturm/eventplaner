@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -17,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -31,9 +33,10 @@ import de.morgroup.eventplaner.view.adapter.PagerAdapter;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // init
-    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final DocumentReference userDB = db.collection("users")
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DocumentReference userDB = db.collection("users")
             .document(firebaseAuth.getCurrentUser().getUid());
 
     private ListenerRegistration listenerRegistration;
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState(); // open or close
 
-        adapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,tabLayout.getTabCount());
+        adapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, tabLayout.getTabCount());
         pager.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -146,9 +149,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_logout:
                 // logout-code
-                FirebaseAuth.getInstance().signOut(); //logout
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class)); //startet LoginActivity
-                finish(); //beendet aktuelle Acitivity
+                AlertDialog alertDialog = new AlertDialog.Builder(this)
+                        .setTitle(getResources().getString(R.string.account_logout))
+                        .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
+                                    FirebaseAuth.getInstance().signOut(); //logout
+                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class)); //startet LoginActivity
+                                    finish(); //beendet aktuelle Acitivity
+                                }
+                        )
+                        .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
+                        .create();
+                alertDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.alertdialog_rounded));
+                alertDialog.show();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
