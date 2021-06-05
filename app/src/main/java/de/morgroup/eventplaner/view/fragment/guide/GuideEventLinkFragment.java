@@ -42,7 +42,7 @@ public class GuideEventLinkFragment extends Fragment {
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    Event event = new Event();
+    Event event;
 
 
     public GuideEventLinkFragment() {
@@ -60,6 +60,7 @@ public class GuideEventLinkFragment extends Fragment {
     @OnClick(R.id.NextCreateEvent)
     void onNextPagePress() {
         // -------------------------------------------------------------------------- ONLY TEST
+        event = new Event();
         Date date = null;
         try {
             date = new SimpleDateFormat("dd-MM-yyyy").parse("31-12-1998");
