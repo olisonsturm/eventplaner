@@ -1,6 +1,7 @@
-package de.morgroup.eventplaner.view.fragment;
+package de.morgroup.eventplaner.view.fragment.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ConcatAdapter;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +30,7 @@ import java.util.List;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
+import de.morgroup.eventplaner.view.activity.EventGuideActivity;
 import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
 
 
@@ -71,7 +72,7 @@ public class MainOwnEventsFragment extends Fragment {
                     super(view);
                     create = (CardView) view.findViewById(R.id.create_event);
                     create.setOnClickListener(v -> {
-                        //context.startActivity(new Intent(context, Create.class));
+                        startActivity(new Intent(getContext(), EventGuideActivity.class));
                     });
                 }
             }

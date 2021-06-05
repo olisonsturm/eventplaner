@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.User;
 import de.morgroup.eventplaner.view.adapter.MainPagerAdapter;
@@ -93,6 +95,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @OnClick(R.id.fab_create_event)
+    void onFabCreateEventPress() {
+        startActivity(new Intent(getApplicationContext(), EventGuideActivity.class));
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -116,9 +123,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String firstname = user.getFirstname();
                 String lastname = user.getLastname();
                 String email = user.getEmail();
-
-
-            } else {
 
             }
 

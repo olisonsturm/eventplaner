@@ -1,4 +1,4 @@
-package de.morgroup.eventplaner.view.fragment;
+package de.morgroup.eventplaner.view.fragment.main;
 
 import android.os.Build;
 import android.os.Bundle;

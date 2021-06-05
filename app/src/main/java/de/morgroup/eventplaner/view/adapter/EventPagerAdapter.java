@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
-import de.morgroup.eventplaner.view.fragment.MainAllEventsFragment;
-import de.morgroup.eventplaner.view.fragment.MainOwnEventsFragment;
+import de.morgroup.eventplaner.view.fragment.main.MainAllEventsFragment;
+import de.morgroup.eventplaner.view.fragment.main.MainOwnEventsFragment;
 
 public class EventPagerAdapter extends FragmentPagerAdapter {
 

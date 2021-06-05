@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/EventNameFragment">
+    <!-- Name -->
+    <fragment
+        android:id="@+id/EventNameFragment"
+        android:name="de.morgroup.eventplaner.view.fragment.guide.GuideEventNameFragment"
+        android:label="f"
+        tools:layout="@layout/fragment_guide_event_name">
+
+        <action
+            android:id="@+id/action_EventNameFragment_to_EventDateFragment"
+            app:destination="@id/EventDateFragment"
+            app:enterAnim="@android:anim/slide_in_right"
+            app:exitAnim="@android:anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <!--  Datum  -->
+    <fragment
+        android:id="@+id/EventDateFragment"
+        android:name="de.morgroup.eventplaner.view.fragment.guide.GuideEventDateFragment"
+        android:label="f"
+        tools:layout="@layout/fragment_guide_event_date">
+
+        <action
+            android:id="@+id/action_EventDateFragment_to_EventTimeFragment"
+            app:destination="@id/EventTimeFragment" />
+    </fragment>
+    <!--  Zeit  -->
+    <fragment
+        android:id="@+id/EventTimeFragment"
+        android:name="de.morgroup.eventplaner.view.fragment.guide.GuideEventTimeFragment"
+        android:label="f"
+        tools:layout="@layout/fragment_guide_event_time">
+
+        <action
+            android:id="@+id/action_EventTimeFragment_to_EventLinkFragment"
+            app:destination="@id/EventLinkFragment" />
+    </fragment>
+    <!--  Link  -->
+    <fragment
+        android:id="@+id/EventLinkFragment"
+        android:name="de.morgroup.eventplaner.view.fragment.guide.GuideEventLinkFragment"
+        android:label="f"
+        tools:layout="@layout/fragment_guide_event_link">
+
+        <action
+            android:id="@+id/action_EventLinkFragment_to_MainActivity" />
+    </fragment>
+</navigation>

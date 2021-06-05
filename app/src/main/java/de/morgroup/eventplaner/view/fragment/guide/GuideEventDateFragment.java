@@ -1,4 +1,4 @@
-package de.morgroup.eventplaner.view.fragment;
+package de.morgroup.eventplaner.view.fragment.guide;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
 
 
-public class EventGenerallyFragment extends Fragment {
+public class GuideEventDateFragment extends Fragment {
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -36,44 +36,21 @@ public class EventGenerallyFragment extends Fragment {
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private ListenerRegistration listenerRegistration;
-
-    private RecyclerView recyclerView;
-    private EventItemAdapter eventItemAdapter;
-    private List eventItemList;
-
-    public EventGenerallyFragment() {
+    public GuideEventDateFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_own_events, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_guide_event_date, container, false);
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // wrong only one event
-        listenerRegistration = db.collection("events").whereEqualTo("owner", firebaseUser.getUid()).addSnapshotListener((snapshotsOwner, eOwner) -> {
-            // clear all event items for refresh
-            eventItemList.clear();
-            // catch errors (no permissions)
-            if (eOwner != null) {
-                return;
-            }
-            Event eventOwner;
-            // getting data and update
-            for (QueryDocumentSnapshot document : snapshotsOwner) {
-                // receive the user object from db
-                eventOwner = document.toObject(Event.class);
-                // show the event
 
-            }
-        });
     }
 
 }
