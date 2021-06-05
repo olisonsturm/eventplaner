@@ -41,9 +41,8 @@ import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.model.User;
 import de.morgroup.eventplaner.view.activity.EventActivity;
-import de.morgroup.eventplaner.view.activity.decoration.MainDateHeaderItemDecoration;
 
-public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements MainDateHeaderItemDecoration.StickyHeaderInterface {
+public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -126,20 +125,6 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    class HeaderViewHolder extends RecyclerView.ViewHolder {
-
-        TextView date;
-
-        HeaderViewHolder(View itemView) {
-            super(itemView);
-            date = itemView.findViewById(R.id.date);
-        }
-
-        void bindData(int position) {
-            date.setText(String.valueOf(position / 5));
-        }
-    }
-
     public EventItemAdapter(Context context, List<Object> itemList, boolean owner, FirebaseUser firebaseUser) {
         this.context = context;
         this.itemList = itemList;
@@ -150,12 +135,7 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @NotNull
     @Override
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        if (viewType == 1) {
-            return new EventViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.main_date_header, parent, false));
-        } else {
-            return new EventViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event_list_item, parent, false));
-        }
+        return new EventViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event_list_item, parent, false));
     }
 
 
@@ -165,8 +145,6 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof EventViewHolder) {
             ((EventViewHolder) holder).bindData(position);
-        } else if (holder instanceof HeaderViewHolder) {
-            ((HeaderViewHolder) holder).bindData(position);
         }
     }
 
@@ -239,53 +217,6 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             month = months[num - 1].substring(0, 3).toUpperCase() + ".";
         }
         return month;
-    }
-
-    @Override
-    public int getHeaderPositionForItem(int itemPosition) {
-        int headerPosition = 0;
-        do {
-            if (this.isHeader(itemPosition)) {
-                headerPosition = itemPosition;
-                break;
-            }
-            itemPosition -= 1;
-        } while (itemPosition >= 0);
-        return headerPosition;
-    }
-
-    @Override
-    public int getHeaderLayout(int headerPosition) {
-        return R.layout.main_date_header;
-    }
-
-    @Override
-    public void bindHeaderData(View header, int headerPosition) {
-
-    }
-
-    @Override
-    public boolean isHeader(int itemPosition) {
-        if (itemList.get(itemPosition) instanceof Event)
-            return false;
-        else
-            return true;
-    }
-
-    class Data {
-        int viewType;
-
-        public Data(int viewType) {
-            this.viewType = viewType;
-        }
-
-        public int getViewType() {
-            return viewType;
-        }
-
-        public void setViewType(int viewType) {
-            this.viewType = viewType;
-        }
     }
 
 }
