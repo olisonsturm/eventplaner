@@ -9,8 +9,10 @@ import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,6 +22,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
@@ -46,8 +50,18 @@ public class GuideEventNameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_event_name, container, false);
-
+        ButterKnife.bind(this, view);
         return view;
+    }
+
+    @OnClick(R.id.NextCreateEvent)
+    void onNextPagePress() {
+        Navigation.findNavController(getView()).navigate(R.id.action_EventNameFragment_to_EventDateFragment);
+    }
+
+    @OnClick(R.id.CloseCreateEvent)
+    void onClosePress() {
+        getActivity().finish();
     }
 
     @Override

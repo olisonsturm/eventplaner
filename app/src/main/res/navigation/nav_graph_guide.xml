@@ -43,9 +43,5 @@
         android:name="de.morgroup.eventplaner.view.fragment.guide.GuideEventLinkFragment"
         android:label="f"
         tools:layout="@layout/fragment_guide_event_link">
-
-        <action android:id="@+id/action_EventLinkFragment_to_MainActivity"
-
-            />
     </fragment>
 </navigation>
