@@ -7,4 +7,23 @@
         <item name="colorAccent">@color/colorPrimaryRed</item>
     </style>
 
+    <style name="fab_rounded_left">
+        <item name="cornerSize">40%</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+    </style>
+
+    <style name="fab_rounded_right">
+        <item name="cornerSize">40%</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+    </style>
+
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Add attributes here -->
+        <item name="colorPrimary">@color/colorPrimaryGrey</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryBlue</item>
+        <item name="colorAccent">@color/colorPrimaryRed</item>
+    </style>
+
 </resources>

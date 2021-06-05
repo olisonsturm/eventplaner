@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,15 +19,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
+import de.morgroup.eventplaner.view.activity.decoration.MainDateHeaderItemDecoration;
 import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
 
-public class AllEventsFragment extends Fragment {
+public class MainAllEventsFragment extends Fragment implements MainDateHeaderItemDecoration.StickyHeaderInterface {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -38,22 +40,46 @@ public class AllEventsFragment extends Fragment {
     private EventItemAdapter eventItemAdapter;
     private List eventItemList;
 
-    public AllEventsFragment() {
+    public MainAllEventsFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_events, container, false);
+
+        /*
+        //ADD NEW EVENT
+        DocumentReference ref = db.collection("events").document();
+        Event event = new Event();
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("dd-MM-yyyy").parse("31-12-1998");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        event.setDay(Timestamp.now());
+        event.setId(ref.getId());
+
+        event.setMember(new ArrayList<String>(Arrays.asList("O8jIznrIC1Uq3v0FupPM1KDDVSJ2")));
+        event.setName("Test2");
+        event.setOwner("O8jIznrIC1Uq3v0FupPM1KDDVSJ2");
+        event.setTime("11 Uhr");
+        ref.set(event);
+        */
+
+
+        View view = inflater.inflate(R.layout.fragment_main_all_events, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
 
         eventItemList = new ArrayList<>();
-        eventItemAdapter = new EventItemAdapter(getContext(), eventItemList, false);
+        // TODO: OWNER FIX
+        eventItemAdapter = new EventItemAdapter(getContext(), eventItemList, false, firebaseUser);
 
-        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(eventItemAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new MainDateHeaderItemDecoration(eventItemAdapter));
 
         return view;
     }
@@ -62,23 +88,11 @@ public class AllEventsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        eventItemList.clear();
-        /*Event event = new Event();
-        event.setId("1N5rb3qnZmsl2N8dk3O1");
-        event.setName("Weihnachtsfete von Familie Sturm");
-        event.setDay("24");
-        event.setMonth("Dez.");
-        event.setTime("14 Uhr");
-        event.setThumbnailUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Messe_Luzern_Corporate_Event.jpg/800px-Messe_Luzern_Corporate_Event.jpg");
-        db.collection("events").document("1N5rb3qnZmsl2N8dk3O1").set(event);
-        db.collection("events").document("r289fewi98wh9w8f8j83").set(event);*/
-
         /*
          *  TODO: Leider sind keine OR abfragen, also ob user in member or user is owner möglich!
          */
         // getting data by listener
         listenerRegistration = db.collection("events").whereArrayContains("member", firebaseUser.getUid()).addSnapshotListener((snapshotsMember, eMember) -> {
-            List<String> values = new ArrayList<>();
             // clear all event items for refresh
             eventItemList.clear();
             // catch errors (no permissions)
@@ -93,8 +107,38 @@ public class AllEventsFragment extends Fragment {
                 // show the event
                 eventItemList.add(eventMember);
             }
+            Collections.sort(eventItemList);
             eventItemAdapter.notifyDataSetChanged();
         });
     }
 
+
+    // ?????
+    @Override
+    public int getHeaderPositionForItem(int itemPosition) {
+        int headerPosition = 0;
+        do {
+            if (this.isHeader(itemPosition)) {
+                headerPosition = itemPosition;
+                break;
+            }
+            itemPosition -= 1;
+        } while (itemPosition >= 0);
+        return headerPosition;
+    }
+
+    @Override
+    public int getHeaderLayout(int headerPosition) {
+        return 0;
+    }
+
+    @Override
+    public void bindHeaderData(View header, int headerPosition) {
+
+    }
+
+    @Override
+    public boolean isHeader(int itemPosition) {
+        return false;
+    }
 }

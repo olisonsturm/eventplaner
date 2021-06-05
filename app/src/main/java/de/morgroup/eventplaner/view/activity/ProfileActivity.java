@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if (firebaseUser.isEmailVerified()) {
             checkEmailVerification.setImageDrawable(getResources().getDrawable(R.drawable.ic_email_verification_true));

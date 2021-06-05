@@ -1,28 +1,36 @@
 package de.morgroup.eventplaner.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Event {
+import com.google.firebase.Timestamp;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Event implements Comparable<Event> {
     private String id;
     private String name;
     private String owner;
     private String time;
-    private String day;
-    private String month;
+    private Timestamp day;
     private String thumbnailUrl;
     private ArrayList<String> member;
+
+    @Override
+    public int compareTo(Event o) {
+        return getDay().toDate().compareTo(o.getDay().toDate());
+    }
 
     public Event() {
     }
 
-    public Event(String id, String name, String owner, String time, String day, String month, String thumbnailUrl, ArrayList<String> member) {
+    public Event(String id, String name, String owner, String time, Timestamp day, String thumbnailUrl, ArrayList<String> member) {
         this.id = id;
         this.name = name;
         this.owner = owner;
         this.time = time;
         this.day = day;
-        this.month = month;
         this.thumbnailUrl = thumbnailUrl;
         this.member = member;
     }
@@ -59,20 +67,12 @@ public class Event {
         this.time = time;
     }
 
-    public String getDay() {
+    public Timestamp getDay() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setDay(Timestamp day) {
         this.day = day;
-    }
-
-    public String getMonth() {
-        return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
     }
 
     public String getThumbnailUrl() {
@@ -90,4 +90,5 @@ public class Event {
     public void setMember(ArrayList<String> member) {
         this.member = member;
     }
+
 }

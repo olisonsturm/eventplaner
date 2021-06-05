@@ -14,9 +14,10 @@
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- Settings -->
         <activity
             android:name=".view.activity.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" /> <!-- Start -->
         <activity
             android:name=".view.activity.StartActivity"
             android:label="@string/app_name"
@@ -31,27 +32,38 @@
             android:name=".view.activity.ProfileActivity"
             android:label="@string/app_name"
             android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- Confirm -->
         <activity
             android:name=".view.activity.ConfirmActivity"
             android:label="@string/app_name"
             android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- Login -->
         <activity
             android:name=".view.activity.LoginActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity> <!-- Register -->
+            android:screenOrientation="portrait" /> <!-- Register -->
         <activity
             android:name=".view.activity.RegisterActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" /> <!-- EventÜbersicht -->
+            android:screenOrientation="portrait" /> <!-- Event-Übersicht -->
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".view.activity.EventActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" /> <!-- META -->
         <meta-data
             android:name="preloaded_fonts"

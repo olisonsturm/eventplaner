@@ -10,6 +10,4 @@
         <item name="colorPrimaryDark">@color/colorPrimaryBlue</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
-
 </resources>

@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgColorWhiteBlue"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".view.fragment.OwnEventsFragment">
+    tools:context=".view.fragment.MainOwnEventsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -17,6 +19,6 @@
         android:paddingTop="15dp"
         android:paddingEnd="5dp"
         android:paddingBottom="15dp"
-        android:scrollbars="none" />
+        android:scrollbars="none"/>
 
 </RelativeLayout>

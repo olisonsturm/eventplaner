@@ -55,4 +55,6 @@
     <string name="dialog_event_verlassen">Willst du das Event wirklich verlassen?</string>
     <string name="item_menu_event_löschen">Event löschen</string>
     <string name="dialog_event_löschen">Willst du das Event wirklich löschen?\nJeder Teilnehmer wird automatisch aus dem Event entfernt.</string>
+    <string name="event_create">Erstellen</string>
+
 </resources>

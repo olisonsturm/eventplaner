@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.User;
-import de.morgroup.eventplaner.view.adapter.PagerAdapter;
+import de.morgroup.eventplaner.view.adapter.MainPagerAdapter;
 
 @SuppressLint("NonConstantResourceId")
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState(); // open or close
 
-        adapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, tabLayout.getTabCount());
+        adapter = new MainPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, tabLayout.getTabCount());
         pager.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -82,19 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 pager.setCurrentItem(tab.getPosition());
                 navigationView.getMenu().getItem(tab.getPosition()).setChecked(true);
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
 
     }
 

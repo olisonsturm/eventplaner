@@ -15,6 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="20dp"
         card_view:cardElevation="3dp">
 
@@ -40,12 +43,12 @@
                 <androidx.coordinatorlayout.widget.CoordinatorLayout
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
                     android:layout_gravity="end|center_horizontal"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/btn_rounded_left"
-                    android:backgroundTint="@color/colorPrimaryBlue">
+                    android:backgroundTint="@color/colorPrimaryBlue"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
 
                     <TextView
                         android:id="@+id/event_item_owner"
@@ -84,7 +87,7 @@
                                 android:layout_marginBottom="2sp"
                                 android:fontFamily="@font/ubuntu_medium"
                                 android:textColor="@color/whiteTextColor"
-                                android:textSize="12sp" />
+                                android:textSize="10sp" />
 
                             <androidx.coordinatorlayout.widget.CoordinatorLayout
                                 android:layout_width="match_parent"
@@ -117,6 +120,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
+                                android:autoSizeTextType="uniform"
                                 android:fontFamily="@font/ubuntu_medium"
                                 android:gravity="bottom"
                                 android:maxLines="2"
@@ -128,8 +132,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
+                                android:autoSizeTextType="uniform"
                                 android:fontFamily="@font/ubuntu_medium"
-                                android:gravity="top"
+                                android:gravity="bottom"
                                 android:maxLines="1"
                                 android:textColor="@color/whiteTextColor" />
                         </LinearLayout>

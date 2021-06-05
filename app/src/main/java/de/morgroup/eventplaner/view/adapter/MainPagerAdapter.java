@@ -7,14 +7,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
-import de.morgroup.eventplaner.view.fragment.AllEventsFragment;
-import de.morgroup.eventplaner.view.fragment.OwnEventsFragment;
+import de.morgroup.eventplaner.view.fragment.MainAllEventsFragment;
+import de.morgroup.eventplaner.view.fragment.MainOwnEventsFragment;
 
-public class PagerAdapter extends FragmentPagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
 
     private int tabs;
 
-    public PagerAdapter(@NonNull @NotNull FragmentManager fm, int behavior, int tabs) {
+    public MainPagerAdapter(@NonNull @NotNull FragmentManager fm, int behavior, int tabs) {
         super(fm, behavior);
         this.tabs = tabs;
     }
@@ -25,9 +25,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new AllEventsFragment();
+                return new MainAllEventsFragment();
             case 1:
-                return new OwnEventsFragment();
+                return new MainOwnEventsFragment();
             default:
                 return null;
         }

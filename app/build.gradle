@@ -26,6 +26,9 @@ android {
         sourceCompatibility sourceCompatibility
         targetCompatibility sourceCompatibility
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -62,12 +65,12 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
-    // ApiFuture
-    compile group: 'com.google.api', name: 'api-common', version: '1.5.0'
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // Android implementation
     implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.google.android.material:material:1.4.0-beta01'
     implementation 'androidx.annotation:annotation:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
@@ -75,6 +78,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
     implementation 'androidx.preference:preference:1.1.1'
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
 
 }

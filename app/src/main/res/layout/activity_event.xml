@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/bgColorWhiteBlue"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/toolbar_rounded_bottom_gray"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/bgColorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bgColorWhite"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_gravity="start"
+                            android:background="@drawable/btn_rounded_right"
+                            android:backgroundTint="@color/colorPrimaryBlue"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp">
+
+                            <TextView
+                                android:id="@+id/event_item_owner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:textColor="@color/whiteTextColor"
+                                android:textSize="12sp" />
+
+                        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp">
+
+                            <RelativeLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="75dp"
+                                android:layout_gravity="end|top"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:layout_toLeftOf="@+id/date_layout"
+                                    android:gravity="bottom"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/event_item_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="25dp"
+                                        android:autoSizeTextType="uniform"
+                                        android:fontFamily="@font/ubuntu_medium"
+                                        android:gravity="bottom"
+                                        android:maxLines="1"
+                                        android:textColor="@color/colorPrimaryGrey" />
+
+                                    <TextView
+                                        android:id="@+id/event_item_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:autoSizeTextType="uniform"
+                                        android:fontFamily="@font/ubuntu_medium"
+                                        android:gravity="bottom"
+                                        android:maxLines="1"
+                                        android:textColor="@color/blackTextColor"
+                                        android:textSize="27sp" />
+
+                                </RelativeLayout>
+
+                                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                                    android:id="@+id/date_layout"
+                                    android:layout_width="60dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_weight="0"
+                                    android:background="@drawable/shape_rounded"
+                                    android:backgroundTint="@color/colorPrimaryBlue">
+
+                                    <TextView
+                                        android:id="@+id/event_item_month"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom|center"
+                                        android:layout_marginBottom="2sp"
+                                        android:fontFamily="@font/ubuntu_medium"
+                                        android:textColor="@color/whiteTextColor"
+                                        android:textSize="10sp" />
+
+                                    <androidx.coordinatorlayout.widget.CoordinatorLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="57dp"
+                                        android:background="@drawable/shape_rounded"
+                                        android:backgroundTint="@color/colorPrimaryGrey">
+
+                                        <TextView
+                                            android:id="@+id/event_item_day"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:fontFamily="@font/ubuntu_medium"
+                                            android:gravity="center"
+                                            android:textColor="@color/whiteTextColor"
+                                            android:textSize="25sp" />
+                                    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                            </RelativeLayout>
+
+                        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_rounded_bottom_white"
+                android:gravity="center_horizontal|bottom"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+                app:tabIndicator="@drawable/tab_indicator"
+                app:tabIndicatorAnimationMode="elastic"
+                app:tabIndicatorFullWidth="false"
+                app:tabMode="fixed"
+                app:tabUnboundedRipple="true">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allgemein" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abstimmungen" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aufgaben" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Teilnehmer" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:background="@color/bgColorWhiteBlue"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

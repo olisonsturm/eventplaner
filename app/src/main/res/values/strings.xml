@@ -59,5 +59,6 @@
     <string name="dialog_event_verlassen">" Do you really want to leave the event?"</string>
     <string name="item_menu_event_löschen">Delete event</string>
     <string name="dialog_event_löschen">Do you really want to delete the event?\nEach participant will be automatically removed from the event.</string>
+    <string name="event_create">Create</string>
 
 </resources>
