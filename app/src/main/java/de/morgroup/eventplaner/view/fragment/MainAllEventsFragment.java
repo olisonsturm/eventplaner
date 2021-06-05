@@ -25,10 +25,9 @@ import java.util.List;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
-import de.morgroup.eventplaner.view.activity.decoration.MainDateHeaderItemDecoration;
 import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
 
-public class MainAllEventsFragment extends Fragment implements MainDateHeaderItemDecoration.StickyHeaderInterface {
+public class MainAllEventsFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -79,7 +78,6 @@ public class MainAllEventsFragment extends Fragment implements MainDateHeaderIte
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(eventItemAdapter);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new MainDateHeaderItemDecoration(recyclerView, eventItemAdapter));
 
         return view;
     }
@@ -110,35 +108,5 @@ public class MainAllEventsFragment extends Fragment implements MainDateHeaderIte
             Collections.sort(eventItemList);
             eventItemAdapter.notifyDataSetChanged();
         });
-    }
-
-
-    // ?????
-    @Override
-    public int getHeaderPositionForItem(int itemPosition) {
-        int headerPosition = 0;
-        do {
-            if (this.isHeader(itemPosition)) {
-                headerPosition = itemPosition;
-                break;
-            }
-            itemPosition -= 1;
-        } while (itemPosition >= 0);
-        return headerPosition;
-    }
-
-    @Override
-    public int getHeaderLayout(int headerPosition) {
-        return 0;
-    }
-
-    @Override
-    public void bindHeaderData(View header, int headerPosition) {
-
-    }
-
-    @Override
-    public boolean isHeader(int itemPosition) {
-        return false;
     }
 }
