@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_graph_guide"
     app:startDestination="@id/EventNameFragment">
     <!-- Name -->
     <fragment
@@ -28,7 +28,11 @@
 
         <action
             android:id="@+id/action_EventDateFragment_to_EventTimeFragment"
-            app:destination="@id/EventTimeFragment" />
+            app:destination="@id/EventTimeFragment"
+            app:enterAnim="@android:anim/slide_in_right"
+            app:exitAnim="@android:anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <!--  Zeit  -->
     <fragment
@@ -39,7 +43,11 @@
 
         <action
             android:id="@+id/action_EventTimeFragment_to_EventLinkFragment"
-            app:destination="@id/EventLinkFragment" />
+            app:destination="@id/EventLinkFragment"
+            app:enterAnim="@android:anim/slide_in_right"
+            app:exitAnim="@android:anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <!--  Link  -->
     <fragment
@@ -49,6 +57,11 @@
         tools:layout="@layout/fragment_guide_event_link">
 
         <action
-            android:id="@+id/action_EventLinkFragment_to_MainActivity" />
+            android:id="@+id/action_EventLinkFragment_to_MainActivity"
+
+            app:enterAnim="@android:anim/slide_in_right"
+            app:exitAnim="@android:anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 </navigation>
