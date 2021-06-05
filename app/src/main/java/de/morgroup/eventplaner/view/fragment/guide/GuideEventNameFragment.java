@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.List;
 
+import butterknife.BindView;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
@@ -36,6 +38,9 @@ public class GuideEventNameFragment extends Fragment {
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     public GuideEventNameFragment() {
         // Required empty public constructor
     }
@@ -44,6 +49,12 @@ public class GuideEventNameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_event_name, container, false);
+
+        if (toolbar != null) {
+            getActivity().setActionBar(toolbar);
+        }
+        toolbar.setTitle("TEST TEST");
+
         return view;
     }
 
