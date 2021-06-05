@@ -13,11 +13,7 @@
 
         <action
             android:id="@+id/action_EventNameFragment_to_EventDateFragment"
-            app:destination="@id/EventDateFragment"
-            app:enterAnim="@android:anim/slide_in_right"
-            app:exitAnim="@android:anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:destination="@id/EventDateFragment" />
     </fragment>
     <!--  Datum  -->
     <fragment
@@ -28,11 +24,7 @@
 
         <action
             android:id="@+id/action_EventDateFragment_to_EventTimeFragment"
-            app:destination="@id/EventTimeFragment"
-            app:enterAnim="@android:anim/slide_in_right"
-            app:exitAnim="@android:anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:destination="@id/EventTimeFragment" />
     </fragment>
     <!--  Zeit  -->
     <fragment
@@ -43,11 +35,7 @@
 
         <action
             android:id="@+id/action_EventTimeFragment_to_EventLinkFragment"
-            app:destination="@id/EventLinkFragment"
-            app:enterAnim="@android:anim/slide_in_right"
-            app:exitAnim="@android:anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:destination="@id/EventLinkFragment" />
     </fragment>
     <!--  Link  -->
     <fragment
@@ -56,12 +44,8 @@
         android:label="f"
         tools:layout="@layout/fragment_guide_event_link">
 
-        <action
-            android:id="@+id/action_EventLinkFragment_to_MainActivity"
+        <action android:id="@+id/action_EventLinkFragment_to_MainActivity"
 
-            app:enterAnim="@android:anim/slide_in_right"
-            app:exitAnim="@android:anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            />
     </fragment>
 </navigation>

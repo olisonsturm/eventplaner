@@ -7,6 +7,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
+import de.morgroup.eventplaner.view.fragment.event.EventGenerallyFragment;
+import de.morgroup.eventplaner.view.fragment.event.EventMemberFragment;
+import de.morgroup.eventplaner.view.fragment.event.EventTasksFragment;
+import de.morgroup.eventplaner.view.fragment.event.EventVotingFragment;
 import de.morgroup.eventplaner.view.fragment.main.MainAllEventsFragment;
 import de.morgroup.eventplaner.view.fragment.main.MainOwnEventsFragment;
 
@@ -25,9 +29,13 @@ public class EventPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new MainAllEventsFragment();
+                return new EventGenerallyFragment();
             case 1:
-                return new MainOwnEventsFragment();
+                return new EventVotingFragment();
+            case 2:
+                return new EventTasksFragment();
+            case 3:
+                return new EventMemberFragment();
             default:
                 return null;
         }
