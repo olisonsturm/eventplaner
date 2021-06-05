@@ -1,33 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout2"
+    android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@drawable/bg_register">
+    android:background="@color/bgColorWhiteBlue"
+    android:clipToPadding="false"
+    android:elevation="5dp"
+    android:orientation="vertical">
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fab_coordinator_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="212dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="276dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="140dp"
-        android:text="An welchem Tag?"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/CloseCreateEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center|start"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/colorPrimaryGrey"
+            app:backgroundTint="@color/white"
+            app:elevation="2dp"
+            app:iconTint="@color/colorPrimaryGrey"
+            app:shapeAppearanceOverlay="@style/fab_rounded_right"
+            app:srcCompat="@drawable/ic_baseline_close_24"
+            app:theme="@style/MaterialTheme"
+            app:tint="@color/colorPrimaryGrey" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/NextCreateEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center|end"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/colorPrimaryGrey"
+            app:backgroundTint="@color/white"
+            app:elevation="2dp"
+            app:iconTint="@color/colorPrimaryGrey"
+            app:shapeAppearanceOverlay="@style/fab_rounded_left"
+            app:srcCompat="@drawable/ic_baseline_check_24"
+            app:theme="@style/MaterialTheme"
+            app:tint="@color/colorPrimaryGrey" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/create_event"
+        android:layout_width="match_parent"
+        android:layout_height="415dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="10dp"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardElevation="3dp"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.538"
+        card_view:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="150dp"/>
+
+</RelativeLayout>

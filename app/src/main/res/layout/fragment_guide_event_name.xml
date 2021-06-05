@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgColorWhiteBlue"
@@ -20,7 +21,7 @@
         android:layout_marginBottom="40dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/ff"
+            android:id="@+id/CloseCreateEvent"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="center|start"
@@ -31,12 +32,12 @@
             app:elevation="2dp"
             app:iconTint="@color/colorPrimaryGrey"
             app:shapeAppearanceOverlay="@style/fab_rounded_right"
-            app:srcCompat="@drawable/ic_plus"
+            app:srcCompat="@drawable/ic_baseline_close_24"
             app:theme="@style/MaterialTheme"
             app:tint="@color/colorPrimaryGrey" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fff"
+            android:id="@+id/NextCreateEvent"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="center|end"
@@ -47,7 +48,7 @@
             app:elevation="2dp"
             app:iconTint="@color/colorPrimaryGrey"
             app:shapeAppearanceOverlay="@style/fab_rounded_left"
-            app:srcCompat="@drawable/ic_plus"
+            app:srcCompat="@drawable/ic_baseline_check_24"
             app:theme="@style/MaterialTheme"
             app:tint="@color/colorPrimaryGrey" />
 
@@ -69,10 +70,10 @@
         tools:layout_editor_absoluteY="150dp">
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/EventTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
+            android:layout_marginStart="90dp"
             android:layout_marginTop="200dp"
             android:drawableLeft="@drawable/ic_profile"
             android:ems="10"
