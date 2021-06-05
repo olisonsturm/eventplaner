@@ -13,34 +13,23 @@
     android:paddingEnd="26dp"
     android:paddingBottom="500dp">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="352dp"
-        android:layout_height="match_parent"
 
-        />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="352dp"
+        android:layout_height="match_parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/create_event"
-        android:layout_width="match_parent"
-        android:layout_height="416dp"
+        android:layout_width="360dp"
+        android:layout_height="415dp"
         android:layout_gravity="center"
         card_view:cardCornerRadius="20dp"
         card_view:cardElevation="3dp">
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="65dp"
-            android:layout_marginTop="108dp"
-            android:text="An welchem Tag?"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
         <EditText
             android:id="@+id/editTextTextPersonName2"
-            android:layout_width="181dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="75dp"
             android:layout_marginTop="200dp"
