@@ -60,5 +60,8 @@
     <string name="item_menu_event_löschen">Delete event</string>
     <string name="dialog_event_löschen">Do you really want to delete the event?\nEach participant will be automatically removed from the event.</string>
     <string name="event_create">Create</string>
+    <string name="title_activity_create_event_guide">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>
