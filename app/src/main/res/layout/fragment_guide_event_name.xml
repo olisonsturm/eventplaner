@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout3"
-    android:layout_width="430dp"
-    android:layout_height="490dp"
-    android:layout_gravity="center"
-    android:background="@drawable/bg_register"
-    android:baselineAligned="false"
-    tools:layout_editor_absoluteX="206dp"
-    tools:layout_editor_absoluteY="354dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:elevation="5dp"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingTop="15dp"
+    android:paddingEnd="26dp"
+    android:paddingBottom="500dp">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="255dp"
-        android:layout_height="76dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="108dp"
-        android:text="An welchem Tag?"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="352dp"
+        android:layout_height="match_parent"
 
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="119dp"
-        android:layout_marginTop="24dp"
-        android:drawableLeft="@drawable/ic_profile"
-        android:ems="10"
-        android:hint="Event-Name"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/create_event"
+        android:layout_width="match_parent"
+        android:layout_height="416dp"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardElevation="3dp">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="108dp"
+            android:text="An welchem Tag?"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="200dp"
+            android:drawableLeft="@drawable/ic_profile"
+            android:ems="10"
+            android:hint="Event-Name"
+            android:inputType="text" />
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
