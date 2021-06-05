@@ -1,31 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/bgColorWhiteBlue"
     android:clipToPadding="false"
     android:elevation="5dp"
-    android:orientation="vertical"
-    android:paddingStart="24dp"
-    android:paddingTop="15dp"
-    android:paddingEnd="26dp"
-    android:paddingBottom="500dp">
+    android:orientation="vertical">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="352dp"
-        android:layout_height="match_parent" />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fab_coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/ff"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center|start"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/colorPrimaryGrey"
+            app:backgroundTint="@color/white"
+            app:elevation="2dp"
+            app:iconTint="@color/colorPrimaryGrey"
+            app:shapeAppearanceOverlay="@style/fab_rounded_right"
+            app:srcCompat="@drawable/ic_plus"
+            app:theme="@style/MaterialTheme"
+            app:tint="@color/colorPrimaryGrey" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fff"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center|end"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/colorPrimaryGrey"
+            app:backgroundTint="@color/white"
+            app:elevation="2dp"
+            app:iconTint="@color/colorPrimaryGrey"
+            app:shapeAppearanceOverlay="@style/fab_rounded_left"
+            app:srcCompat="@drawable/ic_plus"
+            app:theme="@style/MaterialTheme"
+            app:tint="@color/colorPrimaryGrey" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/create_event"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="415dp"
         android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="10dp"
         card_view:cardCornerRadius="20dp"
-        card_view:cardElevation="3dp">
+        card_view:cardElevation="3dp"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.538"
+        card_view:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="150dp">
 
         <EditText
             android:id="@+id/editTextTextPersonName2"
@@ -39,4 +80,4 @@
             android:inputType="text" />
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+</RelativeLayout>
