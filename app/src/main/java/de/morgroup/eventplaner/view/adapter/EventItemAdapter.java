@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.hardware.Sensor;
 import android.os.Build;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -34,7 +33,6 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,13 +56,13 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private boolean isMenuOpen = false;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class EventViewHolder extends RecyclerView.ViewHolder {
 
         CardView card;
         TextView name, time, day, month, owner;
         ImageView thumbnail, menu;
 
-        public MyViewHolder(View view) {
+        public EventViewHolder(View view) {
             super(view);
             card = (CardView) view.findViewById(R.id.card_view);
             name = (TextView) view.findViewById(R.id.event_item_name);
@@ -76,6 +74,70 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             menu = (ImageView) view.findViewById(R.id.event_item_menu);
         }
 
+        void bindData(int position) {
+            // get event item
+            Event item = (Event) itemList.get(position);
+            // set information
+            name.setText(item.getName().toUpperCase());
+            time.setText(item.getTime().toUpperCase());
+
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String date = dateFormat.format(item.getDay().toDate());
+
+            String d = date.split("-")[0];
+            String m = getMonthForInt(Integer.parseInt(date.split("-")[1]));
+            String y = date.split("-")[2];
+
+            day.setText(d);
+            month.setText(m);
+
+            db.collection("users").document(item.getOwner()).addSnapshotListener((documentSnapshot, e) -> {
+                // preventing errors
+                if (e != null) {
+                    return;
+                }
+                // getting data and update
+                if (documentSnapshot.exists()) {
+                    // receive the user object from db
+                    User user = documentSnapshot.toObject(User.class);
+                    // show the data
+                    owner.setText(user.getFirstname() + " " + user.getLastname());
+                }
+            });
+
+            // loading event thumbnail url by using Glide library
+            Glide.with(context).load(item.getThumbnailUrl()).into(thumbnail);
+
+            menu.setOnClickListener(view -> {
+                if (!isMenuOpen) {
+                    isMenuOpen = true;
+                    showPopupMenu(menu, item.getId(), item.getName(), isOwner);
+                }
+            });
+
+            card.setOnClickListener(view -> {
+                Intent intent = new Intent(context, EventActivity.class);
+                Gson gson = new Gson();
+                String itemGson = gson.toJson(item);
+                intent.putExtra("event", itemGson);
+                context.startActivity(intent);
+            });
+        }
+
+    }
+
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        TextView date;
+
+        HeaderViewHolder(View itemView) {
+            super(itemView);
+            date = itemView.findViewById(R.id.date);
+        }
+
+        void bindData(int position) {
+            date.setText(String.valueOf(position / 5));
+        }
     }
 
     public EventItemAdapter(Context context, List<Object> itemList, boolean owner, FirebaseUser firebaseUser) {
@@ -87,10 +149,13 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @NotNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.event_list_item, parent, false);
-        return new MyViewHolder(itemView);
+    public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        if (viewType == 1) {
+            return new EventViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.main_date_header, parent, false));
+        } else {
+            return new EventViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event_list_item, parent, false));
+        }
     }
 
 
@@ -98,55 +163,12 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
-        // get event item
-        Event item = (Event) itemList.get(position);
-        // set information
-        ((MyViewHolder) holder).name.setText(item.getName().toUpperCase());
-        ((MyViewHolder) holder).time.setText(item.getTime().toUpperCase());
-
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String date = dateFormat.format(item.getDay().toDate());
-
-        String day = date.split("-")[0];
-        String month = getMonthForInt(Integer.parseInt(date.split("-")[1]));
-        String year = date.split("-")[2];
-
-        ((MyViewHolder) holder).day.setText(day);
-        ((MyViewHolder) holder).month.setText(month);
-
-        db.collection("users").document(item.getOwner()).addSnapshotListener((documentSnapshot, e) -> {
-            // preventing errors
-            if (e != null) {
-                return;
-            }
-            // getting data and update
-            if (documentSnapshot.exists()) {
-                // receive the user object from db
-                User user = documentSnapshot.toObject(User.class);
-                // show the data
-                ((MyViewHolder) holder).owner.setText(user.getFirstname() + " " + user.getLastname());
-            }
-        });
-
-        // loading event thumbnail url by using Glide library
-        Glide.with(context).load(item.getThumbnailUrl()).into(((MyViewHolder) holder).thumbnail);
-
-        ((MyViewHolder) holder).menu.setOnClickListener(view -> {
-            if (!isMenuOpen) {
-                isMenuOpen = true;
-                showPopupMenu(((MyViewHolder) holder).menu, item.getId(), item.getName(), isOwner);
-            }
-        });
-
-        ((MyViewHolder) holder).card.setOnClickListener(view -> {
-            Intent intent = new Intent(context, EventActivity.class);
-            Gson gson = new Gson();
-            String itemGson = gson.toJson(item);
-            intent.putExtra("event", itemGson);
-            context.startActivity(intent);
-        });
+        if (holder instanceof EventViewHolder) {
+            ((EventViewHolder) holder).bindData(position);
+        } else if (holder instanceof HeaderViewHolder) {
+            ((HeaderViewHolder) holder).bindData(position);
+        }
     }
-
 
     // Showing popup menu when tapping on 3 dots
     private void showPopupMenu(View view, String id, String name, boolean owner) {
@@ -214,7 +236,7 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         DateFormatSymbols dfs = new DateFormatSymbols();
         String[] months = dfs.getMonths();
         if (num >= 1 && num <= 12) {
-            month = months[num-1].substring(0,3).toUpperCase() + ".";
+            month = months[num - 1].substring(0, 3).toUpperCase() + ".";
         }
         return month;
     }
@@ -234,7 +256,7 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getHeaderLayout(int headerPosition) {
-        return 0;
+        return R.layout.main_date_header;
     }
 
     @Override
@@ -244,7 +266,26 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public boolean isHeader(int itemPosition) {
-        return false;
+        if (itemList.get(itemPosition) instanceof Event)
+            return false;
+        else
+            return true;
+    }
+
+    class Data {
+        int viewType;
+
+        public Data(int viewType) {
+            this.viewType = viewType;
+        }
+
+        public int getViewType() {
+            return viewType;
+        }
+
+        public void setViewType(int viewType) {
+            this.viewType = viewType;
+        }
     }
 
 }

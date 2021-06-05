@@ -2,6 +2,7 @@ package de.morgroup.eventplaner.view.activity.decoration;
 
 import android.graphics.Canvas;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,13 +14,33 @@ public class MainDateHeaderItemDecoration extends RecyclerView.ItemDecoration {
     private StickyHeaderInterface mListener;
     private int mStickyHeaderHeight;
 
-    public MainDateHeaderItemDecoration(@NonNull StickyHeaderInterface listener) {
+    public MainDateHeaderItemDecoration(RecyclerView recyclerView, @NonNull StickyHeaderInterface listener) {
         mListener = listener;
+
+        // On Sticky Header Click
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+                if (motionEvent.getY() <= mStickyHeaderHeight) {
+                    // Handle the clicks on the header here ...
+                    return true;
+                }
+                return false;
+            }
+
+            public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+
+            }
+
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
     }
 
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDrawOver(c, parent, state);
+
         View topChild = parent.getChildAt(0);
         if (topChild == null) {
             return;
@@ -30,13 +51,15 @@ public class MainDateHeaderItemDecoration extends RecyclerView.ItemDecoration {
             return;
         }
 
-        int headerPos = mListener.getHeaderPositionForItem(topChildPosition);
-        View currentHeader = getHeaderViewForItem(headerPos, parent);
+        View currentHeader = getHeaderViewForItem(topChildPosition, parent);
         fixLayoutSize(parent, currentHeader);
         int contactPoint = currentHeader.getBottom();
-        View childInContact = getChildInContact(parent, contactPoint, headerPos);
+        View childInContact = getChildInContact(parent, contactPoint);
+        if (childInContact == null) {
+            return;
+        }
 
-        if (childInContact != null && mListener.isHeader(parent.getChildAdapterPosition(childInContact))) {
+        if (mListener.isHeader(parent.getChildAdapterPosition(childInContact))) {
             moveHeader(c, currentHeader, childInContact);
             return;
         }
@@ -44,7 +67,8 @@ public class MainDateHeaderItemDecoration extends RecyclerView.ItemDecoration {
         drawHeader(c, currentHeader);
     }
 
-    private View getHeaderViewForItem(int headerPosition, RecyclerView parent) {
+    private View getHeaderViewForItem(int itemPosition, RecyclerView parent) {
+        int headerPosition = mListener.getHeaderPositionForItem(itemPosition);
         int layoutResId = mListener.getHeaderLayout(headerPosition);
         View header = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
         mListener.bindHeaderData(header, headerPosition);
@@ -53,7 +77,7 @@ public class MainDateHeaderItemDecoration extends RecyclerView.ItemDecoration {
 
     private void drawHeader(Canvas c, View header) {
         c.save();
-        c.translate(0,  0);
+        c.translate(0, 0);
         header.draw(c);
         c.restore();
     }
@@ -65,29 +89,11 @@ public class MainDateHeaderItemDecoration extends RecyclerView.ItemDecoration {
         c.restore();
     }
 
-    private View getChildInContact(RecyclerView parent, int contactPoint, int currentHeaderPos) {
+    private View getChildInContact(RecyclerView parent, int contactPoint) {
         View childInContact = null;
         for (int i = 0; i < parent.getChildCount(); i++) {
-            int heightTolerance = 0;
             View child = parent.getChildAt(i);
-
-            //measure height tolerance with child if child is another header
-            if (currentHeaderPos != i) {
-                boolean isChildHeader = mListener.isHeader(parent.getChildAdapterPosition(child));
-                if (isChildHeader) {
-                    heightTolerance = mStickyHeaderHeight - child.getHeight();
-                }
-            }
-
-            //add heightTolerance if child top be in display area
-            int childBottomPosition;
-            if (child.getTop() > 0) {
-                childBottomPosition = child.getBottom() + heightTolerance;
-            } else {
-                childBottomPosition = child.getBottom();
-            }
-
-            if (childBottomPosition > contactPoint) {
+            if (child.getBottom() > contactPoint) {
                 if (child.getTop() <= contactPoint) {
                     // This child overlaps the contactPoint
                     childInContact = child;
@@ -97,7 +103,6 @@ public class MainDateHeaderItemDecoration extends RecyclerView.ItemDecoration {
         }
         return childInContact;
     }
-
 
     /**
      * Properly measures and layouts the top sticky header.

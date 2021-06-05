@@ -79,7 +79,7 @@ public class MainAllEventsFragment extends Fragment implements MainDateHeaderIte
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(eventItemAdapter);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new MainDateHeaderItemDecoration(eventItemAdapter));
+        recyclerView.addItemDecoration(new MainDateHeaderItemDecoration(recyclerView, eventItemAdapter));
 
         return view;
     }
