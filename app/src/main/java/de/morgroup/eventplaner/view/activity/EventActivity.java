@@ -2,11 +2,14 @@ package de.morgroup.eventplaner.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +27,7 @@ import butterknife.ButterKnife;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.model.User;
+import de.morgroup.eventplaner.view.adapter.EventPagerAdapter;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -42,7 +46,7 @@ public class EventActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @BindView(R.id.view_pager)
+    @BindView(R.id.view_pager_event)
     ViewPager pager;
     @BindView(R.id.event_item_name)
     TextView name;
@@ -54,8 +58,6 @@ public class EventActivity extends AppCompatActivity {
     TextView month;
     @BindView(R.id.event_item_owner)
     TextView owner;
-//    @BindView(R.id.event_item_thumbnail)
-//    ImageView thumbnail;
 
     androidx.viewpager.widget.PagerAdapter adapter;
 
@@ -99,10 +101,7 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
-        // loading event thumbnail url by using Glide library
-//        Glide.with(getApplicationContext()).load(event.getThumbnailUrl()).into(thumbnail);
-
-        //adapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, tabLayout.getTabCount());
+        adapter = new EventPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, tabLayout.getTabCount());
         pager.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

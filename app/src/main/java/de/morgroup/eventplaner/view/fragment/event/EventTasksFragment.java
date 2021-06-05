@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,7 +23,7 @@ import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
 
 
-public class EventGenerallyFragment extends Fragment {
+public class EventTasksFragment extends Fragment {
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -37,23 +36,20 @@ public class EventGenerallyFragment extends Fragment {
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public EventGenerallyFragment() {
+    public EventTasksFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_event_generally, container, false);
+        View view = inflater.inflate(R.layout.fragment_event_tasks, container, false);
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // loading event thumbnail url by using Glide library
-        //Glide.with(getContext()).load().into(thumbnail);
-
     }
 
 }

@@ -204,7 +204,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
+            android:id="@+id/view_pager_event"
             android:layout_width="match_parent"
             android:background="@color/bgColorWhiteBlue"
             android:layout_height="match_parent" />
