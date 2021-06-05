@@ -8,12 +8,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
+import android.widget.Toolbar;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import butterknife.BindView;
 import de.morgroup.eventplaner.R;
 
 public class EventGuideActivity extends AppCompatActivity {
