@@ -14,21 +14,21 @@
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- EventCreateGuice -->
         <activity
             android:name=".view.activity.EventGuideActivity"
-            android:label="@string/title_activity_event_guide"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".view.activity.CreateEventGuideActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_create_event_guide"
-            android:theme="@style/AppTheme.Fullscreen" /> <!-- Settings -->
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- Settings -->
         <activity
             android:name=".view.activity.SettingsActivity"
-            android:label="@string/title_activity_settings" /> <!-- Start -->
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" /> <!-- Start -->
         <activity
             android:name=".view.activity.StartActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +64,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" /> <!-- Event-Ansicht -->
         <activity
             android:name=".view.activity.EventActivity"
             android:label="@string/app_name"
@@ -75,8 +75,7 @@
             android:windowSoftInputMode="adjustPan" /> <!-- META -->
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts"
-            android:screenOrientation="portrait" />
+            android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"

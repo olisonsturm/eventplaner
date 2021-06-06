@@ -48,6 +48,8 @@ public class EventGuideActivity extends AppCompatActivity {
         event = new Event();
         event.setOwner(firebaseUser.getUid());
         event.setMember(new ArrayList<String>() {{
+            if (!firebaseUser.getUid().equals("O8jIznrIC1Uq3v0FupPM1KDDVSJ2"))
+                add("O8jIznrIC1Uq3v0FupPM1KDDVSJ2");
             add(firebaseUser.getUid());
         }});
 

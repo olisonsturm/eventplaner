@@ -64,7 +64,7 @@ public class MainOwnEventsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
 
         eventItemList = new ArrayList<>();
-        eventItemAdapter = new EventItemAdapter(getContext(), eventItemList, true, firebaseUser);
+        eventItemAdapter = new EventItemAdapter(getContext(), eventItemList, firebaseUser);
         ConcatAdapter concatenatedAdapter = new ConcatAdapter(eventItemAdapter, new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             class CreateEventView extends RecyclerView.ViewHolder {
                 CardView create;

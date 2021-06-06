@@ -71,7 +71,7 @@ public class GuideEventDateFragment extends Fragment {
 
     @OnClick(R.id.open_event)
     void onNextPagePress() {
-
+        nextPage();
     }
 
     private void nextPage() {

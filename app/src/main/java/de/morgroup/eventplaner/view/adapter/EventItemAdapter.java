@@ -50,9 +50,9 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private Context context;
     private List<Object> itemList;
-    private boolean isOwner;
     private FirebaseUser firebaseUser;
 
+    private boolean isOwner;
     private boolean isMenuOpen = false;
 
     class EventViewHolder extends RecyclerView.ViewHolder {
@@ -110,7 +110,11 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             menu.setOnClickListener(view -> {
                 if (!isMenuOpen) {
                     isMenuOpen = true;
-                    showPopupMenu(menu, item.getId(), item.getName(), isOwner);
+                    if (item.getOwner().equals(firebaseUser.getUid())) {
+                        showPopupMenuOwner(menu, item.getId(), item.getName());
+                    } else {
+                        showPopupMenuMember(menu, item.getId(), item.getName());
+                    }
                 }
             });
 
@@ -125,10 +129,9 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    public EventItemAdapter(Context context, List<Object> itemList, boolean owner, FirebaseUser firebaseUser) {
+    public EventItemAdapter(Context context, List<Object> itemList, FirebaseUser firebaseUser) {
         this.context = context;
         this.itemList = itemList;
-        this.isOwner = owner;
         this.firebaseUser = firebaseUser;
     }
 
@@ -149,18 +152,44 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     // Showing popup menu when tapping on 3 dots
-    private void showPopupMenu(View view, String id, String name, boolean owner) {
+    private void showPopupMenuOwner(View view, String id, String name) {
         // inflate menu
         PopupMenu popup = new PopupMenu(context, view);
-        if (!owner) {
-            SpannableString s = new SpannableString(context.getResources().getString(R.string.item_menu_event_verlassen));
-            s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
-            popup.getMenu().add(0, 0, 0, s);
-        } else {
-            SpannableString s = new SpannableString(context.getResources().getString(R.string.item_menu_event_löschen));
-            s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
-            popup.getMenu().add(0, 1, 0, s);
-        }
+
+        SpannableString s = new SpannableString(context.getResources().getString(R.string.item_menu_event_löschen));
+        s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
+        popup.getMenu().add(s);
+
+        popup.setOnMenuItemClickListener(menu -> {
+            switch (menu.getItemId()) {
+                case 0:
+                    AlertDialog alertDialog0 = new AlertDialog.Builder(context)
+                            .setTitle(name)
+                            .setMessage(context.getResources().getString(R.string.dialog_event_löschen))
+                            .setPositiveButton(context.getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
+                                        // delete event
+                                        db.collection("events").document(id).delete();
+                                    }
+                            )
+                            .setNegativeButton(context.getResources().getString(R.string.dialogProfileNegative), null)
+                            .create();
+                    alertDialog0.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.alertdialog_rounded));
+                    alertDialog0.show();
+                    return true;
+                default:
+                    return false;
+            }
+        });
+        popup.setOnDismissListener(menu -> isMenuOpen = false);
+        popup.show();
+    }
+
+    private void showPopupMenuMember(View view, String id, String name) {
+        // inflate menu
+        PopupMenu popup = new PopupMenu(context, view);
+        
+        popup.getMenu().add(context.getResources().getString(R.string.item_menu_event_verlassen));
+
         popup.setOnMenuItemClickListener(menu -> {
             switch (menu.getItemId()) {
                 case 0:
@@ -181,27 +210,12 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     alertDialog0.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.alertdialog_rounded));
                     alertDialog0.show();
                     return true;
-                case 1:
-                    AlertDialog alertDialog1 = new AlertDialog.Builder(context)
-                            .setTitle(name)
-                            .setMessage(context.getResources().getString(R.string.dialog_event_löschen))
-                            .setPositiveButton(context.getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-                                        // delete event
-                                        db.collection("events").document(id).delete();
-                                    }
-                            )
-                            .setNegativeButton(context.getResources().getString(R.string.dialogProfileNegative), null)
-                            .create();
-                    alertDialog1.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.alertdialog_rounded));
-                    alertDialog1.show();
-                    return true;
                 default:
                     return false;
             }
         });
         popup.setOnDismissListener(menu -> isMenuOpen = false);
         popup.show();
-
     }
 
     @Override
