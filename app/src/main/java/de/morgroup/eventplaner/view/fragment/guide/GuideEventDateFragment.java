@@ -1,21 +1,20 @@
 package de.morgroup.eventplaner.view.fragment.guide;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.Timestamp;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,10 +32,9 @@ public class GuideEventDateFragment extends Fragment {
     @BindView(R.id.RelativeLayout)
     RelativeLayout relativeLayout;
     @BindView(R.id.event_calendar_view)
-    CalendarView calendarView;
+    DatePicker picker;
 
     private Event event;
-    private Calendar dateSelected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,22 +43,13 @@ public class GuideEventDateFragment extends Fragment {
         ButterKnife.bind(this, view);
         event = ((EventGuideActivity) getActivity()).getEvent();
         //set min date
-        calendarView.setMinDate(System.currentTimeMillis() - 1000);
-        // get a calendar instance
-        dateSelected = Calendar.getInstance();
-        // calendar view date change listener
-        calendarView.setOnDateChangeListener((v, year, month, day) -> {
-            // set the calendar date as calendar view selected date
-            dateSelected.set(year, month, day);
-            dateSelected.set(Calendar.SECOND, 0);
-            dateSelected.set(Calendar.MINUTE, 0);
-            dateSelected.set(Calendar.HOUR_OF_DAY, 0);
-        });
+        picker.setMinDate(System.currentTimeMillis() - 1000);
 
         relativeLayout.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeRight() {
                 Navigation.findNavController(getView()).navigateUp();
             }
+
             public void onSwipeLeft() {
                 nextPage();
             }
@@ -75,7 +64,7 @@ public class GuideEventDateFragment extends Fragment {
     }
 
     private void nextPage() {
-        Date date = new Date(dateSelected.getTimeInMillis());
+        Date date = getDateFromDatePicker(picker);
         Date today = new Date();
         today.setHours(0);
 
@@ -89,6 +78,20 @@ public class GuideEventDateFragment extends Fragment {
     @OnClick(R.id.close_guide)
     void onClosePress() {
         getActivity().finish();
+    }
+
+    public static java.util.Date getDateFromDatePicker(DatePicker datePicker) {
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year = datePicker.getYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(year, month, day);
+
+        return calendar.getTime();
     }
 
 }

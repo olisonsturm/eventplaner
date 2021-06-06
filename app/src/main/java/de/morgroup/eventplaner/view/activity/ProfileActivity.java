@@ -1,24 +1,39 @@
 package de.morgroup.eventplaner.view.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.MimeTypeFilter;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +50,12 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference userDB = db.collection("users")
             .document(firebaseAuth.getCurrentUser().getUid());
+
+    // Profile Picture
+    private StorageReference storage;
+    private static final int IMAGE_REQUEST = 1;
+    private Uri imageUri;
+    private StorageTask uploadTask;
 
     private ListenerRegistration listenerRegistration;
 
@@ -68,12 +89,19 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        storage = FirebaseStorage.getInstance().getReference("uploads");
+
         if (firebaseUser.isEmailVerified()) {
             checkEmailVerification.setImageDrawable(getResources().getDrawable(R.drawable.ic_email_verification_true));
         } else {
             checkEmailVerification.setImageDrawable(getResources().getDrawable(R.drawable.ic_email_verification_false));
         }
 
+    }
+
+    @OnClick(R.id.header_pb)
+    void onPictureClick() {
+        openImage();
     }
 
     @OnClick(R.id.editFirstLastName)
@@ -268,6 +296,40 @@ public class ProfileActivity extends AppCompatActivity {
         userDB.update(field, value)
                 .addOnFailureListener(e -> {
                 });
+    }
+
+    // Profile Change Picture Methodes
+    private void openImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, IMAGE_REQUEST);
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getApplication().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void uploadImage() {
+        final ProgressDialog pd = new ProgressDialog(getApplicationContext());
+        pd.setMessage("Uploading");
+        pd.show();
+        if (imageUri != null) {
+            final StorageReference fileReference = storage.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+            uploadTask = fileReference.getFile(imageUri);
+            uploadTask.continueWith(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return fileReference.getDownloadUrl();
+                }
+            }).addOnCanceledListener(new OnCompleteListener<>());
+        }
     }
 
 }
