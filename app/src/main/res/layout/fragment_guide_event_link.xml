@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_centerInParent="true"
-        android:layout_margin="20dp"
+        android:layout_margin="30dp"
         card_view:cardCornerRadius="20dp"
         card_view:cardElevation="3dp">
 

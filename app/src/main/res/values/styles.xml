@@ -19,7 +19,7 @@
         <item name="cornerSizeTopLeft">0dp</item>
     </style>
 
-    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Add attributes here -->
         <item name="colorPrimary">@color/colorPrimaryGrey</item>
         <item name="colorPrimaryDark">@color/colorPrimaryBlue</item>

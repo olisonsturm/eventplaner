@@ -23,7 +23,7 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility sourceCompatibility
+        sourceCompatibility 1.8
         targetCompatibility sourceCompatibility
     }
     buildFeatures {
