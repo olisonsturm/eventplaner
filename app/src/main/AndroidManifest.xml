@@ -21,13 +21,12 @@
             android:name=".view.activity.EventGuideActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!-- Settings -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- Settings -->
         <activity
             android:name=".view.activity.SettingsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"/> <!-- Start -->
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" /> <!-- Start -->
         <activity
             android:name=".view.activity.StartActivity"
             android:label="@string/app_name"
@@ -76,6 +75,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" /> <!-- META -->
+        <activity
+            android:name=".view.activity.CropActivity"
+            android:screenOrientation="portrait"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

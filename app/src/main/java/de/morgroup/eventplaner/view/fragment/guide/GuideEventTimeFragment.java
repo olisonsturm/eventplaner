@@ -28,6 +28,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +71,7 @@ public class GuideEventTimeFragment extends Fragment {
             public void onSwipeRight() {
                 Navigation.findNavController(getView()).navigateUp();
             }
+
             public void onSwipeLeft() {
                 nextPage();
             }
@@ -86,31 +88,23 @@ public class GuideEventTimeFragment extends Fragment {
 
     private void nextPage() {
         if (!TextUtils.isEmpty(timeStart.getText()) && !TextUtils.isEmpty(timeEnd.getText())) {
-            if(!dateSwitch.isChecked() || !TextUtils.isEmpty(dateEnd.getText())) {
+            if (!dateSwitch.isChecked() || !TextUtils.isEmpty(dateEnd.getText())) {
                 event = ((EventGuideActivity) getActivity()).getEvent();
 
-                //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                //String date = dateFormat.format(event.getDay().toDate());
-
-                //String dayStart = date.split("-")[0];
-                //String dayEnd = dateEnd.getText().toString().split(".")[0];
-
-                //int days = Integer.valueOf(dayStart) - Integer.valueOf(dayEnd);
-
                 if (!TextUtils.isEmpty(dateEnd.getText())) {
-                    event.setTime(timeStart.getText().toString() + " - " + timeEnd.getText().toString() + " (" + dateEnd.getText().toString().substring(0,6) + dateEnd.getText().toString().substring(8) + ")");
+                    event.setTime(timeStart.getText().toString() + " - " + timeEnd.getText().toString() + " (" + dateEnd.getText().toString().substring(0, 6) + dateEnd.getText().toString().substring(8) + ")");
                 } else {
-
+                    event.setTime(timeStart.getText().toString() + " - " + timeEnd.getText().toString());
                 }
 
                 ((EventGuideActivity) getActivity()).saveEvent();
 
                 Navigation.findNavController(getView()).navigate(R.id.action_EventTimeFragment_to_EventLinkFragment);
             } else {
-                Toast.makeText(getContext(),getResources().getString(R.string.fill_all_fields),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getResources().getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(getContext(),getResources().getString(R.string.fill_all_fields),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getResources().getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -119,16 +113,20 @@ public class GuideEventTimeFragment extends Fragment {
         Calendar currentTime = Calendar.getInstance();
         int hour = currentTime.get(Calendar.HOUR_OF_DAY);
         int minute = currentTime.get(Calendar.MINUTE);
-        TimePickerDialog timePickerStart;
-        timePickerStart = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerEnd = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                Date date = new Time(selectedHour, selectedMinute, 0);
-                DateFormat dateFormat = new SimpleDateFormat("hh:mm");
-                timeStart.setText(dateFormat.format(date) + " Uhr");
+            public void onTimeSet(TimePicker view, int hour, int m) {
+                String minute = String.format("%02d", m);
+                String time = hour + ":" + minute;
+                if (time.contains(":00")) {
+                    time = time.replace(":00", "");
+                    timeStart.setText(time + " Uhr");
+                } else {
+                    timeStart.setText(time + " Uhr");
+                }
             }
         }, hour, minute, true);
-        timePickerStart.show();
+        timePickerEnd.show();
     }
 
     @OnClick(R.id.event_time_end)
@@ -136,16 +134,29 @@ public class GuideEventTimeFragment extends Fragment {
         Calendar currentTime = Calendar.getInstance();
         int hour = currentTime.get(Calendar.HOUR_OF_DAY);
         int minute = currentTime.get(Calendar.MINUTE);
-        TimePickerDialog timePickerEnd;
-        timePickerEnd = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerEnd = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                Date date = new Time(selectedHour, selectedMinute, 0);
-                DateFormat dateFormat = new SimpleDateFormat("hh:mm");
-                timeEnd.setText(dateFormat.format(date) + " Uhr");
+            public void onTimeSet(TimePicker view, int hour, int m) {
+                String minute = String.format("%02d", m);
+                String time = hour + ":" + minute;
+                if (time.contains(":00")) {
+                    time = time.replace(":00", "");
+                    timeEnd.setText(time + " Uhr");
+                } else {
+                    timeEnd.setText(time + " Uhr");
+                }
             }
         }, hour, minute, true);
         timePickerEnd.show();
+    }
+
+    @OnCheckedChanged(R.id.event_time_end_date_switch)
+    void onEndTimeSwitch() {
+        if (dateEnd.isEnabled()) {
+            dateEnd.setEnabled(false);
+        } else {
+            dateEnd.setEnabled(true);
+        }
     }
 
     @OnCheckedChanged(R.id.event_time_end_date_switch)

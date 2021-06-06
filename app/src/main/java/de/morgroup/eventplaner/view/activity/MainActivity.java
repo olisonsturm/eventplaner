@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,6 +17,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -53,6 +58,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager pager;
+    @BindView(R.id.footer_pb)
+    ImageView footerPB;
+    @BindView(R.id.footer_name)
+    TextView footerName;
+    @BindView(R.id.footer_mail)
+    TextView footerMail;
 
     ActionBarDrawerToggle toggle;
     androidx.viewpager.widget.PagerAdapter adapter;
@@ -84,9 +95,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 pager.setCurrentItem(tab.getPosition());
                 navigationView.getMenu().getItem(tab.getPosition()).setChecked(true);
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
@@ -112,20 +125,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (e != null) {
                 return;
             }
-
             // getting data and update
             if (documentSnapshot.exists()) {
-
                 // receive the user object from db
                 User user = documentSnapshot.toObject(User.class);
-
                 // cache the data
                 String firstname = user.getFirstname();
                 String lastname = user.getLastname();
                 String email = user.getEmail();
-
+                if (user.getPhotourl() != null) {
+                    Glide.with(getApplicationContext())
+                            .load(user.getPhotourl())
+                            .apply(new RequestOptions().override(200, 200))
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
+                            .into(footerPB);
+                } else {
+                    footerPB.setImageResource(R.drawable.img_placeholder);
+                }
+                footerName.setText(firstname + " " + lastname);
+                footerMail.setText(email);
             }
-
         });
     }
 

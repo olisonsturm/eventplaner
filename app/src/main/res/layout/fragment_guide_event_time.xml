@@ -84,8 +84,7 @@
                 android:id="@+id/event_time_start"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:drawablePadding="-25dp"
+                android:drawablePadding="15dp"
                 android:layout_gravity="center_horizontal"
                 android:drawableStart="@drawable/ic_baseline_access_time_24"
                 android:editable="false"
@@ -95,10 +94,9 @@
                 android:id="@+id/event_time_end"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:drawablePadding="15dp"
                 android:layout_gravity="center_horizontal"
                 android:drawableStart="@drawable/ic_baseline_access_time_24"
-                android:gravity="center"
-                android:drawablePadding="-25dp"
                 android:editable="false"
                 android:hint="Endzeit" />
 
@@ -112,13 +110,12 @@
             <EditText
                 android:id="@+id/event_time_end_date"
                 android:layout_width="200dp"
+                android:drawablePadding="15dp"
                 android:editable="false"
                 android:enabled="false"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:drawableStart="@drawable/ic_own_events"
-                android:gravity="center"
-                android:drawablePadding="-25dp"
                 android:hint="Enddatum" />
 
         </LinearLayout>

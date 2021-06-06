@@ -15,6 +15,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -25,7 +28,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.User;
-import de.morgroup.eventplaner.util.ProfileImageFB;
 
 @SuppressLint("NonConstantResourceId")
 public class ConfirmActivity extends AppCompatActivity {
@@ -76,12 +78,13 @@ public class ConfirmActivity extends AppCompatActivity {
         user.setEmail(firebaseUser.getEmail());
 
         // set PB
-        if (firebaseUser.getPhotoUrl() != null) {
-            String uPhotoUrl = firebaseUser.getPhotoUrl().toString();
-            new ProfileImageFB(headerPB).execute(uPhotoUrl);
-            user.setPhotourl(uPhotoUrl);
+        if (user.getPhotourl() != null) {
+            Glide.with(getApplicationContext())
+                    .load(user.getPhotourl())
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
+                    .into(headerPB);
         } else {
-            headerPB.setImageDrawable(getResources().getDrawable(R.drawable.img_placeholder));
+            headerPB.setImageResource(R.drawable.img_placeholder);
         }
 
         //set Name
@@ -104,6 +107,11 @@ public class ConfirmActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         firebaseUser.reload();
+    }
+
+    @OnClick(R.id.header_pb)
+    void onPictureClick() {
+        startActivity(new Intent(getApplicationContext(), CropActivity.class));
     }
 
     @OnClick(R.id.editFirstLastName)

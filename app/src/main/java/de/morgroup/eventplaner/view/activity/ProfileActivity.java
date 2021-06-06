@@ -18,10 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.MimeTypeFilter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,7 +43,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.User;
-import de.morgroup.eventplaner.util.ProfileImageFB;
 
 @SuppressLint("NonConstantResourceId")
 public class ProfileActivity extends AppCompatActivity {
@@ -49,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference userDB = db.collection("users")
-            .document(firebaseAuth.getCurrentUser().getUid());
+            .document(firebaseUser.getUid());
 
     // Profile Picture
     private StorageReference storage;
@@ -269,7 +271,6 @@ public class ProfileActivity extends AppCompatActivity {
                 User user = documentSnapshot.toObject(User.class);
 
                 // cache the data
-                assert user != null;
                 String firstname = user.getFirstname();
                 String lastname = user.getLastname();
                 String nickname = user.getNickname();
@@ -279,7 +280,14 @@ public class ProfileActivity extends AppCompatActivity {
                 //String address = addressCache[0] + " " + addressCache[1] + ", " + addressCache[2];
 
                 // show the data
-                new ProfileImageFB(headerPB).execute(user.getPhotourl());
+                if (user.getPhotourl() != null) {
+                    Glide.with(getApplicationContext())
+                            .load(user.getPhotourl())
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
+                            .into(headerPB);
+                } else {
+                    headerPB.setImageResource(R.drawable.img_placeholder);
+                }
                 headerName.setText(firstname + " " + lastname);
                 accountFirstLastName.setText(firstname + " " + lastname);
                 headerMail.setText(email);
@@ -298,38 +306,10 @@ public class ProfileActivity extends AppCompatActivity {
                 });
     }
 
-    // Profile Change Picture Methodes
+    // Profile Change Picture
     private void openImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
+        startActivity(new Intent(getApplicationContext(), CropActivity.class));
     }
 
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getApplication().getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void uploadImage() {
-        final ProgressDialog pd = new ProgressDialog(getApplicationContext());
-        pd.setMessage("Uploading");
-        pd.show();
-        if (imageUri != null) {
-            final StorageReference fileReference = storage.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-
-            uploadTask = fileReference.getFile(imageUri);
-            uploadTask.continueWith(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCanceledListener(new OnCompleteListener<>());
-        }
-    }
 
 }
