@@ -259,17 +259,17 @@ public class ConfirmActivity extends AppCompatActivity {
 
         // check that everything has been specified
         if (TextUtils.isEmpty(accountFirstLastName.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Bitte fülle alle Felder aus", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.fill_all_fields), Toast.LENGTH_LONG).show();
             return;
         }
 
         if (TextUtils.isEmpty(accountNick.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Bitte fülle alle Felder aus", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.fill_all_fields), Toast.LENGTH_LONG).show();
             return;
         }
 
         if (TextUtils.isEmpty(accountMobile.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Bitte fülle alle Felder aus", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.fill_all_fields), Toast.LENGTH_LONG).show();
             return;
         }
 

@@ -46,28 +46,6 @@ public class MainAllEventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        /*
-        //ADD NEW EVENT
-        DocumentReference ref = db.collection("events").document();
-        Event event = new Event();
-        Date date = null;
-        try {
-            date = new SimpleDateFormat("dd-MM-yyyy").parse("31-12-1998");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        event.setDay(Timestamp.now());
-        event.setId(ref.getId());
-
-        event.setMember(new ArrayList<String>(Arrays.asList("O8jIznrIC1Uq3v0FupPM1KDDVSJ2")));
-        event.setName("Test2");
-        event.setOwner("O8jIznrIC1Uq3v0FupPM1KDDVSJ2");
-        event.setTime("11 Uhr");
-        ref.set(event);
-        */
-
-
         View view = inflater.inflate(R.layout.fragment_main_all_events, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
 

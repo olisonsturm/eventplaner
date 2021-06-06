@@ -22,7 +22,7 @@
         android:layout_marginBottom="40dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/CloseCreateEvent"
+            android:id="@+id/close_guide"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="center|start"
@@ -38,7 +38,7 @@
             app:tint="@color/colorPrimaryGrey" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/NextCreateEvent"
+            android:id="@+id/open_event"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="center|end"
@@ -49,7 +49,7 @@
             app:elevation="2dp"
             app:iconTint="@color/colorPrimaryGrey"
             app:shapeAppearanceOverlay="@style/fab_rounded_left"
-            app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
+            app:srcCompat="@drawable/ic_arrow_forward"
             app:theme="@style/MaterialTheme"
             app:tint="@color/colorPrimaryGrey" />
 
@@ -58,23 +58,26 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/create_event"
         android:layout_width="match_parent"
-        android:layout_height="415dp"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
+        android:layout_height="350dp"
         android:layout_centerInParent="true"
+        android:layout_margin="20dp"
         card_view:cardCornerRadius="20dp"
-        card_view:cardElevation="3dp"
-        card_view:layout_constraintEnd_toEndOf="parent"
-        card_view:layout_constraintHorizontal_bias="0.538"
-        card_view:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="150dp">
+        card_view:cardElevation="3dp">
 
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="20dp"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <CalendarView
+                android:id="@+id/event_calendar_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

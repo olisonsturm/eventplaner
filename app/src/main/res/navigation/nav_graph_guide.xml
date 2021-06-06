@@ -13,7 +13,11 @@
 
         <action
             android:id="@+id/action_EventNameFragment_to_EventDateFragment"
-            app:destination="@id/EventDateFragment" />
+            app:destination="@id/EventDateFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <!--  Datum  -->
     <fragment
@@ -24,7 +28,11 @@
 
         <action
             android:id="@+id/action_EventDateFragment_to_EventTimeFragment"
-            app:destination="@id/EventTimeFragment" />
+            app:destination="@id/EventTimeFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <!--  Zeit  -->
     <fragment
@@ -35,13 +43,15 @@
 
         <action
             android:id="@+id/action_EventTimeFragment_to_EventLinkFragment"
-            app:destination="@id/EventLinkFragment" />
+            app:destination="@id/EventLinkFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <!--  Link  -->
     <fragment
         android:id="@+id/EventLinkFragment"
         android:name="de.morgroup.eventplaner.view.fragment.guide.GuideEventLinkFragment"
-        android:label="f"
-        tools:layout="@layout/fragment_guide_event_link">
-    </fragment>
+        android:label="f"></fragment>
 </navigation>

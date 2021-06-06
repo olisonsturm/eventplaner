@@ -234,7 +234,6 @@ public class ProfileActivity extends AppCompatActivity {
             if (e != null) {
                 return;
             }
-
             // getting data and update
             if (documentSnapshot.exists()) {
 
@@ -260,19 +259,15 @@ public class ProfileActivity extends AppCompatActivity {
                 accountNick.setText(nickname);
                 accountMobile.setText(mobile);
                 //accountAddress.setText(address);
-
             }
-
         });
     }
 
     private void updateData(String field, String value) {
-
         // update user document with new user data
         userDB.update(field, value)
                 .addOnFailureListener(e -> {
                 });
-
     }
 
 }

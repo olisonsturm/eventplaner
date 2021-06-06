@@ -1,73 +1,80 @@
 package de.morgroup.eventplaner.view.fragment.guide;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 import de.morgroup.eventplaner.R;
+import de.morgroup.eventplaner.listener.OnSwipeTouchListener;
 import de.morgroup.eventplaner.model.Event;
-import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
+import de.morgroup.eventplaner.view.activity.EventGuideActivity;
 
 
 public class GuideEventNameFragment extends Fragment {
 
-    @Nullable
-    @org.jetbrains.annotations.Nullable
-    @Override
-    public Context getContext() {
-        return super.getContext();
-    }
+    Event event;
 
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    public GuideEventNameFragment() {
-        // Required empty public constructor
-    }
+    @BindView(R.id.RelativeLayout)
+    RelativeLayout relativeLayout;
+    @BindView(R.id.event_name_edit_text)
+    TextView name;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_event_name, container, false);
         ButterKnife.bind(this, view);
+
+        relativeLayout.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+            public void onSwipeRight() {
+                getActivity().finish();
+            }
+
+            public void onSwipeLeft() {
+                nextPage();
+            }
+        });
+
         return view;
     }
 
-    @OnClick(R.id.NextCreateEvent)
+    @OnClick(R.id.open_event)
     void onNextPagePress() {
-        Navigation.findNavController(getView()).navigate(R.id.action_EventNameFragment_to_EventDateFragment);
+        nextPage();
     }
 
-    @OnClick(R.id.CloseCreateEvent)
+    private void nextPage() {
+        if (!TextUtils.isEmpty(name.getText())) {
+
+            event = ((EventGuideActivity) getActivity()).getEvent();
+
+            event.setName(name.getText().toString());
+            event.setThumbnailUrl("https://www.bkgymswim.com.au/wp-content/uploads/2017/08/image_large.png");
+
+            Navigation.findNavController(getView()).navigate(R.id.action_EventNameFragment_to_EventDateFragment);
+
+        } else {
+            Toast.makeText(getContext(), getResources().getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.close_guide)
     void onClosePress() {
         getActivity().finish();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
     }
 
 }

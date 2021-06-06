@@ -60,14 +60,13 @@
     <string name="item_menu_event_löschen">Delete event</string>
     <string name="dialog_event_löschen">Do you really want to delete the event?\nEach participant will be automatically removed from the event.</string>
     <string name="event_create">Create</string>
-    <string name="title_activity_create_event_guide">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_event_guide">EventGuideActivity</string>
+    <string name="title_activity_create_event_guide">Event Guide</string>
+    <string name="title_activity_event_guide">Event Guide</string>
 
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="fill_all_fields">Please fill in all fields</string>
 
 </resources>
