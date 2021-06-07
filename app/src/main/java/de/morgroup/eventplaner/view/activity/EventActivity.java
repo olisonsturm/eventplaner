@@ -11,6 +11,9 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
@@ -144,33 +147,6 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        // catch any update from firestore db
-
-        // getting data by listener
-        listenerRegistration = userDB.addSnapshotListener((documentSnapshot, e) -> {
-            // preventing errors
-            if (e != null) {
-                return;
-            }
-
-            // getting data and update
-            if (documentSnapshot.exists()) {
-
-                // receive the user object from db
-                User user = documentSnapshot.toObject(User.class);
-
-                // cache the data
-                String firstname = user.getFirstname();
-                String lastname = user.getLastname();
-                String email = user.getEmail();
-
-
-            } else {
-
-            }
-
-        });
     }
 
     private Event getIncomingIntent() {
@@ -188,6 +164,46 @@ public class EventActivity extends AppCompatActivity {
             month = months[num - 1].substring(0, 3).toUpperCase() + ".";
         }
         return month;
+    }
+
+    // menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        if (event.getOwner().equals(firebaseUser.getUid())) {
+            //owner
+            inflater.inflate(R.menu.event_menu_owner, menu);
+        } else {
+            //member
+            inflater.inflate(R.menu.event_menu_member, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (event.getOwner().equals(firebaseUser.getUid())) {
+            //owner
+            switch (item.getItemId()) {
+                case R.id.event_delete:
+                    break;
+                case 1:
+                    break;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        } else {
+            //member
+            switch (item.getItemId()) {
+                case R.id.event_leave:
+                    break;
+                case 1:
+                    break;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

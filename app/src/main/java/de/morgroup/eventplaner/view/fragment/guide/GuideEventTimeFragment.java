@@ -150,16 +150,18 @@ public class GuideEventTimeFragment extends Fragment {
         timePickerEnd.show();
     }
 
-    @OnCheckedChanged(R.id.event_time_end_date_switch)
+    @OnClick(R.id.event_time_end_time_switch)
     void onEndTimeSwitch() {
-        if (dateEnd.isEnabled()) {
-            dateEnd.setEnabled(false);
+        if (timeEnd.isEnabled()) {
+            timeEnd.setText("OPEN END");
+            timeEnd.setEnabled(false);
         } else {
-            dateEnd.setEnabled(true);
+            timeEnd.setText(null);
+            timeEnd.setEnabled(true);
         }
     }
 
-    @OnCheckedChanged(R.id.event_time_end_date_switch)
+    @OnClick(R.id.event_time_end_date_switch)
     void onEndDateSwitch() {
         if (dateEnd.isEnabled()) {
             dateEnd.setEnabled(false);

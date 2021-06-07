@@ -33,11 +33,13 @@
                     android:id="@+id/event_item_thumbnail"
                     android:layout_width="386dp"
                     android:layout_height="fill_parent"
+                    android:src="@drawable/img_placeholder_event"
                     android:layout_gravity="center" />
 
                 <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:layout_gravity="center"
                     android:src="@drawable/shadow_event" />
 
                 <androidx.coordinatorlayout.widget.CoordinatorLayout
