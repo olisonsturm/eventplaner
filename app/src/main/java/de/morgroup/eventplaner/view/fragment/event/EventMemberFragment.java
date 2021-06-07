@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,18 +83,22 @@ public class EventMemberFragment extends Fragment {
 
         ConcatAdapter concatenatedAdapter = new ConcatAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             class CreateEventView extends RecyclerView.ViewHolder {
+                LinearLayout layout;
                 TextView name, rank;
                 ImageView photo;
+
                 public CreateEventView(View view) {
                     super(view);
-
+                    layout = (LinearLayout) view.findViewById(R.id.member_item_layout);
+                    layout.setClickable(false);
+                    layout.setFocusable(false);
                     name = (TextView) view.findViewById(R.id.member_item_name);
                     rank = (TextView) view.findViewById(R.id.member_item_rank);
                     photo = (ImageView) view.findViewById(R.id.member_item_photo);
 
                     // set information
                     name.setText(owner.getFirstname() + " " + owner.getLastname());
-                        rank.setText("Gründer");
+                    rank.setText(getResources().getString(R.string.owner));
 
 
                     // loading event thumbnail url by using Glide library
@@ -111,6 +116,7 @@ public class EventMemberFragment extends Fragment {
 
                 }
             }
+
             @NonNull
             @NotNull
             @Override
@@ -119,10 +125,12 @@ public class EventMemberFragment extends Fragment {
                         .inflate(R.layout.member_list_item, parent, false);
                 return new CreateEventView(view);
             }
+
             @Override
             public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
 
             }
+
             @Override
             public int getItemCount() {
                 int create = 1;
@@ -147,7 +155,7 @@ public class EventMemberFragment extends Fragment {
                 return;
             }
             for (QueryDocumentSnapshot snapshot : documents) {
-                if(event.getMember().contains(snapshot.getId())) {
+                if (event.getMember().contains(snapshot.getId())) {
                     User user = snapshot.toObject(User.class);
                     // show the event member
                     if (!user.getUid().equals(event.getOwner())) {

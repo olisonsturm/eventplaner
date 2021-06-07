@@ -76,5 +76,8 @@
     <string name="event_leave">Verlassen</string>
     <string name="describe_your_event">Beschreibe dein Event!</string>
     <string name="default_description">%owner hat noch keine Beschreibung hinzugefügt!</string>
+    <string name="owner">Gründer</string>
+    <string name="member">Teilnehmer</string>
+    <string name="invite_with_link">Mit Link einladen</string>
 
 </resources>

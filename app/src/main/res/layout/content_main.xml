@@ -97,26 +97,6 @@
         </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 
-    <!--<com.google.android.material.circularreveal.CircularRevealFrameLayout
-        android:id="@+id/sheet"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom|end"
-        android:background="@color/bgColorWhiteBlue"
-        android:visibility="invisible"
-        app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            layout="@layout/acitivity_eventlaenge"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-
-    </com.google.android.material.circularreveal.CircularRevealFrameLayout>-->
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/fab_coordinator_layout"
         android:layout_width="match_parent"

@@ -80,5 +80,8 @@
     <string name="event_leave">Leave</string>
     <string name="describe_your_event">Describe your event!</string>
     <string name="default_description">%owner hat noch keine Beschreibung hinzugefügt!</string>
+    <string name="owner">Owner</string>
+    <string name="member">Member</string>
+    <string name="invite_with_link">Invite with link</string>
 
 </resources>

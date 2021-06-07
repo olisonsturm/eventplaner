@@ -57,7 +57,7 @@ public class EventMemberItemAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             User user = (User) itemList.get(position);
             // set information
             name.setText(user.getFirstname() + " " + user.getLastname());
-            rank.setText("Teilnehmer");
+            rank.setText(context.getResources().getString(R.string.member));
 
 
             // loading event thumbnail url by using Glide library

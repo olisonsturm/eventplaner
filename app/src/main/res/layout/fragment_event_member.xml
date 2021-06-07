@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,10 +15,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingStart="5dp"
         android:paddingTop="20dp"
-        android:paddingEnd="5dp"
         android:paddingBottom="15dp"
         android:scrollbars="none" />
 
-</RelativeLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fab_coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="40dp">
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_create_event"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center|end"
+            android:clickable="true"
+            android:textColor="@color/colorPrimaryGrey"
+            android:theme="@style/MaterialTheme"
+            app:backgroundTint="@color/white"
+            app:iconTint="@color/colorPrimaryGrey"
+            app:elevation="2dp"
+            app:shapeAppearanceOverlay="@style/fab_rounded_left"
+            app:srcCompat="@drawable/ic_plus"
+            app:tint="@color/colorPrimaryGrey"
+            android:focusable="true" />-->
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_link"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center|end"
+            android:clickable="true"
+            android:textColor="@color/colorPrimaryBlue"
+            android:theme="@style/MaterialTheme"
+            android:text="@string/invite_with_link"
+            android:paddingStart="20dp"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/white"
+            app:iconTint="@color/colorPrimaryGrey"
+            app:elevation="1dp"
+            app:shapeAppearanceOverlay="@style/fab_rounded_left"
+            app:srcCompat="@drawable/ic_plus"
+            app:tint="@color/colorPrimaryGrey"
+            android:focusable="true" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
