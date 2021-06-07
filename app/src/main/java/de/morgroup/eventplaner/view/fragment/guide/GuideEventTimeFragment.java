@@ -67,6 +67,8 @@ public class GuideEventTimeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_guide_event_time, container, false);
         ButterKnife.bind(this, view);
 
+        event = ((EventGuideActivity) getActivity()).getEvent();
+
         relativeLayout.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeRight() {
                 Navigation.findNavController(getView()).navigateUp();
@@ -153,7 +155,7 @@ public class GuideEventTimeFragment extends Fragment {
     @OnClick(R.id.event_time_end_time_switch)
     void onEndTimeSwitch() {
         if (timeEnd.isEnabled()) {
-            timeEnd.setText("OPEN END");
+            timeEnd.setText("Open end");
             timeEnd.setEnabled(false);
         } else {
             timeEnd.setText(null);
@@ -172,6 +174,7 @@ public class GuideEventTimeFragment extends Fragment {
 
     @OnClick(R.id.event_time_end_date)
     void onEndDateClick() {
+        event = ((EventGuideActivity) getActivity()).getEvent();
         Calendar currentDate = Calendar.getInstance();
         int y = currentDate.get(Calendar.YEAR);
         int d = currentDate.get(Calendar.MONTH);
@@ -185,6 +188,8 @@ public class GuideEventTimeFragment extends Fragment {
                 dateEnd.setText(dateFormat.format(date));
             }
         }, y, d, m);
+        Date startDate = event.getDay().toDate() ;
+        datePicker.getDatePicker().setMinDate(startDate.getTime() + (1000 * 60 * 60 * 24)); // plus one day
         datePicker.show();
     }
 

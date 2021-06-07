@@ -31,7 +31,7 @@
             app:elevation="2dp"
             app:iconTint="@color/colorPrimaryGrey"
             app:shapeAppearanceOverlay="@style/fab_rounded_right"
-            app:srcCompat="@drawable/ic_baseline_close_24"
+            app:srcCompat="@drawable/ic_close"
             app:theme="@style/MaterialTheme"
             app:tint="@color/colorPrimaryGrey" />
 
@@ -97,9 +97,9 @@
                 android:inputType="text"
                 android:gravity="center"
                 android:singleLine="true"
-                android:maxLength="20"
+                android:maxLength="30"
                 android:maxLines="1"
-                android:hint="Eventname" />
+                android:hint="@string/eventname" />
 
         </LinearLayout>
 

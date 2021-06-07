@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.transition.Fade;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -53,12 +55,6 @@ public class ProfileActivity extends AppCompatActivity {
     private DocumentReference userDB = db.collection("users")
             .document(firebaseUser.getUid());
 
-    // Profile Picture
-    private StorageReference storage;
-    private static final int IMAGE_REQUEST = 1;
-    private Uri imageUri;
-    private StorageTask uploadTask;
-
     private ListenerRegistration listenerRegistration;
 
     @BindView(R.id.header_pb)
@@ -90,8 +86,6 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        storage = FirebaseStorage.getInstance().getReference("uploads");
 
         if (firebaseUser.isEmailVerified()) {
             checkEmailVerification.setImageDrawable(getResources().getDrawable(R.drawable.ic_email_verification_true));
@@ -286,7 +280,10 @@ public class ProfileActivity extends AppCompatActivity {
                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
                             .into(headerPB);
                 } else {
-                    headerPB.setImageResource(R.drawable.img_placeholder);
+                    Glide.with(getApplicationContext())
+                            .load(R.drawable.img_placeholder)
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
+                            .into(headerPB);
                 }
                 headerName.setText(firstname + " " + lastname);
                 accountFirstLastName.setText(firstname + " " + lastname);
@@ -309,6 +306,12 @@ public class ProfileActivity extends AppCompatActivity {
     // Profile Change Picture
     private void openImage() {
         startActivity(new Intent(getApplicationContext(), CropActivity.class));
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/event_mute"
+        android:title="@string/event_mute"
+        android:icon="@drawable/ic_settings"/>
     <item
         android:id="@+id/event_leave"
-        android:title="Event verlassen" />
+        android:title="@string/event_leave"
+        android:icon="@drawable/ic_logout"/>
 </menu>

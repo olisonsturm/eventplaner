@@ -84,7 +84,10 @@ public class ConfirmActivity extends AppCompatActivity {
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
                     .into(headerPB);
         } else {
-            headerPB.setImageResource(R.drawable.img_placeholder);
+            Glide.with(getApplicationContext())
+                    .load(R.drawable.img_placeholder)
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
+                    .into(headerPB);
         }
 
         //set Name

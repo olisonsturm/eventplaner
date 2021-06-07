@@ -56,6 +56,7 @@ public class GuideEventLinkFragment extends Fragment {
         String itemGson = gson.toJson(event);
         intent.putExtra("event", itemGson);
         startActivity(intent);
+        getActivity().finish();
     }
 
 }

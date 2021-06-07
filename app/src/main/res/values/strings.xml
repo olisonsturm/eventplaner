@@ -60,13 +60,25 @@
     <string name="item_menu_event_löschen">Delete event</string>
     <string name="dialog_event_löschen">Do you really want to delete the event?\nEach participant will be automatically removed from the event.</string>
     <string name="event_create">Create</string>
-    <string name="title_activity_create_event_guide">Event Guide</string>
-    <string name="title_activity_event_guide">Event Guide</string>
-
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="fill_all_fields">Please fill in all fields</string>
+    <string name="no_image_selected">No image selected</string>
+    <string name="uploading">uploading...</string>
+    <string name="eventname">Eventname</string>
+    <string name="event_time">Time of the event</string>
+    <string name="startzeit">Start time</string>
+    <string name="endzeit">End time</string>
+    <string name="more_days">Multiple days?</string>
+    <string name="enddatum">End date</string>
+    <string name="event_join_link">Event join link:</string>
+    <string name="event_delete">Delete</string>
+    <string name="event_edit">Edit</string>
+    <string name="event_mute">Mute</string>
+    <string name="event_leave">Leave</string>
+    <string name="describe_your_event">Describe your event!</string>
+    <string name="default_description">%owner hat noch keine Beschreibung hinzugefügt!</string>
 
 </resources>

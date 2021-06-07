@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/event_mute"
+        android:title="@string/event_mute"
+        android:icon="@drawable/ic_settings"/>
+    <item
+        android:id="@+id/event_edit"
+        android:title="@string/event_edit"
+        android:icon="@drawable/ic_profile"/>
+    <item
         android:id="@+id/event_delete"
-        android:title="Event löschen" />
+        android:title="@string/event_delete"
+        android:icon="@drawable/ic_delete" />
 </menu>

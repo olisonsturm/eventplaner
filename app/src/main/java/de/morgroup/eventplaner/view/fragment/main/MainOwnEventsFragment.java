@@ -31,7 +31,7 @@ import java.util.List;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.view.activity.EventGuideActivity;
-import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
+import de.morgroup.eventplaner.view.adapter.MainEventItemAdapter;
 
 
 public class MainOwnEventsFragment extends Fragment {
@@ -50,12 +50,8 @@ public class MainOwnEventsFragment extends Fragment {
     private ListenerRegistration listenerRegistration;
 
     private RecyclerView recyclerView;
-    private EventItemAdapter eventItemAdapter;
+    private MainEventItemAdapter eventItemAdapter;
     private List eventItemList;
-
-    public MainOwnEventsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +60,7 @@ public class MainOwnEventsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
 
         eventItemList = new ArrayList<>();
-        eventItemAdapter = new EventItemAdapter(getContext(), eventItemList, firebaseUser);
+        eventItemAdapter = new MainEventItemAdapter(getContext(), eventItemList, firebaseUser);
         ConcatAdapter concatenatedAdapter = new ConcatAdapter(eventItemAdapter, new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             class CreateEventView extends RecyclerView.ViewHolder {
                 CardView create;

@@ -93,6 +93,7 @@ public class CropActivity extends AppCompatActivity {
                 Map<String, Object> updates = new HashMap<>();
                 updates.put("photourl", FieldValue.delete());
                 userDB.update(updates);
+                finish();
             }
         });
 

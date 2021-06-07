@@ -8,19 +8,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.util.List;
 
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.model.Event;
-import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
 
 
 public class EventTasksFragment extends Fragment {

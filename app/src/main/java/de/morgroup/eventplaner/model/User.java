@@ -1,8 +1,6 @@
 package de.morgroup.eventplaner.model;
 
-public class User {
-
-    private static User instance;
+public class User implements Comparable<User>{
 
     private String uid;
     private String photourl;
@@ -11,6 +9,11 @@ public class User {
     private String nickname;
     private String email;
     private String mobile;
+
+    @Override
+    public int compareTo(User o) {
+        return getFirstname().compareTo(o.getFirstname());
+    }
 
     public User() {}
 

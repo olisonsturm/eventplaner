@@ -127,16 +127,15 @@ public class GuideEventNameFragment extends Fragment {
         startActivityForResult(intent, IMAGE_REQUEST);
     }
 
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContext().getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
+    /*
+    *
+    * TODO: delete event storage image, if event not complete created
+    *
+    * */
     private void uploadImage(Uri imageUri) {
         event = ((EventGuideActivity) getActivity()).getEvent();
         ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setMessage("Uploading");
+        pd.setMessage(getResources().getString(R.string.uploading));
         pd.show();
         if (imageUri != null) {
             final StorageReference fileReference = storage.child(event.getId() + ".jpg");
@@ -162,7 +161,6 @@ public class GuideEventNameFragment extends Fragment {
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
                                 .into(thumbnail);
                     } else {
-                        Toast.makeText(getContext(), "Failed!", Toast.LENGTH_SHORT).show();
                         pd.dismiss();
                     }
                 }
@@ -174,7 +172,7 @@ public class GuideEventNameFragment extends Fragment {
                 }
             });
         } else {
-            Toast.makeText(getContext(), "No Image selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getResources().getString(R.string.no_image_selected), Toast.LENGTH_SHORT).show();
             pd.dismiss();
         }
     }

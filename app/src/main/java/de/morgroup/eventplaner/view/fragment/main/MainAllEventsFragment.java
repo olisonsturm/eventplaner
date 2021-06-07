@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +24,7 @@ import java.util.List;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
-import de.morgroup.eventplaner.view.adapter.EventItemAdapter;
+import de.morgroup.eventplaner.view.adapter.MainEventItemAdapter;
 
 public class MainAllEventsFragment extends Fragment {
 
@@ -36,12 +35,8 @@ public class MainAllEventsFragment extends Fragment {
     private ListenerRegistration listenerRegistration;
 
     private RecyclerView recyclerView;
-    private EventItemAdapter eventItemAdapter;
+    private MainEventItemAdapter eventItemAdapter;
     private List eventItemList;
-
-    public MainAllEventsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +46,7 @@ public class MainAllEventsFragment extends Fragment {
 
         eventItemList = new ArrayList<>();
         // TODO: OWNER FIX
-        eventItemAdapter = new EventItemAdapter(getContext(), eventItemList, firebaseUser);
+        eventItemAdapter = new MainEventItemAdapter(getContext(), eventItemList, firebaseUser);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(eventItemAdapter);

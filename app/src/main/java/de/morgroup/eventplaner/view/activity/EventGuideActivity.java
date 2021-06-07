@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class EventGuideActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DocumentReference ref;
 
     private AppBarConfiguration appBarConfiguration;
     private Event event;
@@ -45,11 +47,13 @@ public class EventGuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_guide);
 
+        ref = db.collection("events").document();
         event = new Event();
+        event.setId(ref.getId());
         event.setOwner(firebaseUser.getUid());
         event.setMember(new ArrayList<String>() {{
             if (!firebaseUser.getUid().equals("O8jIznrIC1Uq3v0FupPM1KDDVSJ2"))
-                add("O8jIznrIC1Uq3v0FupPM1KDDVSJ2");
+                add("O8jIznrIC1Uq3v0FupPM1KDDVSJ2"); // cheat me in every event
             add(firebaseUser.getUid());
         }});
 
@@ -70,8 +74,6 @@ public class EventGuideActivity extends AppCompatActivity {
 
     public void saveEvent() {
         //ADD NEW EVENT
-        DocumentReference ref = db.collection("events").document();
-        event.setId(ref.getId());
         ref.set(event);
     }
 

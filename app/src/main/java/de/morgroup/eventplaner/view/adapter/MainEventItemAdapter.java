@@ -1,6 +1,7 @@
 package de.morgroup.eventplaner.view.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,17 +9,25 @@ import android.os.Build;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Fade;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +39,8 @@ import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -42,7 +53,7 @@ import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.model.User;
 import de.morgroup.eventplaner.view.activity.EventActivity;
 
-public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MainEventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -105,7 +116,11 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
 
             // loading event thumbnail url by using Glide library
-            Glide.with(context).load(item.getThumbnailUrl()).into(thumbnail);
+            if (item.getThumbnailUrl() != null) {
+                Glide.with(context).load(item.getThumbnailUrl()).into(thumbnail);
+            } else {
+                thumbnail.setImageResource(R.drawable.img_placeholder_event);
+            }
 
             menu.setOnClickListener(view -> {
                 if (!isMenuOpen) {
@@ -129,7 +144,7 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    public EventItemAdapter(Context context, List<Object> itemList, FirebaseUser firebaseUser) {
+    public MainEventItemAdapter(Context context, List<Object> itemList, FirebaseUser firebaseUser) {
         this.context = context;
         this.itemList = itemList;
         this.firebaseUser = firebaseUser;
@@ -152,17 +167,30 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     // Showing popup menu when tapping on 3 dots
+    @SuppressLint("RestrictedApi")
     private void showPopupMenuOwner(View view, String id, String name) {
         // inflate menu
         PopupMenu popup = new PopupMenu(context, view);
-
-        SpannableString s = new SpannableString(context.getResources().getString(R.string.item_menu_event_löschen));
-        s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
-        popup.getMenu().add(s);
+        popup.inflate(R.menu.event_menu_owner);
+        try {
+            Field[] fields = popup.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if ("mPopup".equals(field.getName())) {
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popup);
+                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                    setForceIcons.invoke(menuPopupHelper, true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         popup.setOnMenuItemClickListener(menu -> {
             switch (menu.getItemId()) {
-                case 0:
+                case R.id.event_delete:
                     AlertDialog alertDialog0 = new AlertDialog.Builder(context)
                             .setTitle(name)
                             .setMessage(context.getResources().getString(R.string.dialog_event_löschen))
@@ -176,6 +204,12 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     alertDialog0.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.alertdialog_rounded));
                     alertDialog0.show();
                     return true;
+                case R.id.event_mute:
+                    Toast.makeText(context,"not included", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.event_edit:
+                    Toast.makeText(context,"not included", Toast.LENGTH_SHORT).show();
+                    return true;
                 default:
                     return false;
             }
@@ -187,12 +221,26 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private void showPopupMenuMember(View view, String id, String name) {
         // inflate menu
         PopupMenu popup = new PopupMenu(context, view);
-        
-        popup.getMenu().add(context.getResources().getString(R.string.item_menu_event_verlassen));
+        popup.inflate(R.menu.event_menu_member);
+        try {
+            Field[] fields = popup.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if ("mPopup".equals(field.getName())) {
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popup);
+                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                    setForceIcons.invoke(menuPopupHelper, true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         popup.setOnMenuItemClickListener(menu -> {
             switch (menu.getItemId()) {
-                case 0:
+                case R.id.event_leave:
                     AlertDialog alertDialog0 = new AlertDialog.Builder(context)
                             .setTitle(name)
                             .setMessage(context.getResources().getString(R.string.dialog_event_verlassen))
@@ -209,6 +257,9 @@ public class EventItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             .create();
                     alertDialog0.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.alertdialog_rounded));
                     alertDialog0.show();
+                    return true;
+                case R.id.event_mute:
+                    Toast.makeText(context,"not included", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
                     return false;

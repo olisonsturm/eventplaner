@@ -1,9 +1,12 @@
 package de.morgroup.eventplaner.view.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -136,11 +140,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (user.getPhotourl() != null) {
                     Glide.with(getApplicationContext())
                             .load(user.getPhotourl())
-                            .apply(new RequestOptions().override(200, 200))
                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
                             .into(footerPB);
                 } else {
-                    footerPB.setImageResource(R.drawable.img_placeholder);
+                    Glide.with(getApplicationContext())
+                            .load(R.drawable.img_placeholder)
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
+                            .into(footerPB);
                 }
                 footerName.setText(firstname + " " + lastname);
                 footerMail.setText(email);
@@ -150,20 +156,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
         switch (item.getItemId()) {
             case R.id.nav_all_events:
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 pager.setCurrentItem(0, true);
                 break;
             case R.id.nav_own_events:
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 pager.setCurrentItem(1, true);
                 break;
             case R.id.nav_profile:
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class), options.toBundle());
                 break;
             case R.id.nav_settings:
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class), options.toBundle());
                 break;
             case R.id.nav_logout:
                 // logout-code
@@ -193,6 +198,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
 }

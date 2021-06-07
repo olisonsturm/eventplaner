@@ -61,5 +61,20 @@
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="fill_all_fields">Bitte fülle alle Felder aus</string>
+    <string name="no_image_selected">Du hast kein Bild ausgewählt</string>
+    <string name="uploading">hochladen...</string>
+    <string name="eventname">Eventname</string>
+    <string name="event_time">Länge des Events</string>
+    <string name="startzeit">Startzeit</string>
+    <string name="endzeit">Endzeit</string>
+    <string name="more_days">Mehrere Tage?</string>
+    <string name="enddatum">Enddatum</string>
+    <string name="event_join_link">Event-Beitrittslink:</string>
+    <string name="event_delete">Löschen</string>
+    <string name="event_edit">Bearbeiten</string>
+    <string name="event_mute">Stummschalten</string>
+    <string name="event_leave">Verlassen</string>
+    <string name="describe_your_event">Beschreibe dein Event!</string>
+    <string name="default_description">%owner hat noch keine Beschreibung hinzugefügt!</string>
 
 </resources>

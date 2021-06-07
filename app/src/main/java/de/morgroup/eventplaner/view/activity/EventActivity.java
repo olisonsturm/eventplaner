@@ -1,48 +1,37 @@
 package de.morgroup.eventplaner.view.activity;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.webkit.MimeTypeMap;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,12 +46,21 @@ public class EventActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference userDB = db.collection("users")
-            .document(firebaseAuth.getCurrentUser().getUid());
+    private DocumentReference userDB;
 
     private ListenerRegistration listenerRegistration;
 
     Event event;
+
+    public Event getEvent() {
+        return event;
+    }
+
+    User owner;
+
+    public User getOwner() {
+        return owner;
+    }
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -79,7 +77,7 @@ public class EventActivity extends AppCompatActivity {
     @BindView(R.id.event_item_month)
     TextView month;
     @BindView(R.id.event_item_owner)
-    TextView owner;
+    TextView ownerName;
 
     androidx.viewpager.widget.PagerAdapter adapter;
 
@@ -94,6 +92,9 @@ public class EventActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         event = getIncomingIntent();
+        owner = new User();
+        userDB = db.collection("users")
+                .document(event.getOwner());
 
         // set information
         name.setText(event.getName().toUpperCase());
@@ -108,20 +109,6 @@ public class EventActivity extends AppCompatActivity {
 
         day.setText(d);
         month.setText(m);
-
-        db.collection("users").document(event.getOwner()).addSnapshotListener((documentSnapshot, e) -> {
-            // preventing errors
-            if (e != null) {
-                return;
-            }
-            // getting data and update
-            if (documentSnapshot.exists()) {
-                // receive the user object from db
-                User user = documentSnapshot.toObject(User.class);
-                // show the data
-                owner.setText(user.getFirstname() + " " + user.getLastname());
-            }
-        });
 
         adapter = new EventPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, tabLayout.getTabCount());
         pager.setAdapter(adapter);
@@ -147,6 +134,18 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        listenerRegistration = userDB.addSnapshotListener((documentSnapshot, e) -> {
+            // preventing errors
+            if (e != null) {
+                return;
+            }
+            // getting data and update
+            if (documentSnapshot.exists()) {
+                // receive the user object from db
+                owner = documentSnapshot.toObject(User.class);
+                ownerName.setText(owner.getFirstname() + " " + owner.getLastname());
+            }
+        });
     }
 
     private Event getIncomingIntent() {
@@ -177,6 +176,14 @@ public class EventActivity extends AppCompatActivity {
             //member
             inflater.inflate(R.menu.event_menu_member, menu);
         }
+        Method menuMethod = null;
+        try {
+            menuMethod = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+            menuMethod.setAccessible(true);
+            menuMethod.invoke(menu, true);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -186,21 +193,52 @@ public class EventActivity extends AppCompatActivity {
             //owner
             switch (item.getItemId()) {
                 case R.id.event_delete:
+                    AlertDialog alertDialog0 = new AlertDialog.Builder(this)
+                            .setTitle(event.getName())
+                            .setMessage(getResources().getString(R.string.dialog_event_löschen))
+                            .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
+                                        // delete event
+                                        db.collection("events").document(event.getId()).delete();
+                                        finish();
+                                    }
+                            )
+                            .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
+                            .create();
+                    alertDialog0.getWindow().setBackgroundDrawableResource(R.drawable.alertdialog_rounded);
+                    alertDialog0.show();
                     break;
-                case 1:
+                case R.id.event_mute:
+                    Toast.makeText(getApplicationContext(), "not included", Toast.LENGTH_SHORT).show();
                     break;
-                default:
-                    return super.onOptionsItemSelected(item);
+                case R.id.event_edit:
+                    Toast.makeText(getApplicationContext(), "not included", Toast.LENGTH_SHORT).show();
+                    break;
             }
         } else {
             //member
             switch (item.getItemId()) {
                 case R.id.event_leave:
+                    AlertDialog alertDialog0 = new AlertDialog.Builder(getApplicationContext())
+                            .setTitle(event.getName())
+                            .setMessage(getResources().getString(R.string.dialog_event_verlassen))
+                            .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
+                                // leave event
+                                DocumentReference docRef = db.collection("events").document(event.getId());
+                                // Remove the uid from member field
+                                Map<String, Object> updates = new HashMap<>();
+                                updates.put("member", FieldValue.arrayRemove(firebaseUser.getUid()));
+                                // update event document
+                                docRef.update(updates);
+                                finish();
+                            })
+                            .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
+                            .create();
+                    alertDialog0.getWindow().setBackgroundDrawableResource(R.drawable.alertdialog_rounded);
+                    alertDialog0.show();
                     break;
-                case 1:
+                case R.id.event_mute:
+                    Toast.makeText(getApplicationContext(), "not included", Toast.LENGTH_SHORT).show();
                     break;
-                default:
-                    return super.onOptionsItemSelected(item);
             }
         }
         return super.onOptionsItemSelected(item);

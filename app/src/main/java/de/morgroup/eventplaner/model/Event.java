@@ -13,6 +13,7 @@ public class Event implements Comparable<Event> {
     private String name;
     private String owner;
     private String time;
+    private String description;
     private Timestamp day;
     private String thumbnailUrl;
     private ArrayList<String> member;
@@ -91,4 +92,11 @@ public class Event implements Comparable<Event> {
         this.member = member;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
