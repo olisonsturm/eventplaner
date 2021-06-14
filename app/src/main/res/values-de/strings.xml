@@ -79,5 +79,6 @@
     <string name="owner">Gründer</string>
     <string name="member">Teilnehmer</string>
     <string name="invite_with_link">Mit Link einladen</string>
+    <string name="results">Results</string>
 
 </resources>

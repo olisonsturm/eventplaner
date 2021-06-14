@@ -26,11 +26,12 @@ public class Event implements Comparable<Event> {
     public Event() {
     }
 
-    public Event(String id, String name, String owner, String time, Timestamp day, String thumbnailUrl, ArrayList<String> member) {
+    public Event(String id, String name, String owner, String time, String description, Timestamp day, String thumbnailUrl, ArrayList<String> member) {
         this.id = id;
         this.name = name;
         this.owner = owner;
         this.time = time;
+        this.description = description;
         this.day = day;
         this.thumbnailUrl = thumbnailUrl;
         this.member = member;

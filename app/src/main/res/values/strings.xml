@@ -83,5 +83,6 @@
     <string name="owner">Owner</string>
     <string name="member">Member</string>
     <string name="invite_with_link">Invite with link</string>
+    <string name="results">Results</string>
 
 </resources>

@@ -80,6 +80,9 @@
         <activity
             android:name=".view.activity.CropActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.VotingActivity"
+            android:screenOrientation="portrait" />
         <!-- META -->
         <meta-data
             android:name="preloaded_fonts"

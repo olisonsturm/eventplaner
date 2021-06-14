@@ -1,97 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@color/bgColorWhiteBlue"
+    android:orientation="vertical"
     tools:context=".view.activity.VotingActivity">
 
-    <TextView
-        android:id="@+id/question"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fab_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1 oder 2?"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp">
 
-    <!-- QUESTION 1 -->
-    <SeekBar
-        android:id="@+id/seekbar1"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/close_voting"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center|start"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/colorPrimaryGrey"
+            app:backgroundTint="@color/white"
+            app:elevation="2dp"
+            app:iconTint="@color/colorPrimaryGrey"
+            app:shapeAppearanceOverlay="@style/fab_rounded_right"
+            app:srcCompat="@drawable/ic_close"
+            app:theme="@style/MaterialTheme"
+            app:tint="@color/colorPrimaryGrey" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/create_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:max="100"
-        android:progress="25"
-        android:progressDrawable="@drawable/progress_track"
-        android:thumb="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/question" />
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardElevation="3dp">
 
-    <TextView
-        android:id="@+id/option1"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:paddingStart="32dp"
-        android:paddingEnd="0dp"
-        android:text="2"
-        app:layout_constraintEnd_toStartOf="@id/percent1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/question" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/percent1"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:paddingStart="0dp"
-        android:paddingEnd="32dp"
-        android:text="25%"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/question" />
+            <TextView
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:padding="20dp"
+                android:textAlignment="center"
+                android:textSize="23sp"
+                android:textStyle="bold" />
 
-    <!-- QUESTION 2 -->
-    <SeekBar
-        android:id="@+id/seekbar2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:max="100"
-        android:progress="25"
-        android:progressDrawable="@drawable/progress_track"
-        android:thumb="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seekbar1" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/option2"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:paddingStart="32dp"
-        android:paddingEnd="0dp"
-        android:text="2"
-        app:layout_constraintEnd_toStartOf="@id/percent2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seekbar1" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_centerInParent="true"
+                    android:nestedScrollingEnabled="true" />
 
-    <TextView
-        android:id="@+id/percent2"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:paddingStart="0dp"
-        android:paddingEnd="32dp"
-        android:text="25%"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seekbar1" />
+            </RelativeLayout>
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

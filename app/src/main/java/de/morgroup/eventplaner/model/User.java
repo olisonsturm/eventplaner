@@ -3,12 +3,12 @@ package de.morgroup.eventplaner.model;
 public class User implements Comparable<User>{
 
     private String uid;
-    private String photourl;
     private String firstname;
     private String lastname;
     private String nickname;
     private String email;
     private String mobile;
+    private String photourl;
 
     @Override
     public int compareTo(User o) {
@@ -17,13 +17,14 @@ public class User implements Comparable<User>{
 
     public User() {}
 
-    public User(String uid, String firstname, String lastname, String nickname, String email, String mobile) {
+    public User(String uid, String firstname, String lastname, String nickname, String email, String mobile, String photourl) {
         this.uid = uid;
         this.firstname = firstname;
         this.lastname = lastname;
         this.nickname = nickname;
         this.email = email;
         this.mobile = mobile;
+        this.photourl = photourl;
     }
 
     public String getUid() {
