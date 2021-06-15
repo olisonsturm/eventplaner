@@ -10,12 +10,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -79,6 +83,20 @@ public class EventActivity extends AppCompatActivity {
     @BindView(R.id.event_item_owner)
     TextView ownerName;
 
+    // voting
+    @BindView(R.id.fab_result_voting)
+    ExtendedFloatingActionButton eFabVoting;
+    @BindView(R.id.fab_create_voting)
+    FloatingActionButton fabVoting;
+    // tasks
+    @BindView(R.id.fab_result_tasks)
+    ExtendedFloatingActionButton eFabTask;
+    @BindView(R.id.fab_create_tasks)
+    FloatingActionButton fabTask;
+    // link
+    @BindView(R.id.fab_share_link)
+    ExtendedFloatingActionButton eFabLink;
+
     androidx.viewpager.widget.PagerAdapter adapter;
 
     @Override
@@ -117,6 +135,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 pager.setCurrentItem(tab.getPosition());
+                animateFab(tab.getPosition());
             }
 
             @Override
@@ -125,6 +144,22 @@ public class EventActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                animateFab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -163,6 +198,63 @@ public class EventActivity extends AppCompatActivity {
             month = months[num - 1].substring(0, 3).toUpperCase() + ".";
         }
         return month;
+    }
+
+    // fab
+    private void animateFab(int position) {
+        switch (position) {
+            case 1:
+                // voting
+                show(eFabVoting);
+                show(fabVoting);
+                // tasks
+                hide(eFabTask);
+                hide(fabTask);
+                // link
+                hide(eFabLink);
+
+                break;
+            case 2:
+                // voting
+                hide(eFabVoting);
+                hide(fabVoting);
+                // tasks
+                show(eFabTask);
+                show(fabTask);
+                // link
+                hide(eFabLink);
+                break;
+            case 3:
+                // voting
+                hide(eFabVoting);
+                hide(fabVoting);
+                // tasks
+                hide(eFabTask);
+                hide(fabTask);
+                // link
+                show(eFabLink);
+                break;
+            default:
+                // voting
+                hide(eFabVoting);
+                hide(fabVoting);
+                // tasks
+                hide(eFabTask);
+                hide(fabTask);
+                // link
+                hide(eFabLink);
+                break;
+        }
+    }
+
+    // To animate view slide out from left to right
+    public void show(View view) {
+        view.setVisibility(View.VISIBLE);
+    }
+
+    // To animate view slide out from right to left
+    public void hide(View view) {
+        view.setVisibility(View.GONE);
     }
 
     // menu

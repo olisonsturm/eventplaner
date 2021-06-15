@@ -21,29 +21,6 @@
         android:paddingBottom="15dp"
         android:scrollbars="none" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/fab_coordinator_layout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="40dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_create_voting"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_gravity="center|end"
-            android:clickable="true"
-            android:focusable="true"
-            android:textColor="@color/colorPrimaryGrey"
-            android:theme="@style/MaterialTheme"
-            app:backgroundTint="@color/white"
-            app:elevation="2dp"
-            app:iconTint="@color/colorPrimaryGrey"
-            app:shapeAppearanceOverlay="@style/fab_rounded_left"
-            app:srcCompat="@drawable/ic_add"
-            app:tint="@color/colorPrimaryGrey" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

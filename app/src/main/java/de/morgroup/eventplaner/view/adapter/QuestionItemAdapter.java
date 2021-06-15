@@ -85,7 +85,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter {
                         System.out.println("COUNT:" + count);
                         double per = (count / total) * 100;
                         System.out.println("PERCENT:" + per);
-                        if(total != 0) {
+                        if (total != 0) {
                             percent.setText(String.format("%.0f%%", per));
                         }
                         seekBar.setProgress((int) Math.round(per));
@@ -112,12 +112,12 @@ public class QuestionItemAdapter extends RecyclerView.Adapter {
                                                 docRef.update(updates);
                                             }
                                         }
+                                        // set new vote
+                                        DocumentReference ref = votingDB.collection("votes").document(String.valueOf(position));
+                                        Map<String, Object> update = new HashMap<>();
+                                        update.put("users", FieldValue.arrayUnion(firebaseUser.getUid()));
+                                        ref.set(update, SetOptions.merge());
                                     }
-                                    // set new vote
-                                    DocumentReference ref = votingDB.collection("votes").document(String.valueOf(position));
-                                    Map<String, Object> update = new HashMap<>();
-                                    update.put("users", FieldValue.arrayUnion(firebaseUser.getUid()));
-                                    ref.set(update, SetOptions.merge());
                                 }
                             });
                 }
