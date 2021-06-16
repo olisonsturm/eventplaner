@@ -69,7 +69,16 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Event-Ansicht -->
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http"
+                    android:host="www.eventplaner.com"
+                    android:pathPrefix="/join" />
+            </intent-filter>
+        </activity> <!-- Event-Ansicht -->
         <activity
             android:name=".view.activity.EventActivity"
             android:label="@string/app_name"

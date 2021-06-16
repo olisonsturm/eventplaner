@@ -1,18 +1,27 @@
 package de.morgroup.eventplaner.view.fragment.guide;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
@@ -21,7 +30,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Executor;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.morgroup.eventplaner.R;
@@ -38,13 +51,30 @@ public class GuideEventLinkFragment extends Fragment {
 
     Event event;
 
+    Uri dynamicLinkUri;
+
+    @BindView(R.id.link)
+    TextView link;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_event_link, container, false);
         ButterKnife.bind(this, view);
+
+        event = ((EventGuideActivity) getActivity()).getEvent();
+
         ((EventGuideActivity) getActivity()).setFinish(true);
+
+        link.setText("");
+        createShortJoinLink();
+
         return view;
+    }
+
+    @OnClick(R.id.link)
+    void onLinkPress() {
+        shareLink(dynamicLinkUri);
     }
 
     @OnClick(R.id.open_event)
@@ -58,5 +88,60 @@ public class GuideEventLinkFragment extends Fragment {
         startActivity(intent);
         getActivity().finish();
     }
+
+    public void createShortJoinLink() {
+
+        Uri linkWithId = Uri.parse("https://www.eventplaner.com/join")
+                .buildUpon()
+                .appendQueryParameter("eventId", event.getId())
+                .build();
+
+        Uri imageUrl = null;
+        if (event.getThumbnailUrl() != null) {
+            imageUrl = Uri.parse(event.getThumbnailUrl());
+        } else {
+            imageUrl = Uri.parse("https://firebasestorage.googleapis.com/v0/b/eventplaner-b44ff.appspot.com/o/app_image.png?alt=media&token=0888903d-2030-4cb6-82b5-f3af0aa67d06");
+        }
+
+        Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(linkWithId)
+                .setDomainUriPrefix("https://eventplaner.page.link")
+                // Set parameters
+                .setSocialMetaTagParameters(
+                        new DynamicLink.SocialMetaTagParameters.Builder()
+                                .setTitle(event.getName().toUpperCase())
+                                .setDescription("Das ist ein Event der Eventplaner-App")
+                                .setImageUrl(imageUrl)
+                                .build())
+                .setAndroidParameters(
+                        new DynamicLink.AndroidParameters.Builder()
+                                .build())
+                .buildShortDynamicLink()
+                .addOnCompleteListener((EventGuideActivity) getContext(), new OnCompleteListener<ShortDynamicLink>() {
+                    @Override
+                    public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                        if (task.isSuccessful()) {
+                            // Short link created
+                            Uri shortLink = task.getResult().getShortLink();
+                            Uri flowchartLink = task.getResult().getPreviewLink();
+                            link.setText(shortLink.toString());
+                            dynamicLinkUri = shortLink;
+                            Map<String, Object> update = new HashMap<>();
+                            update.put("joinLink", shortLink.toString());
+                            db.collection("events").document(event.getId()).update(update);
+                        }
+                    }
+                });
+    }
+
+    public void shareLink(Uri myDynamicLink) {
+        Intent sendIntent = new Intent();
+        String msg = "Joine meinem Event: " + myDynamicLink;
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, msg);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Test"));
+    }
+
 
 }

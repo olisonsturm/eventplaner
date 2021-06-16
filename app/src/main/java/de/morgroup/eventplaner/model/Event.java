@@ -1,11 +1,7 @@
 package de.morgroup.eventplaner.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.firebase.Timestamp;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Event implements Comparable<Event> {
@@ -17,6 +13,7 @@ public class Event implements Comparable<Event> {
     private Timestamp day;
     private String thumbnailUrl;
     private ArrayList<String> member;
+    private String joinLink;
 
     @Override
     public int compareTo(Event o) {
@@ -26,7 +23,7 @@ public class Event implements Comparable<Event> {
     public Event() {
     }
 
-    public Event(String id, String name, String owner, String time, String description, Timestamp day, String thumbnailUrl, ArrayList<String> member) {
+    public Event(String id, String name, String owner, String time, String description, Timestamp day, String thumbnailUrl, ArrayList<String> member, String joinLink) {
         this.id = id;
         this.name = name;
         this.owner = owner;
@@ -35,6 +32,7 @@ public class Event implements Comparable<Event> {
         this.day = day;
         this.thumbnailUrl = thumbnailUrl;
         this.member = member;
+        this.joinLink = joinLink;
     }
 
     public String getId() {
@@ -99,5 +97,13 @@ public class Event implements Comparable<Event> {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getJoinLink() {
+        return joinLink;
+    }
+
+    public void setJoinLink(String joinLink) {
+        this.joinLink = joinLink;
     }
 }

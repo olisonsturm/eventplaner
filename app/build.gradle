@@ -51,6 +51,9 @@ dependencies {
     // Firebase Storage
     implementation 'com.google.firebase:firebase-storage'
 
+    // Firebase Dynamic Links
+    implementation 'com.google.firebase:firebase-dynamic-links'
+
     // Google
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 

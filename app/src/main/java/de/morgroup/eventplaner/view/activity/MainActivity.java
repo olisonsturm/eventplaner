@@ -3,12 +3,14 @@ package de.morgroup.eventplaner.view.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,14 +26,26 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,7 +135,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
 
-        // catch any update from firestore db
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, pendingDynamicLinkData -> {
+                    Uri deeplink = null;
+                    if (pendingDynamicLinkData != null){
+                        deeplink = pendingDynamicLinkData.getLink();
+                        String eventId = deeplink.getQueryParameter("eventId");
+                        Map<String, Object> update = new HashMap<>();
+                        update.put("member", FieldValue.arrayUnion(firebaseUser.getUid()));
+                        DocumentReference eventRef = db.collection("events").document(eventId);
+                        eventRef.update(update);
+                        eventRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    String name = (String) task.getResult().get("name");
+                                    Toast.makeText(getApplicationContext(), "Du bist dem Event " + name.toUpperCase() + " beigetreten", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    }
+
+
+                });
 
         // getting data by listener
         listenerRegistration = userDB.addSnapshotListener((documentSnapshot, e) -> {
