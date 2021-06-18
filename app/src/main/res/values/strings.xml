@@ -84,5 +84,6 @@
     <string name="member">Member</string>
     <string name="invite_with_link">Invite with link</string>
     <string name="results">Results</string>
+    <string name="event_link_desc">Click the link to share it.</string>
 
 </resources>

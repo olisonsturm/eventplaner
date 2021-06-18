@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
+import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
@@ -66,10 +67,10 @@ public class EventGenerallyFragment extends Fragment {
     TextView editDescriptionButton;
     @BindView(R.id.event_edit_place)
     TextView editPlaceButton;
-    @BindView(R.id.event_map)
-    MapView mapView;
 
-    private MapController mapController;
+    @BindView(R.id.event_map)
+    MapView map = null;
+    private IMapController mapController;
     private LocationManager locationManager;
 
     @Override
@@ -82,12 +83,11 @@ public class EventGenerallyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_event_generally, container, false);
         ButterKnife.bind(this, view);
 
-        mapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
-        mapView.setBuiltInZoomControls(true);
-        mapController = (MapController) mapView.getController();
-        mapController.setZoom(13);
-        GeoPoint gPt = new GeoPoint(51500000, -150000);
-        mapController.setCenter(gPt);
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        mapController = map.getController();
+        mapController.setZoom(12);
+        GeoPoint startPoint = new GeoPoint(48.8583, 2.2944);
+        mapController.setCenter(startPoint);
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
@@ -145,9 +145,8 @@ public class EventGenerallyFragment extends Fragment {
                     description.setHint(default_description);
                 }
             });
-
-
         }
+
         // getting data by listener
         listenerRegistration = eventDB.addSnapshotListener((documentSnapshot, e) -> {
             // preventing errors
@@ -173,5 +172,4 @@ public class EventGenerallyFragment extends Fragment {
             }
         });
     }
-
 }

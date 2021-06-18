@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,6 @@ public class GuideEventLinkFragment extends Fragment {
 
         ((EventGuideActivity) getActivity()).setFinish(true);
 
-        link.setText("");
         createShortJoinLink();
 
         return view;
@@ -91,13 +91,13 @@ public class GuideEventLinkFragment extends Fragment {
 
     public void createShortJoinLink() {
 
-        Uri linkWithId = Uri.parse("https://www.eventplaner.com/join")
+        Uri linkWithId = Uri.parse("https://www.eventplaner.eu/join")
                 .buildUpon()
                 .appendQueryParameter("eventId", event.getId())
                 .build();
 
-        Uri imageUrl = null;
-        if (event.getThumbnailUrl() != null) {
+        Uri imageUrl;
+        if (!TextUtils.isEmpty(event.getThumbnailUrl())) {
             imageUrl = Uri.parse(event.getThumbnailUrl());
         } else {
             imageUrl = Uri.parse("https://firebasestorage.googleapis.com/v0/b/eventplaner-b44ff.appspot.com/o/app_image.png?alt=media&token=0888903d-2030-4cb6-82b5-f3af0aa67d06");
@@ -105,7 +105,7 @@ public class GuideEventLinkFragment extends Fragment {
 
         Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(linkWithId)
-                .setDomainUriPrefix("https://eventplaner.page.link")
+                .setDomainUriPrefix("https://eventplaner.eu/join")
                 // Set parameters
                 .setSocialMetaTagParameters(
                         new DynamicLink.SocialMetaTagParameters.Builder()

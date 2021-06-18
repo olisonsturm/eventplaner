@@ -260,8 +260,7 @@
         app:tint="@color/colorPrimaryGrey" />
 
     <!-- TASKS -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_result_tasks"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
@@ -283,8 +282,7 @@
         app:shapeAppearanceOverlay="@style/fab_rounded_right"
         app:tint="@color/colorPrimaryGrey" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_create_tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -305,8 +303,7 @@
         app:tint="@color/colorPrimaryGrey" />
 
     <!-- LINK -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_share_link"
         android:layout_width="wrap_content"
         android:layout_height="56dp"

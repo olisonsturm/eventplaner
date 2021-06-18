@@ -80,5 +80,6 @@
     <string name="member">Teilnehmer</string>
     <string name="invite_with_link">Mit Link einladen</string>
     <string name="results">Results</string>
+    <string name="event_link_desc">Klicke den Link, um ihn zu teilen.</string>
 
 </resources>

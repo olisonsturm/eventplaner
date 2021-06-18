@@ -131,6 +131,15 @@ public class EventActivity extends AppCompatActivity {
         adapter = new EventPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, tabLayout.getTabCount());
         pager.setAdapter(adapter);
 
+        // voting
+        hide(eFabVoting);
+        hide(fabVoting);
+        // tasks
+        hide(eFabTask);
+        hide(fabTask);
+        // link
+        hide(eFabLink);
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -203,6 +212,16 @@ public class EventActivity extends AppCompatActivity {
     // fab
     private void animateFab(int position) {
         switch (position) {
+            case 0:
+                // voting
+                hide(eFabVoting);
+                hide(fabVoting);
+                // tasks
+                hide(eFabTask);
+                hide(fabTask);
+                // link
+                hide(eFabLink);
+                break;
             case 1:
                 // voting
                 show(eFabVoting);
