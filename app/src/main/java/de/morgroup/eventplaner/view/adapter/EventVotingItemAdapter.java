@@ -63,6 +63,7 @@ public class EventVotingItemAdapter extends RecyclerView.Adapter {
 
                 context.startActivity(intent);
             });
+
         }
 
     }

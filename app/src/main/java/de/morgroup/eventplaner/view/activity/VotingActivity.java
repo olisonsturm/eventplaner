@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -76,6 +78,9 @@ public class VotingActivity extends AppCompatActivity {
     @BindView(R.id.question)
     TextView question;
 
+    @BindView(R.id.delete_voting)
+    FloatingActionButton delete;
+
     private QuestionItemAdapter adapter;
     private List options;
     private int votesTotal;
@@ -104,6 +109,10 @@ public class VotingActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.suppressLayout(true);
+
+        if (event.getOwner().equals(firebaseUser.getUid())) {
+            delete.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -129,6 +138,22 @@ public class VotingActivity extends AppCompatActivity {
     @OnClick(R.id.close_voting)
     void onClosePress() {
         finish();
+    }
+
+    @OnClick(R.id.delete_voting)
+    void onDeletePress() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.dialog_voting_löschen))
+                .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
+                            // delete event
+                            db.collection("events").document(event.getId()).collection("voting").document(voting.getId()).delete();
+                            finish();
+                        }
+                )
+                .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
+                .create();
+        alertDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.alertdialog_rounded));
+        alertDialog.show();
     }
 
     private Voting getIncomingVotingIntent() {

@@ -196,29 +196,6 @@ public class ProfileActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-//    @OnClick(R.id.editAddress)
-//    void onAddressPress() {
-//            EditText view = new EditText(this);
-//            view.setHint(getResources().getString(R.string.addressHint));
-//            float dpi = getResources().getDisplayMetrics().density;
-//            AlertDialog alertDialog = new AlertDialog.Builder(this)
-//                    .setTitle(getResources().getString(R.string.address))
-//                    .setView(view, (int) (20 * dpi), (int) (10 * dpi), (int) (20 * dpi), (int) (0 * dpi))
-//                    .setPositiveButton(getResources().getString(R.string.dialogProfilePositive), (dialog, which) -> {
-//                        if (view.getText() != null) {
-//                            if (view.getText().toString().length() > 0) {
-//                                String cAddress = view.getText().toString();
-//                                accountAddress.setText(cAddress);
-//                                updateData("address", cAddress);
-//                            }
-//                        }
-//                    })
-//                    .setNegativeButton(getResources().getString(R.string.dialogProfileNegative), null)
-//                    .create();
-//            alertDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.alertdialog_rounded));
-//            alertDialog.show();
-//    }
-
     @OnClick(R.id.account_delete)
     void onAccountDeletePress() {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
@@ -307,12 +284,5 @@ public class ProfileActivity extends AppCompatActivity {
     private void openImage() {
         startActivity(new Intent(getApplicationContext(), CropActivity.class));
     }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
 
 }

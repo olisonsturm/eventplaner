@@ -87,12 +87,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateVisible" />
+        <!-- Crop -->
         <activity
             android:name=".view.activity.CropActivity"
             android:screenOrientation="portrait" />
+        <!-- Voting -->
         <activity
             android:name=".view.activity.VotingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <!-- Create Voting -->
+        <activity
+            android:name=".view.activity.CreateVotingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <!-- META -->
         <meta-data
             android:name="preloaded_fonts"

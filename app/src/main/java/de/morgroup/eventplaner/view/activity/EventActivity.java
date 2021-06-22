@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +40,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
 import de.morgroup.eventplaner.model.User;
@@ -274,6 +276,23 @@ public class EventActivity extends AppCompatActivity {
     // To animate view slide out from right to left
     public void hide(View view) {
         view.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.fab_create_voting)
+    void createVotingPress() {
+        Intent intent = new Intent(getApplicationContext(), CreateVotingActivity.class);
+        intent.putExtra("eventId", event.getId());
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.fab_share_link)
+    void shareLinkPress() {
+        Intent sendIntent = new Intent();
+        String msg = "Joine meinem Event: " + event.getJoinLink();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, msg);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Test"));
     }
 
     // menu

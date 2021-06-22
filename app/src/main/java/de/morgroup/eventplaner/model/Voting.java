@@ -5,28 +5,25 @@ import com.google.firebase.Timestamp;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Voting /*implements Comparable<Voting>*/ {
+public class Voting implements Comparable<Voting> {
     private String id;
     private String name;
     private Timestamp endTime;
-    private String description;
     private ArrayList<String> options;
-    private Map<String, ArrayList<String>> votes;
 
-/*    @Override
+    @Override
     public int compareTo(Voting o) {
         return getEndTime().toDate().compareTo(o.getEndTime().toDate());
-    }*/
+    }
 
     public Voting() {
     }
 
-    public Voting(String id, String name, String owner, Timestamp endTime, Timestamp day, String thumbnailUrl, ArrayList<String> options, Map<String, ArrayList<String>> votes) {
+    public Voting(String id, String name, Timestamp endTime, ArrayList<String> options) {
         this.id = id;
         this.name = name;
         this.endTime = endTime;
         this.options = options;
-        this.votes = votes;
     }
 
     public String getId() {
@@ -59,22 +56,6 @@ public class Voting /*implements Comparable<Voting>*/ {
 
     public void setOptions(ArrayList<String> options) {
         this.options = options;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Map<String, ArrayList<String>> getVotes() {
-        return votes;
-    }
-
-    public void setVotes(Map<String, ArrayList<String>> votes) {
-        this.votes = votes;
     }
 
 }

@@ -81,5 +81,19 @@
     <string name="invite_with_link">Mit Link einladen</string>
     <string name="results">Results</string>
     <string name="event_link_desc">Klicke den Link, um ihn zu teilen.</string>
+    <string name="dialog_voting_löschen">Willst du wirklich diese Abstimmung löschen?</string>
+    <string name="answer_options">Antwortmöglichkeiten:</string>
+    <string name="end_time">Endzeit</string>
+    <string name="your_question">Deine Frage?</string>
+    <string name="answer_1">Antwort 1</string>
+    <string name="answer_10">Antwort 10</string>
+    <string name="answer_9">Antwort 9</string>
+    <string name="answer_8">Antwort 8</string>
+    <string name="answer_7">Antwort 7</string>
+    <string name="answer_6">Antwort 6</string>
+    <string name="answer_5">Antwort 5</string>
+    <string name="answer_4">Antwort 4</string>
+    <string name="answer_3">Antwort 3</string>
+    <string name="answer_2">Antwort 2</string>
 
 </resources>

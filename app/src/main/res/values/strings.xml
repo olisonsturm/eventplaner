@@ -79,11 +79,25 @@
     <string name="event_mute">Mute</string>
     <string name="event_leave">Leave</string>
     <string name="describe_your_event">Describe your event!</string>
-    <string name="default_description">%owner hat noch keine Beschreibung hinzugefügt!</string>
+    <string name="default_description">%owner has not added a description yet!</string>
     <string name="owner">Owner</string>
     <string name="member">Member</string>
     <string name="invite_with_link">Invite with link</string>
     <string name="results">Results</string>
     <string name="event_link_desc">Click the link to share it.</string>
+    <string name="dialog_voting_löschen">Do you really want to delete this voting?</string>
+    <string name="answer_options">Answer options:</string>
+    <string name="end_time">End time</string>
+    <string name="your_question">Your question?</string>
+    <string name="answer_1">Answer 1</string>
+    <string name="answer_10">Answer 10</string>
+    <string name="answer_9">Answer 9</string>
+    <string name="answer_8">Answer 8</string>
+    <string name="answer_7">Answer 7</string>
+    <string name="answer_6">Answer 6</string>
+    <string name="answer_5">Answer 5</string>
+    <string name="answer_4">Answer 4</string>
+    <string name="answer_3">Answer 3</string>
+    <string name="answer_2">Answer 2</string>
 
 </resources>

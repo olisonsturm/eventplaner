@@ -88,9 +88,11 @@ public class EventVotingFragment extends Fragment {
                 // receive the user object from db
                 voting = document.toObject(Voting.class);
                 // show the event
-                votingItemList.add(voting);
+                if (!voting.getEndTime().toDate().after(new Date())) {
+                    votingItemList.add(voting);
+                }
             }
-            //Collections.sort(votingItemList);
+            Collections.sort(votingItemList);
             votingItemAdapter.notifyDataSetChanged();
         });
     }

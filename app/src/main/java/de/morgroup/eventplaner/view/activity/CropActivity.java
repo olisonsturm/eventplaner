@@ -142,6 +142,7 @@ public class CropActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
             String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null);
             Uri uri = Uri.parse(path);
+
             final StorageReference fileReference = storage.child(firebaseUser.getUid() + ".jpg");
             fileReference.delete();
             uploadTask = fileReference.putFile(uri);

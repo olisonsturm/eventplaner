@@ -34,6 +34,23 @@
             app:theme="@style/MaterialTheme"
             app:tint="@color/colorPrimaryGrey" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/delete_voting"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center|end"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/colorPrimaryGrey"
+            android:visibility="invisible"
+            app:backgroundTint="@color/white"
+            app:elevation="2dp"
+            app:iconTint="@color/colorPrimaryGrey"
+            app:shapeAppearanceOverlay="@style/fab_rounded_left"
+            app:srcCompat="@drawable/ic_delete"
+            app:theme="@style/MaterialTheme"
+            app:tint="@color/colorPrimaryGrey" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.cardview.widget.CardView

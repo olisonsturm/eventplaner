@@ -80,6 +80,8 @@ public class GuideEventLinkFragment extends Fragment {
     @OnClick(R.id.open_event)
     void onFinishPress() {
         event = ((EventGuideActivity) getActivity()).getEvent();
+        event.setJoinLink(dynamicLinkUri.toString());
+        ((EventGuideActivity) getActivity()).saveEvent();
 
         Intent intent = new Intent(getContext(), EventActivity.class);
         Gson gson = new Gson();
@@ -110,11 +112,12 @@ public class GuideEventLinkFragment extends Fragment {
                 .setSocialMetaTagParameters(
                         new DynamicLink.SocialMetaTagParameters.Builder()
                                 .setTitle(event.getName().toUpperCase())
-                                .setDescription("Das ist ein Event der Eventplaner-App")
+                                .setDescription("Erstellt mit EventPlaner")
                                 .setImageUrl(imageUrl)
                                 .build())
                 .setAndroidParameters(
                         new DynamicLink.AndroidParameters.Builder()
+                                .setFallbackUrl(Uri.parse("http://beta.eventplaner.eu"))
                                 .build())
                 .buildShortDynamicLink()
                 .addOnCompleteListener((EventGuideActivity) getContext(), new OnCompleteListener<ShortDynamicLink>() {
@@ -126,9 +129,6 @@ public class GuideEventLinkFragment extends Fragment {
                             Uri flowchartLink = task.getResult().getPreviewLink();
                             link.setText(shortLink.toString());
                             dynamicLinkUri = shortLink;
-                            Map<String, Object> update = new HashMap<>();
-                            update.put("joinLink", shortLink.toString());
-                            db.collection("events").document(event.getId()).update(update);
                         }
                     }
                 });
