@@ -193,7 +193,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
         switch (item.getItemId()) {
             case R.id.nav_all_events:
                 pager.setCurrentItem(0, true);
@@ -202,10 +201,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 pager.setCurrentItem(1, true);
                 break;
             case R.id.nav_profile:
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class), options.toBundle());
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
             case R.id.nav_settings:
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class), options.toBundle());
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 break;
             case R.id.nav_logout:
                 // logout-code

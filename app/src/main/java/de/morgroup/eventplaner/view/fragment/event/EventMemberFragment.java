@@ -79,7 +79,7 @@ public class EventMemberFragment extends Fragment {
 
         memberItemList = new ArrayList<>();
 
-        memberItemAdapter = new EventMemberItemAdapter(getContext(), memberItemList);
+        memberItemAdapter = new EventMemberItemAdapter(getContext(), memberItemList, event, firebaseUser);
 
         ConcatAdapter concatenatedAdapter = new ConcatAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             class CreateEventView extends RecyclerView.ViewHolder {

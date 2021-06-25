@@ -45,7 +45,7 @@ public class MainAllEventsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
 
         eventItemList = new ArrayList<>();
-        // TODO: OWNER FIX
+
         eventItemAdapter = new MainEventItemAdapter(getContext(), eventItemList, firebaseUser);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
