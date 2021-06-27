@@ -91,30 +91,37 @@ public class GuideEventNameFragment extends Fragment {
         return view;
     }
 
+    // der pfeil um auf die nächste seite/fragment zu kommen
     @OnClick(R.id.open_event)
     void onNextPagePress() {
         nextPage();
     }
 
+    // wenn auf das bild gedrückt wird kann man dem event ein eigenes thumbnail hinzufügen
     @OnClick(R.id.event_thumbnail_image_view)
     void onThumbnailPress() {
         openImage();
     }
 
     private void nextPage() {
-        if (!TextUtils.isEmpty(name.getText())) {
+        if (!TextUtils.isEmpty(name.getText().toString())) {
 
+            // laden das erstellte event aus der activity
             event = ((EventGuideActivity) getActivity()).getEvent();
 
+            // setzen des eventnamens
             event.setName(name.getText().toString());
 
+            // nächste seite wird aufgerufen
             Navigation.findNavController(getView()).navigate(R.id.action_EventNameFragment_to_EventDateFragment);
 
         } else {
+            // popupmessage falls nicht ausgefüllt
             Toast.makeText(getContext(), getResources().getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show();
         }
     }
 
+    // beenden des guides
     @OnClick(R.id.close_guide)
     void onClosePress() {
         getActivity().finish();
@@ -153,15 +160,16 @@ public class GuideEventNameFragment extends Fragment {
                 public void onComplete(@NonNull @NotNull Task<Uri> task) {
                     pd.dismiss();
                     if (task.isSuccessful()) {
+                        // den generierten link des bildes wird jetzt dem event hinzugefügtr als string attribut
                         Uri downloadUri = task.getResult();
                         String mUri = downloadUri.toString();
+                        // setzen den link als attribut um in später per event model abzufragen
                         event.setThumbnailUrl(mUri);
+                        // was ist glide erklärung
                         Glide.with(getContext())
                                 .load(mUri)
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
                                 .into(thumbnail);
-                    } else {
-                        pd.dismiss();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -177,10 +185,12 @@ public class GuideEventNameFragment extends Fragment {
         }
     }
 
+    // sobald ein bild ausgewählt wurde in der gallery
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_REQUEST) {
+            // bild bekommen und mit der methode uploadimage auf unser firebase storage hochladen
             uploadImage(data.getData());
         }
     }

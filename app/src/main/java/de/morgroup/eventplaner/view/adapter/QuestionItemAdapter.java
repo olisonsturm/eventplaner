@@ -2,7 +2,6 @@ package de.morgroup.eventplaner.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +24,6 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,9 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import de.morgroup.eventplaner.R;
-import de.morgroup.eventplaner.model.Event;
-import de.morgroup.eventplaner.model.Voting;
-import de.morgroup.eventplaner.view.activity.VotingActivity;
 
 public class QuestionItemAdapter extends RecyclerView.Adapter {
 
@@ -52,6 +46,8 @@ public class QuestionItemAdapter extends RecyclerView.Adapter {
     private Context context;
     private List options;
     private ArrayList<ArrayList<String>> votes;
+
+    private static boolean flag = true;
 
     class OptionsViewHolder extends RecyclerView.ViewHolder {
 
@@ -96,30 +92,34 @@ public class QuestionItemAdapter extends RecyclerView.Adapter {
             option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    votingDB.collection("votes").whereArrayContains("users", firebaseUser.getUid())
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            if (!document.getId().equals(position)) {
-                                                // delete old vote
-                                                DocumentReference docRef = votingDB.collection("votes").document(document.getId());
-                                                Map<String, Object> updates = new HashMap<>();
-                                                updates.put("users", FieldValue.arrayRemove(firebaseUser.getUid()));
-                                                docRef.update(updates);
+                    // TODO: Dokument name zu UID und im Dokument auswahl abspeichern (PROBLEM: Zwei Auswahlmöglichkeiten)
+                    if (flag) {
+                        flag = false;
+                        votingDB.collection("votes").whereArrayContains("users", firebaseUser.getUid())
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                if (!document.getId().equals(position)) {
+                                                    // delete old vote
+                                                    DocumentReference docRef = votingDB.collection("votes").document(document.getId());
+                                                    Map<String, Object> updates = new HashMap<>();
+                                                    updates.put("users", FieldValue.arrayRemove(firebaseUser.getUid()));
+                                                    docRef.update(updates);
+                                                }
                                             }
+                                            // set new vote
+                                            DocumentReference ref = votingDB.collection("votes").document(String.valueOf(position));
+                                            Map<String, Object> update = new HashMap<>();
+                                            update.put("users", FieldValue.arrayUnion(firebaseUser.getUid()));
+                                            ref.set(update, SetOptions.merge());
                                         }
-                                        // set new vote
-                                        DocumentReference ref = votingDB.collection("votes").document(String.valueOf(position));
-                                        Map<String, Object> update = new HashMap<>();
-                                        update.put("users", FieldValue.arrayUnion(firebaseUser.getUid()));
-                                        ref.set(update, SetOptions.merge());
+                                        flag = true;
                                     }
-                                }
-                            });
+                                });
+                    }
                 }
             });
 

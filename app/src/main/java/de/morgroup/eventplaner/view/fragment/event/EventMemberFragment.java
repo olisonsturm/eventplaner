@@ -1,11 +1,14 @@
 package de.morgroup.eventplaner.view.fragment.event;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,7 +37,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
@@ -90,8 +96,6 @@ public class EventMemberFragment extends Fragment {
                 public CreateEventView(View view) {
                     super(view);
                     layout = (LinearLayout) view.findViewById(R.id.member_item_layout);
-                    layout.setClickable(false);
-                    layout.setFocusable(false);
                     name = (TextView) view.findViewById(R.id.member_item_name);
                     rank = (TextView) view.findViewById(R.id.member_item_rank);
                     photo = (ImageView) view.findViewById(R.id.member_item_photo);
@@ -114,6 +118,66 @@ public class EventMemberFragment extends Fragment {
                                 .into(photo);
                     }
 
+                    layout.setOnClickListener(view2 -> {
+                        showPopupMenuDialog(owner);
+                    });
+
+                }
+
+                // dialog menu
+                public void showPopupMenuDialog(User user) {
+                    if (event.getOwner().equals(firebaseUser.getUid())) {
+                        final String[] option;
+                        if (user.getUid().equals(firebaseUser.getUid())) {
+                            option = new String[]{"Whatsapp-Chat öffnen"};
+                        } else {
+                            option = new String[]{"Whatsapp-Chat öffnen", user.getNickname() + " entfernen"};
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.alertdialog_item, option);
+                        AlertDialog.Builder dialogMenu = new AlertDialog.Builder(getContext());
+                        dialogMenu.setAdapter(adapter, (dialog, which) -> {
+                            switch (which) {
+                                case 0:
+                                    // nachricht schreiben per Whatsapp
+                                    Uri uri = Uri.parse("smsto:" + user.getMobile());
+                                    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                                    intent.setPackage("com.whatsapp");
+                                    startActivity(Intent.createChooser(intent, ""));
+                                    return;
+                                case 1:
+                                    Map<String, Object> update = new HashMap<>();
+                                    update.put("member", FieldValue.arrayRemove(user.getUid()));
+                                    FirebaseFirestore.getInstance().collection("events")
+                                            .document(event.getId()).update(update);
+                                    return;
+                                default:
+                                    return;
+                            }
+                        });
+                        final AlertDialog alertDialog = dialogMenu.create();
+                        alertDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.alertdialog_rounded));
+                        alertDialog.show();
+                    } else {
+                        final String[] option = {"Whatsapp-Chat öffnen"};
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.alertdialog_item, option);
+                        AlertDialog.Builder dialogMenu2 = new AlertDialog.Builder(getContext());
+                        dialogMenu2.setAdapter(adapter, (dialog, which) -> {
+                            switch (which) {
+                                case 0:
+                                    // nachricht schreiben per Whatsapp
+                                    Uri uri = Uri.parse("smsto:" + user.getMobile());
+                                    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                                    intent.setPackage("com.whatsapp");
+                                    startActivity(Intent.createChooser(intent, ""));
+                                    return;
+                                default:
+                                    return;
+                            }
+                        });
+                        final AlertDialog alertDialog2 = dialogMenu2.create();
+                        alertDialog2.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.alertdialog_rounded));
+                        alertDialog2.show();
+                    }
                 }
             }
 

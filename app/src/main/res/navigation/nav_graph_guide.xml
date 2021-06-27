@@ -53,5 +53,5 @@
     <fragment
         android:id="@+id/EventLinkFragment"
         android:name="de.morgroup.eventplaner.view.fragment.guide.GuideEventLinkFragment"
-        android:label="f"></fragment>
+        android:label="f" />
 </navigation>

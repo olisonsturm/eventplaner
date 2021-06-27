@@ -140,7 +140,7 @@ public class GuideEventLinkFragment extends Fragment {
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, msg);
         sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, "Test"));
+        startActivity(Intent.createChooser(sendIntent, ""));
     }
 
 

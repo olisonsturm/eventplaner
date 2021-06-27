@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference userDB = db.collection("users")
-            .document(firebaseAuth.getCurrentUser().getUid());
+            .document(firebaseUser.getUid());
 
     private ListenerRegistration listenerRegistration;
 

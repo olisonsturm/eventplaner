@@ -65,13 +65,14 @@ public class GuideEventDateFragment extends Fragment {
 
     private void nextPage() {
         Date date = getDateFromDatePicker(picker);
-        Date today = new Date();
-        today.setHours(0);
 
+        // event bekommen von activity
         event = ((EventGuideActivity) getActivity()).getEvent();
 
+        // setzen des datums
         event.setDay(new Timestamp(date));
 
+        // nächste seite
         Navigation.findNavController(getView()).navigate(R.id.action_EventDateFragment_to_EventTimeFragment);
     }
 
@@ -80,6 +81,7 @@ public class GuideEventDateFragment extends Fragment {
         getActivity().finish();
     }
 
+    // methode um das datum von der datepickerauswahl zu bekommen
     public static java.util.Date getDateFromDatePicker(DatePicker datePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();

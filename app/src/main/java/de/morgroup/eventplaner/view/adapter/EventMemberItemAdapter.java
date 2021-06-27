@@ -91,7 +91,7 @@ public class EventMemberItemAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     // dialog menu
-    private void showPopupMenuDialog(User user) {
+    public void showPopupMenuDialog(User user) {
         if (event.getOwner().equals(firebaseUser.getUid())) {
             final String[] option = {"Whatsapp-Chat öffnen", user.getNickname() + " entfernen"};
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.alertdialog_item, option);

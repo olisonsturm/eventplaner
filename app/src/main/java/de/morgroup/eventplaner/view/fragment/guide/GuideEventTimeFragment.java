@@ -115,7 +115,7 @@ public class GuideEventTimeFragment extends Fragment {
         Calendar currentTime = Calendar.getInstance();
         int hour = currentTime.get(Calendar.HOUR_OF_DAY);
         int minute = currentTime.get(Calendar.MINUTE);
-        TimePickerDialog timePickerEnd = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerStart = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hour, int m) {
                 String minute = String.format("%02d", m);
@@ -128,7 +128,7 @@ public class GuideEventTimeFragment extends Fragment {
                 }
             }
         }, hour, minute, true);
-        timePickerEnd.show();
+        timePickerStart.show();
     }
 
     @OnClick(R.id.event_time_end)
