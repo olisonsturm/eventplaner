@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingTop="20dp"
-        android:paddingBottom="15dp"
+        android:paddingBottom="110dp"
         android:scrollbars="none" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

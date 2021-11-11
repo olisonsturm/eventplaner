@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -77,7 +78,6 @@ public class EventGenerallyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         event = ((EventActivity) getActivity()).getEvent();
-
         eventDB = db.collection("events").document(event.getId());
 
         View view = inflater.inflate(R.layout.fragment_event_generally, container, false);

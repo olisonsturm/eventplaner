@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/bgColorWhiteBlue"
@@ -91,8 +93,8 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:background="@color/bgColorWhiteBlue"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/bgColorWhiteBlue">
 
         </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
@@ -100,25 +102,33 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/fab_coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="40dp">
+        android:layout_height="100dp"
+        android:layout_gravity="bottom">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_create_event"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_gravity="center|end"
+            android:layout_gravity="center|end|top
+"
             android:clickable="true"
+            android:focusable="true"
             android:textColor="@color/colorPrimaryGrey"
             android:theme="@style/MaterialTheme"
             app:backgroundTint="@color/white"
-            app:iconTint="@color/colorPrimaryGrey"
             app:elevation="2dp"
+            app:iconTint="@color/colorPrimaryGrey"
             app:shapeAppearanceOverlay="@style/fab_rounded_left"
             app:srcCompat="@drawable/ic_plus"
-            app:tint="@color/colorPrimaryGrey"
-            android:focusable="true" />
+            app:tint="@color/colorPrimaryGrey" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-7245487030447444/9040779945" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

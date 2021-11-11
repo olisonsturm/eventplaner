@@ -118,6 +118,7 @@ public class GuideEventLinkFragment extends Fragment {
                 .setAndroidParameters(
                         new DynamicLink.AndroidParameters.Builder()
                                 .setFallbackUrl(Uri.parse("http://beta.eventplaner.eu"))
+                                .setMinimumVersion(4)
                                 .build())
                 .buildShortDynamicLink()
                 .addOnCompleteListener((EventGuideActivity) getContext(), new OnCompleteListener<ShortDynamicLink>() {

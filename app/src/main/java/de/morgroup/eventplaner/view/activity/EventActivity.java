@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -56,13 +58,13 @@ public class EventActivity extends AppCompatActivity {
 
     private ListenerRegistration listenerRegistration;
 
-    Event event;
+    private Event event;
 
     public Event getEvent() {
         return event;
     }
 
-    User owner;
+    private User owner;
 
     public User getOwner() {
         return owner;
@@ -99,6 +101,9 @@ public class EventActivity extends AppCompatActivity {
     @BindView(R.id.fab_share_link)
     ExtendedFloatingActionButton eFabLink;
 
+    @BindView(R.id.adView)
+    AdView adView;
+
     androidx.viewpager.widget.PagerAdapter adapter;
 
     @Override
@@ -110,6 +115,10 @@ public class EventActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //load new banner ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         event = getIncomingIntent();
         owner = new User();
@@ -148,7 +157,6 @@ public class EventActivity extends AppCompatActivity {
                 pager.setCurrentItem(tab.getPosition());
                 animateFab(tab.getPosition());
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
@@ -157,17 +165,16 @@ public class EventActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
-
             @Override
             public void onPageSelected(int position) {
                 animateFab(position);
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
 

@@ -59,11 +59,10 @@ public class MainAllEventsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        /*
-         *  TODO: Leider sind keine OR abfragen, also ob user in member or user is owner möglich!
-         */
         // getting data by listener
-        listenerRegistration = db.collection("events").whereArrayContains("member", firebaseUser.getUid()).addSnapshotListener((snapshotsMember, eMember) -> {
+        listenerRegistration = db.collection("events")
+                .whereArrayContains("member", firebaseUser.getUid())
+                .addSnapshotListener((snapshotsMember, eMember) -> {
             // clear all event items for refresh
             eventItemList.clear();
             // catch errors (no permissions)

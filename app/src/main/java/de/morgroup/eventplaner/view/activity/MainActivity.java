@@ -26,6 +26,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView footerName;
     @BindView(R.id.footer_mail)
     TextView footerMail;
+    @BindView(R.id.adView)
+    AdView adView;
 
     ActionBarDrawerToggle toggle;
     androidx.viewpager.widget.PagerAdapter adapter;
@@ -94,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        //load new banner ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_all_events);
@@ -139,13 +147,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .getDynamicLink(getIntent())
                 .addOnSuccessListener(this, pendingDynamicLinkData -> {
                     Uri deeplink = null;
-                    if (pendingDynamicLinkData != null){
+                    if (pendingDynamicLinkData != null) {
                         deeplink = pendingDynamicLinkData.getLink();
                         String eventId = deeplink.getQueryParameter("eventId");
+
                         Map<String, Object> update = new HashMap<>();
                         update.put("member", FieldValue.arrayUnion(firebaseUser.getUid()));
+
                         DocumentReference eventRef = db.collection("events").document(eventId);
                         eventRef.update(update);
+
                         eventRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
@@ -155,9 +166,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 }
                             }
                         });
+
                     }
-
-
                 });
 
         // getting data by listener

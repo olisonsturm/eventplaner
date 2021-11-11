@@ -13,21 +13,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.morgroup.eventplaner.R;
 import de.morgroup.eventplaner.model.Event;
+import de.morgroup.eventplaner.model.User;
 import de.morgroup.eventplaner.model.Voting;
 import de.morgroup.eventplaner.view.activity.EventActivity;
 import de.morgroup.eventplaner.view.activity.VotingActivity;
 
 public class EventVotingItemAdapter extends RecyclerView.Adapter {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
     private Context context;
     private List<Object> itemList;
@@ -37,11 +48,13 @@ public class EventVotingItemAdapter extends RecyclerView.Adapter {
 
         CardView card;
         TextView name;
+        CoordinatorLayout newLabel;
 
         public VotingViewHolder(View view) {
             super(view);
             card = (CardView) view.findViewById(R.id.card_view);
             name = (TextView) view.findViewById(R.id.name);
+            newLabel = (CoordinatorLayout) view.findViewById(R.id.newLabel);
         }
 
         void bindData(int position) {
@@ -49,6 +62,24 @@ public class EventVotingItemAdapter extends RecyclerView.Adapter {
             Voting voting = (Voting) itemList.get(position);
             // set information
             name.setText(voting.getName());
+
+            db.collection("events").document(event.getId())
+                    .collection("voting").document(voting.getId())
+                    .collection("votes").whereArrayContains("users", firebaseUser.getUid())
+                    .addSnapshotListener((snapshot, e) -> {
+                        // preventing errors
+                        if (e != null) {
+                            return;
+                        }
+                        for (QueryDocumentSnapshot doc : snapshot) {
+                            List<String> users = (List<String>) doc.get("users");
+                            if (users.contains(firebaseUser.getUid())) {
+                                newLabel.setVisibility(View.INVISIBLE);
+                            } else {
+                                newLabel.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
 
             card.setOnClickListener(view -> {
                 Intent intent = new Intent(context, VotingActivity.class);

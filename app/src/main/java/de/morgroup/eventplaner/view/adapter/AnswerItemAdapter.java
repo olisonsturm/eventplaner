@@ -34,7 +34,7 @@ import java.util.Map;
 
 import de.morgroup.eventplaner.R;
 
-public class QuestionItemAdapter extends RecyclerView.Adapter {
+public class AnswerItemAdapter extends RecyclerView.Adapter {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -126,7 +126,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public QuestionItemAdapter(Context context, List options, DocumentReference votingDB) {
+    public AnswerItemAdapter(Context context, List options, DocumentReference votingDB) {
         this.context = context;
         this.options = options;
         this.votingDB = votingDB;
